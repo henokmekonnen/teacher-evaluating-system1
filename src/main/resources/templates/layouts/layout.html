@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Teacher</title>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta name="description" content="Ela Admin - HTML5 Admin Template">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+
+    <link rel="stylesheet" th:href="@{/assets/css/normalize.min.css}" href="../static/assets/css/normalize.min.css" />
+    <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}" href="../static/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" th:href="@{/assets/css/font-awesome.min.css}" href="../static/assets/css/font-awesome.min.css" />
+    <link rel="stylesheet" th:href="@{/assets/css/themify-icons.css}" href="../static/assets/css/themify-icons.css" />
+    <link rel="stylesheet" th:href="@{/assets/css/pe-icon-7-stroke.min.css}" href="../static/assets/css/pe-icon-7-stroke.min.css" />
+    <link rel="stylesheet" th:href="@{/assets/css/flag-icon.min.css}" href="../static/assets/css/flag-icon.min.css" />
+    <link rel="stylesheet" th:href="@{/assets/css/cs-skin-elastic.css}" href="../static/assets/css/cs-skin-elastic.css" />
+    <link rel="stylesheet" th:href="@{/assets/css/style.css}" href="../static/assets/css/style.css" />
+    <link rel="stylesheet" th:href="@{/assets/css/chartist.min.css}" href="../static/assets/css/chartist.min.css" />
+    <link rel="stylesheet" th:href="@{/assets/css/jqvmap.min.css}" href="../static/assets/css/jqvmap.min.css" />
+    <link rel="stylesheet" th:href="@{/assets/css/weather-icons.css}" href="../static/assets/css/weather-icons.css" />
+    <link rel="stylesheet" th:href="@{/assets/css/fullcalendar.min.css}" href="../static/assets/css/fullcalendar.min.css" />
+    <link rel="stylesheet" th:href="@{/assets/css/lib/datatable/dataTables.bootstrap.min.css}" href="../static/assets/css/lib/datatable/dataTables.bootstrap.min.css" />
+
+    <link rel="stylesheet" th:href="@{/assets/js/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css}" href="..static/assets/js/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" />
+    <link rel="stylesheet" th:href="@{/assets/css/material.css}" href="..static/assets/css/material.css" />
+
+</head>
+<body>
+
+<div th:replace="fragments/side-menu :: sideMenu"></div>
+
+<div id="right-panel" class="right-panel">
+
+    <div th:replace="fragments/header:: header">  </div>
+
+
+    <div layout:fragment="wrapper"></div>
+    <div class="clearfix"></div>
+    <div th:replace="fragments/footer:: footer">  </div>
+</div>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var contextRoot= /*[[@{/}]]*/ '';
+    /*]]>*/
+</script>
+
+<script th:src="@{/assets/js/jquery.min.js}" href="../static/assets/js/jquery.min.js"></script>
+<script th:src="@{/assets/js/popper.min.js}" href="../static/assets/js/popper.min.js"></script>
+<script th:src="@{/assets/js/bootstrap.min.js}" href="../static/assets/js/bootstrap.min.js"></script>
+
+<script th:src="@{/assets/js/jquery.matchHeight.min.js}" href="../static/assets/js/jquery.matchHeight.min.js"></script>
+<script th:src="@{/assets/js/main.js}" href="../static/assets/js/main.js"></script>
+<script th:src="@{/assets/js/moment.latest.min.js}" href="../static/assets/js/moment.latest.min.js"></script>
+<script th:src="@{/assets/js/sidebarmenu.js}" href="../static/assets/js/sidebarmenu.js"></script>
+
+<script th:src="@{/assets/js/basic-form-elements.js}" href="../static/assets/js/basic-form-elements.js"></script>
+
+<!--datatables-->
+<script th:src="@{/assets/js/lib/data-table/datatables.min.js}"></script>
+<script th:src="@{/assets/js/lib/data-table/dataTables.bootstrap.min.js}"></script>
+<script th:src="@{/assets/js/lib/data-table/dataTables.buttons.min.js}"></script>
+<script th:src="@{/assets/js/lib/data-table/buttons.bootstrap.min.js}"></script>
+<script th:src="@{/assets/js/bootstrapvalidator.min.js}"></script>
+<script th:src="@{/assets/js/lib/data-table/jszip.min.js}"></script>
+<script th:src="@{/assets/js/lib/data-table/vfs_fonts.js}"></script>
+<script th:src="@{/assets/js/lib/data-table/buttons.html5.min.js}"></script>
+<script th:src="@{/assets/js/lib/data-table/buttons.print.min.js}"></script>
+<script th:src="@{/assets/js/lib/data-table/buttons.colVis.min.js}"></script>
+<script th:src="@{/assets/js/lib/data-table/pdfmake/0.1.18/build/pdfmake.min.js}"></script>
+<script th:src="@{/assets/js/init/datatables-init.js}"></script>
+<script th:src="@{/assets/js/wizard.js}" href="../static/assets/js/wizard.js"></script>
+
+<!--ONLY JS for Basic Functionaloty-->
+
+
+
+<div layout:fragment="footer-script">
+
+
+</div>
+</body>
+</html>

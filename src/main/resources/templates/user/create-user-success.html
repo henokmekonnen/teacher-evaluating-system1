@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+<head>
+    <meta charset="UTF-8">
+
+</head>
+<body>
+<div layout:fragment="wrapper">
+    <div class="breadcrumbs">
+        <div class="breadcrumbs-inner">
+            <div class="row m-0">
+                <div class="col-sm-4">
+                    <div class="page-header float-left">
+                        <div class="page-title">
+                            <h1>Manage User</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-8">
+                    <div class="page-header float-right">
+                        <div class="page-title">
+                            <ol class="breadcrumb text-right">
+
+
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="animated fadeIn">
+            <div class="row">
+
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong>Create User Success </strong>
+                        </div>
+                        <div class="card-body card-block">
+                            <form th:action="@{/user/createUser}" th:object="${responseModel}" method="post" enctype="multipart/form-data" class="form-horizontal" id="create-org-frm">
+                                <div th:replace="fragments/messageAlert :: alert(type=${type}, message=${message})"></div>
+                                <div class="row form-group">
+
+
+                                    <div class="col-lg-6">
+                                        <div class="form-group" >
+                                            <label><strong>First Name</strong> <span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" id="firstName" name="firstName"  disabled="disabled"
+                                                   th:field="*{firstName}" required="required" >
+                                            <span class="form-error"
+                                                  th:if="${#fields.hasErrors('firstName')}"
+                                                  th:errors="*{firstName}">...</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row form-group">
+
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label><strong>Last Name</strong> <span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" id="lastName"   disabled="disabled"
+                                                   name="firstName" th:field="*{lastName}" required="required" >
+                                            <span class="form-error"
+                                                  th:if="${#fields.hasErrors('lastName')}"
+                                                  th:errors="*{lastName}">...</span>
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+
+                                <div class="row form-group">
+
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label><strong>Grand FATHER NAME</strong> <span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" id="grandFatherName" disabled="disabled"
+                                                   name="grandFatherName" th:field="*{grandFatherName}" required="required" >
+                                            <span class="form-error"
+                                                  th:if="${#fields.hasErrors('grandFatherName')}"
+                                                  th:errors="*{grandFatherName}">...</span>
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label><strong>Gender</strong> <span class="text-danger">*</span></label>
+                                            <select class="form-control" name="gender" disabled="disabled" required="required"  th:field="*{gender}">
+                                                <option value=""> please select gender </option>
+                                                <option th:value="F"  th:text="FEMALE"></option>
+                                                <option th:value="M"  th:text="MALE"></option>
+                                            </select>
+                                            <span class="form-error"
+                                                  th:if="${#fields.hasErrors('gender')}"
+                                                  th:errors="*{gender}">...</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label><strong>Date of Birth</strong> <span class="text-danger">*</span></label>
+                                            <input type="date" class="form-control" id="dateOfBirth" disabled="disabled"
+                                                   name="dateOfBirth" th:field="*{dateOfBirth}" required="required" >
+                                            <span class="form-error"
+                                                  th:if="${#fields.hasErrors('dateOfBirth')}"
+                                                  th:errors="*{dateOfBirth}">...</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label><strong>Phone Number</strong> <span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" id="phoneNumber" disabled="disabled"
+                                                   name="phoneNumber" th:field="*{phoneNumber}" required="required" >
+                                            <span class="form-error"
+                                                  th:if="${#fields.hasErrors('phoneNumber')}"
+                                                  th:errors="*{phoneNumber}">...</span>
+                                        </div></div>
+
+
+                                </div>
+                                <div class="row form-group">
+
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label><strong>Email</strong> <span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" id="email" disabled="disabled"
+                                                   name="email" th:field="*{email}" required="required" >
+                                            <span class="form-error"
+                                                  th:if="${#fields.hasErrors('email')}"
+                                                  th:errors="*{email}">...</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label><strong>Department</strong> <span class="text-danger">*</span></label>
+                                            <select class="form-control" name="departmentId" disabled="disabled" required="required"  th:field="*{departmentId}">
+                                                <option value=""> please select department </option>
+                                                <option th:each="DepartmentId:${departmentListResult}" th:value="${DepartmentId.dptId}"
+                                                        th:text="${DepartmentId.dptName}"></option>
+                                            </select>
+                                            <span class="form-error"
+                                                  th:if="${#fields.hasErrors('departmentId')}"
+                                                  th:errors="*{departmentId}">...</span>
+                                        </div></div>
+
+                                </div>
+
+                                <div class="btn pull-right" >
+                                    <a  th:href="@{'/backtocreate'}" class="btn btn-secondary btn-sm"></i> Cancel</a>
+
+                                </div>
+
+                            </form>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>
+
