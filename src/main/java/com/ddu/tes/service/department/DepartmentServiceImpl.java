@@ -45,14 +45,18 @@ public class DepartmentServiceImpl implements  DepartmentService{
 
             Department department = (Department) sqlRepository.findOne(filter);
 
-           if(department != null ){
+           if(department == null ){
                 result.setStatusCode(1000);
-                result.setStatusMessage("department already exists");
+                result.setStatusMessage("department not found");
                 result.setDepartmentExists(Boolean.FALSE);
                 return  result;
             }
 
             result.setStatusCode(0);
+            result.setDescription(department.getDescription());
+            result.setDptName(department.getDepartmentName());
+            result.setNumberOfStaff(department.getNumberOfStaff());
+            result.setDptId(department.getDepartmentId());
             result.setStatusMessage("Found");
             result.setDepartmentExists(Boolean.TRUE);
             return  result;
@@ -67,6 +71,35 @@ public class DepartmentServiceImpl implements  DepartmentService{
     }
 
 
+    @Override
+    public boolean departmentExist (String name ){
+        GetDepartmentByNameResult result = new GetDepartmentByNameResult();
+
+        try {
+
+            if(StringUtils.isBlank(name)){
+               return  false;
+            }
+
+            Department filter = new Department();
+            filter.setDepartmentName(name);
+
+            Department department = (Department) sqlRepository.findOne(filter);
+
+            if(department != null ){
+                return  false;
+            }
+
+          return  true;
+
+        }catch (Exception ex){
+            logger.error(ex);
+            result.setStatusCode(1000);
+            result.setStatusMessage(ex.getMessage());
+            result.setDepartmentExists(Boolean.FALSE);
+          throw  ex;
+        }
+    }
     @Override
     public CreateDepartmentResponseModel createDepartment(CreateDepartmentRequestModel confirmCreateDepartment) {
          CreateDepartmentResponseModel responseModel = new CreateDepartmentResponseModel();

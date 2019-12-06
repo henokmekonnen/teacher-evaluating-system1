@@ -11,4 +11,5 @@ public interface DepartmentService {
      public GetDepartmentByNameResult getDepartmentByName (final String departmentName);
      public CreateDepartmentResponseModel createDepartment(CreateDepartmentRequestModel confirmCreateDepartment);
      public GetAllDepartmentListResult getAllDepartments();
+     public boolean departmentExist (String name );
 }

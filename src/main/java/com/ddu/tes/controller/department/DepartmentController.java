@@ -2,7 +2,9 @@ package com.ddu.tes.controller.department;
 
 import com.ddu.tes.controller.model.department.CreateDepartmentRequestModel;
 import com.ddu.tes.controller.model.department.CreateDepartmentResponseModel;
+import com.ddu.tes.controller.model.department.EditDepartmentRequestModel;
 import com.ddu.tes.service.department.DepartmentService;
+import com.ddu.tes.service.department.GetAllDepartmentListResult;
 import com.ddu.tes.service.department.GetDepartmentByNameResult;
 import com.ddu.tes.utils.Constant;
 import org.apache.commons.lang.StringUtils;
@@ -12,10 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
@@ -26,12 +25,29 @@ import javax.validation.Valid;
  */
 @Controller
 @RequestMapping("/department")
-@SessionAttributes({"createDepartmentRequestModel"})
+@SessionAttributes({"createDepartmentRequestModel", "editDepartmentRequestModel"})
 public class DepartmentController {
     private static final Log logger = LogFactory.getLog(DepartmentController.class);
 
     @Autowired
     DepartmentService departmentService;
+
+    @RequestMapping(value = "/departmentList", method = RequestMethod.GET)
+    public String departmentList(Model model, HttpSession session, RedirectAttributes redirectAttributes) {
+        try {
+
+            GetAllDepartmentListResult departmentListResult = departmentService.getAllDepartments();
+            model.addAttribute("departmentList", departmentListResult.getDepartmentList());
+            return "department/department-list";
+
+        } catch (Exception ex) {
+            logger.error("error while creating dept" + ex, ex.getCause());
+            model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
+            model.addAttribute(Constant.MESSAGE, ex.getMessage());
+            return "department/department-list";
+        }
+
+    }
 
     @RequestMapping(value = "/createDepartment", method = RequestMethod.GET)
     public String createDepartment(Model model, HttpSession session, RedirectAttributes redirectAttributes) {
@@ -149,6 +165,49 @@ public class DepartmentController {
             model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
             model.addAttribute(Constant.MESSAGE, ex.getMessage());
             return "department/create-department";
+        }
+
+    }
+
+
+    @RequestMapping(value = "/editDepartmenent/{dptName}", method = RequestMethod.GET)
+    public String editDepartmenent(Model model, @PathVariable(name = "dptName") String dptName) {
+
+        GetAllDepartmentListResult departmentListResult = departmentService.getAllDepartments();
+        model.addAttribute("departmentList", departmentListResult.getDepartmentList());
+
+
+        try {
+                if(dptName == null){
+
+                    model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
+                    model.addAttribute(Constant.MESSAGE, "Please provide id");
+                    return "department/department-list";
+                }
+
+               GetDepartmentByNameResult result =  departmentService.getDepartmentByName(dptName);
+
+                if (result.getStatusCode() == 0) {
+                    model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
+                    model.addAttribute(Constant.MESSAGE, result.getStatusMessage());
+                    return "department/department-list";
+                }
+
+            EditDepartmentRequestModel editDepartmentRequestModel = new EditDepartmentRequestModel();
+                editDepartmentRequestModel.setDepartmentName(result.getDptName());
+                editDepartmentRequestModel.setNumberOfStaff(result.getNumberOfStaff());
+                editDepartmentRequestModel.setDescription(result.getDescription());
+                editDepartmentRequestModel.setDptId(result.getDptId());
+
+                model.addAttribute("editDepartmentRequestModel", editDepartmentRequestModel);
+
+            return "department/edit-department";
+
+        } catch (Exception ex) {
+            logger.error("error while creating dept" + ex, ex.getCause());
+            model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
+            model.addAttribute(Constant.MESSAGE, ex.getMessage());
+            return "department/department-list";
         }
 
     }
