@@ -14,7 +14,7 @@
                 <div class="col-sm-4">
                     <div class="page-header float-left">
                         <div class="page-title">
-                            <h1>Manage Role</h1>
+                            <h1>Manage Department</h1>
                         </div>
                     </div>
                 </div>
@@ -39,9 +39,69 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header">
-                            <strong>Title</strong>
+                            <strong>Edit Department</strong>
                         </div>
+                        <div class="card-body card-block">
+                            <form th:action="@{/department/confirmEditDepartment}" th:object="${confirmEditDepartment}" method="PUT" enctype="multipart/form-data" class="form-horizontal" id="create-org-frm">
+                                <div th:replace="fragments/messageAlert :: alert(type=${type}, message=${message})"></div>
+                                <div class="row form-group">
 
+
+                                    <div class="col-lg-6">
+                                        <div class="form-group" >
+                                            <label><strong>Department Name Name</strong> <span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" id="departmentName" name="departmentName"  disabled="disabled"
+                                                   th:field="*{departmentName}" required="required" >
+                                            <span class="form-error"
+                                                  th:if="${#fields.hasErrors('departmentName')}"
+                                                  th:errors="*{departmentName}">...</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row form-group">
+
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label><strong>Number Of Staff</strong> <span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" id="code"   disabled="disabled"
+                                                   name="code" th:field="*{numberOfStaff}" required="required" >
+                                            <span class="form-error"
+                                                  th:if="${#fields.hasErrors('numberOfStaff')}"
+                                                  th:errors="*{numberOfStaff}">...</span>
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+
+                                <div class="row form-group">
+
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label><strong>Description</strong> <span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" id="description" disabled="disabled"
+                                                   name="description" th:field="*{description}" required="required" >
+                                            <span class="form-error"
+                                                  th:if="${#fields.hasErrors('description')}"
+                                                  th:errors="*{description}">...</span>
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+                                <div class="btn pull-right" >
+                                    <a  th:href="@{'/backtocreate'}" class="btn btn-secondary btn-sm"></i> Cancel</a>
+                                    <button type="submit" class="btn  btn-primary btn-sm">
+                                        Save
+                                    </button>
+
+                                </div>
+
+                            </form>
+                        </div>
 
                     </div>
 
@@ -53,3 +113,4 @@
 </div>
 </body>
 </html>
+

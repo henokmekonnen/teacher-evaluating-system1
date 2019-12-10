@@ -2,12 +2,10 @@ package com.ddu.tes.controller.user;
 
 import com.ddu.tes.controller.model.user.CreateUserRequestModel;
 import com.ddu.tes.controller.model.user.CreateUserResponseModel;
+import com.ddu.tes.controller.model.user.EditUserRequestModel;
 import com.ddu.tes.service.department.DepartmentService;
 import com.ddu.tes.service.department.GetAllDepartmentListResult;
-import com.ddu.tes.service.user.GetAllUserListResult;
-import com.ddu.tes.service.user.GetUserByEmailResult;
-import com.ddu.tes.service.user.GetUserByPhoneResult;
-import com.ddu.tes.service.user.UserService;
+import com.ddu.tes.service.user.*;
 import com.ddu.tes.utils.Constant;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
@@ -16,10 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
@@ -219,6 +214,68 @@ public class UserController {
             model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
             model.addAttribute(Constant.MESSAGE, ex.getMessage());
             return "user/create-user";
+        }
+
+    }
+    @RequestMapping(value = "/userList", method = RequestMethod.GET)
+    public String userList(Model model, HttpSession session, RedirectAttributes redirectAttributes) {
+        try {
+
+            GetAllUserListResult userListResult = userService.getAllUsers();
+            GetAllDepartmentListResult departmentListResult = departmentService.getAllDepartments();
+            model.addAttribute("departmentListResult", departmentListResult.getDepartmentList());
+            model.addAttribute("userList", userListResult.getUserList());
+            return "user/user-list";
+
+        } catch (Exception ex) {
+            logger.error("error while creating usr" + ex, ex.getCause());
+            model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
+            model.addAttribute(Constant.MESSAGE, ex.getMessage());
+            return "user/user-list";
+        }
+
+    }
+
+    @RequestMapping(value = "/editUser/{usrUuid}", method = RequestMethod.GET)
+    public String editDepartmenent(Model model, @PathVariable(name = "usrUuid") String usrName) {
+        GetAllDepartmentListResult departmentListResult = departmentService.getAllDepartments();
+        GetAllUserListResult userListResult = userService.getAllUsers();
+        model.addAttribute("userList", userListResult.getUserList());
+        model.addAttribute("departmentListResult", departmentListResult.getDepartmentList());
+
+        try {
+            if(usrName == null){
+                model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
+                model.addAttribute(Constant.MESSAGE, "Please provide id");
+                return "user/user-list";
+            }
+
+            GetUserByNameResult result =  userService.getUserByName(usrName);
+
+            if (result.getStatusCode() != 0) {
+                model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
+                model.addAttribute(Constant.MESSAGE, result.getStatusMessage());
+                return "user/user-list";
+            }
+            EditUserRequestModel editUserRequestModel = new EditUserRequestModel();
+
+            model.addAttribute("editUserRequestModel", editUserRequestModel);
+
+            editUserRequestModel.setFirstName(result.getUsrFirstName());
+            editUserRequestModel.setLastName(result.getUsrLastName());
+            editUserRequestModel.setGrandFatherName(result.getUsrGrandFatherName());
+            editUserRequestModel.setDateOfBirth(result.getUsrDateOfBirth());
+            editUserRequestModel.setEmail(result.getUsrEmail());
+            editUserRequestModel.setPhoneNumber(result.getUsrPhoneNumber());
+            editUserRequestModel.setGender(result.getUsrGender());
+
+            return "user/edit-user";
+
+        } catch (Exception ex) {
+            logger.error("error while creating dept" + ex, ex.getCause());
+            model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
+            model.addAttribute(Constant.MESSAGE, ex.getMessage());
+            return "user/user-list";
         }
 
     }

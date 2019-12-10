@@ -1,7 +1,10 @@
 package com.ddu.tes.service.department;
 
+
 import com.ddu.tes.controller.model.department.CreateDepartmentRequestModel;
 import com.ddu.tes.controller.model.department.CreateDepartmentResponseModel;
+import com.ddu.tes.controller.model.department.EditDepartmentRequestModel;
+import com.ddu.tes.controller.model.department.EditDepartmentResponseModel;
 import com.ddu.tes.data.modle.Department;
 import com.ddu.tes.data.repository.SqlRepository;
 import com.ddu.tes.utils.Constant;
@@ -129,7 +132,35 @@ public class DepartmentServiceImpl implements  DepartmentService{
              return  responseModel;
          }
     }
+    @Override
+    public EditDepartmentResponseModel editDepartment(EditDepartmentRequestModel confirmEditDepartment) {
+        EditDepartmentResponseModel responseModel = new EditDepartmentResponseModel();
 
+        try {
+            Department newDepartment = new Department();
+
+            newDepartment.setDepartmentName(confirmEditDepartment.getDepartmentName());
+            newDepartment.setNumberOfStaff(confirmEditDepartment.getNumberOfStaff());
+            newDepartment.setDescription(confirmEditDepartment.getDescription());
+            newDepartment.setCreatedBy(Constant.SYSTEM);
+
+            newDepartment =(Department) sqlRepository.insert(newDepartment);
+
+            responseModel.setStatusCode(0);
+            responseModel.setStatusMessage("Successfully Updated department");
+            responseModel.setDepartmentName(newDepartment.getDepartmentName());
+            responseModel.setDescription(newDepartment.getDescription());
+            responseModel.setNumberOfStaff(newDepartment.getNumberOfStaff());
+
+            return  responseModel;
+
+        }catch (Exception ex) {
+            logger.error(ex);
+            responseModel.setStatusCode(1000);
+            responseModel.setStatusMessage(ex.getMessage());
+            return  responseModel;
+        }
+    }
     @Override
     public GetAllDepartmentListResult getAllDepartments() {
 
@@ -152,7 +183,8 @@ public class DepartmentServiceImpl implements  DepartmentService{
                 department  = (Department)department;
                 departmentMap.put("dptId",((Department) department).getDepartmentId());
                 departmentMap.put("dptName",((Department) department).getDepartmentName());
-
+                departmentMap.put("dptNoStaff",((Department) department).getNumberOfStaff());
+                departmentMap.put("dptDescription",((Department) department).getDescription());
                 selectedDepartmentList.add(departmentMap);
             }
             responseModel.setStatusCode(0);

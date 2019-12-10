@@ -94,7 +94,7 @@ public class SqlRepositoryImpl implements SqlRepository, InitializingBean {
     }
 
     @Override
-    public long update(Object object) {
+    public Object update(Object object) {
 
         if(object == null) throw new RuntimeException(Constant.INVALID_OBJECT_PROVIDED_FOR_SQL_DATA_CONTEXT_UPDATE_OPERATION);
 

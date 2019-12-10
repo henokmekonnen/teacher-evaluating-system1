@@ -3,6 +3,7 @@ package com.ddu.tes.controller.department;
 import com.ddu.tes.controller.model.department.CreateDepartmentRequestModel;
 import com.ddu.tes.controller.model.department.CreateDepartmentResponseModel;
 import com.ddu.tes.controller.model.department.EditDepartmentRequestModel;
+import com.ddu.tes.controller.model.department.EditDepartmentResponseModel;
 import com.ddu.tes.service.department.DepartmentService;
 import com.ddu.tes.service.department.GetAllDepartmentListResult;
 import com.ddu.tes.service.department.GetDepartmentByNameResult;
@@ -176,10 +177,8 @@ public class DepartmentController {
         GetAllDepartmentListResult departmentListResult = departmentService.getAllDepartments();
         model.addAttribute("departmentList", departmentListResult.getDepartmentList());
 
-
         try {
                 if(dptName == null){
-
                     model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
                     model.addAttribute(Constant.MESSAGE, "Please provide id");
                     return "department/department-list";
@@ -187,19 +186,21 @@ public class DepartmentController {
 
                GetDepartmentByNameResult result =  departmentService.getDepartmentByName(dptName);
 
-                if (result.getStatusCode() == 0) {
+                if (result.getStatusCode() != 0) {
                     model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
                     model.addAttribute(Constant.MESSAGE, result.getStatusMessage());
                     return "department/department-list";
                 }
-
             EditDepartmentRequestModel editDepartmentRequestModel = new EditDepartmentRequestModel();
+
+            model.addAttribute("editDepartmentRequestModel", editDepartmentRequestModel);
+
                 editDepartmentRequestModel.setDepartmentName(result.getDptName());
                 editDepartmentRequestModel.setNumberOfStaff(result.getNumberOfStaff());
                 editDepartmentRequestModel.setDescription(result.getDescription());
                 editDepartmentRequestModel.setDptId(result.getDptId());
 
-                model.addAttribute("editDepartmentRequestModel", editDepartmentRequestModel);
+
 
             return "department/edit-department";
 
@@ -212,4 +213,89 @@ public class DepartmentController {
 
     }
 
+    @RequestMapping(value = "/confirmEditDepartment", method = RequestMethod.PUT)
+    public String confirmEditDepartment(@Valid EditDepartmentRequestModel confirmEditDepartment, BindingResult result, Model model) {
+
+        try {
+
+            model.addAttribute("confirmEditDepartment",confirmEditDepartment);
+
+            if (StringUtils.isBlank(confirmEditDepartment.getDepartmentName())){
+                result.rejectValue("departmentName", "error.departmentName", "Please provide department name.");
+                model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
+                model.addAttribute(Constant.MESSAGE, "Please provide department name.");
+                return "department/edit-department";
+
+            }
+
+            GetDepartmentByNameResult result1 = departmentService.getDepartmentByName(confirmEditDepartment.getDepartmentName());
+
+            if(result1.getStatusCode() == 0){
+
+                result.rejectValue("departmentName", "error.departmentName", "Department Already exists.");
+                model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
+                model.addAttribute(Constant.MESSAGE, "Department Already exists.");
+                return "department/edit-department";
+            }
+
+            if (StringUtils.isBlank(confirmEditDepartment.getDescription())){
+                result.rejectValue("description", "error.description", "Please provide valid description.");
+                model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
+                model.addAttribute(Constant.MESSAGE, "Please provide description.");
+                return "department/edit-department";
+
+            }
+
+            if (confirmEditDepartment.getNumberOfStaff() <= 0){
+                result.rejectValue("noOfStaff", "error.noOfStaff", "Please provide valid number of depertment users.");
+                model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
+                model.addAttribute(Constant.MESSAGE, "Please provide valid number of depertment users.");
+                return "department/edit-department";
+
+            }
+
+            return "department/edit-department-confirm";
+
+        }catch (Exception ex){
+            logger.error("error while creating dept"+ ex, ex.getCause());
+            model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
+            model.addAttribute(Constant.MESSAGE, ex.getMessage());
+            return "department/edit-department";
+        }
+
+    }
+
+    @RequestMapping(value = "/editDepartment", method = RequestMethod.PUT)
+    public String editDepartment(@ModelAttribute EditDepartmentRequestModel confirmEditDepartment, BindingResult result, Model model) {
+
+        try {
+
+            model.addAttribute("EditDepartmentRequestModel",confirmEditDepartment);
+
+            EditDepartmentResponseModel responseModel = departmentService.editDepartment(confirmEditDepartment);
+
+            if(responseModel.getStatusCode() != 0){
+                model.addAttribute("EditDepartmentRequestModel",confirmEditDepartment);
+                model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
+                model.addAttribute(Constant.MESSAGE, responseModel.getStatusMessage());
+                return "department/edit-department";
+            }
+
+            confirmEditDepartment = new EditDepartmentRequestModel();
+
+            model.addAttribute("responseModel", responseModel);
+            model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_SUCCESS);
+            model.addAttribute(Constant.MESSAGE, responseModel.getStatusMessage());
+            return "department/edit-department-success";
+
+        }catch (Exception ex){
+            logger.error("error while creating dept"+ ex, ex.getCause());
+            model.addAttribute("EditDepartmentRequestModel",confirmEditDepartment);
+            model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
+            model.addAttribute(Constant.MESSAGE, ex.getMessage());
+            return "department/edit-department";
+        }
+
+    }
 }
+

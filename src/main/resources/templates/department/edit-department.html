@@ -42,7 +42,7 @@
                             <strong>Edit Department</strong>
                         </div>
                         <div class="card-body card-block">
-                            <form th:action="@{/department/confirmEditDepartment}" th:object="${editDepartmentRequestModel}" method="post" enctype="multipart/form-data" class="form-horizontal" id="create-org-frm">
+                            <form th:action="@{/department/confirmEditDepartment}" th:object="${editDepartmentRequestModel}" method="GET" enctype="multipart/form-data" class="form-horizontal" id="create-org-frm">
                                 <div th:replace="fragments/messageAlert :: alert(type=${type}, message=${message})"></div>
                                 <div class="row form-group">
 

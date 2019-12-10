@@ -42,7 +42,7 @@ public interface SqlRepository {
      * @param object
      * @return returns the id of an object which is updated.
      */
-    public long update(Object object);
+    public Object update(Object object);
 
     /**
      * Delete an existing domain object

@@ -2,16 +2,10 @@ package com.ddu.tes.controller.model.department;
 
 import com.ddu.tes.controller.model.AbstractResponseModel;
 
-/**
- * @author GHabtamu
- */
-public class EditDepartmentRequestModel  extends AbstractResponseModel {
-
+public class EditDepartmentResponseModel extends AbstractResponseModel {
     private String  departmentName;
     private String description;
     private Integer numberOfStaff;
-    private Integer dptId;
-
 
     public String getDepartmentName() {
         return departmentName;
@@ -35,13 +29,5 @@ public class EditDepartmentRequestModel  extends AbstractResponseModel {
 
     public void setNumberOfStaff(Integer numberOfStaff) {
         this.numberOfStaff = numberOfStaff;
-    }
-
-    public Integer getDptId() {
-        return dptId;
-    }
-
-    public void setDptId(Integer dptId) {
-        this.dptId = dptId;
     }
 }

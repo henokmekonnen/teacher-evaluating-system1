@@ -2,6 +2,7 @@ package com.ddu.tes.service.user;
 
 import com.ddu.tes.controller.model.user.CreateUserRequestModel;
 import com.ddu.tes.controller.model.user.CreateUserResponseModel;
+import com.ddu.tes.data.modle.Department;
 import com.ddu.tes.data.modle.User;
 import com.ddu.tes.data.repository.SqlRepository;
 import com.ddu.tes.utils.Constant;
@@ -63,7 +64,45 @@ public class UserServiceImpl implements UserService {
             return result;
         }
     }
-@Override
+
+    @Override
+    public GetUserByNameResult getUserByName(String uuid) {
+        GetUserByNameResult username = new GetUserByNameResult();
+        try {
+
+            if ((username) != null) {
+                username.setStatusCode(1000);
+                username.setStatusMessage("user already exists");
+                username.setUserNameExists(Boolean.FALSE);
+                return username;
+            }
+            User filter = new User();
+            filter.setUuid(uuid);
+
+            User useru = (User) sqlRepository.findOne(filter);
+            if (useru != null) {
+                username.setStatusCode(1000);
+                username.setStatusMessage("user already exists");
+                username.setUserNameExists(Boolean.FALSE);
+                return username;
+            }
+
+            username.setStatusCode(0);
+            username.setStatusMessage("Found");
+            username.setUserNameExists(Boolean.TRUE);
+            return username;
+        } catch (Exception ex) {
+            logger.error(ex);
+            username.setStatusCode(1000);
+            username.setStatusMessage(ex.getMessage());
+            username.setUserNameExists(Boolean.FALSE);
+            return username;
+        }
+
+    }
+
+
+    @Override
 public GetUserByPhoneResult getUserByPhone(String phoneNumber) {
     GetUserByPhoneResult phoneuser = new GetUserByPhoneResult();
 
@@ -149,7 +188,7 @@ public GetUserByPhoneResult getUserByPhone(String phoneNumber) {
         try {
 
             List<Object> userList = sqlRepository.findAll(User.class);
-
+            List<Object> depList=sqlRepository.findAll(Department.class);
             if (userList == null) {
                 responseModel.setStatusCode(1000);
                 responseModel.setStatusMessage("No user found");
@@ -163,8 +202,15 @@ public GetUserByPhoneResult getUserByPhone(String phoneNumber) {
                 Map<String, Object> userMap = new HashMap<>();
                 user = (User) user;
                 userMap.put("usrId", ((User) user).getUserId());
+                userMap.put("usrUuid", ((User) user).getUuid());
+                userMap.put("usrFirstName", ((User) user).getFirstName());
+                userMap.put("usrLastName", ((User) user).getLastName());
+                userMap.put("usrGrandFatherName", ((User) user).getGrandFatherName());
+                userMap.put("usrDOB", ((User) user).getDateOfBirth());
+                userMap.put("usrPhoneNumber", ((User) user).getPhoneNumber());
                 userMap.put("usrEmail", ((User) user).getEmail());
-
+                userMap.put("usrGender", ((User) user).getGender());
+                userMap.put("usrDeaprtmentId", ((User) user).getDepartmentId());
                 selectedUserList.add(userMap);
             }
             responseModel.setStatusCode(0);
