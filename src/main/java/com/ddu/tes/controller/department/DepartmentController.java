@@ -171,7 +171,7 @@ public class DepartmentController {
     }
 
 
-    @RequestMapping(value = "/editDepartmenent/{dptName}", method = RequestMethod.GET)
+    @RequestMapping(value = "/editDepartmenent/{dptName}", method = RequestMethod.POST)
     public String editDepartmenent(Model model, @PathVariable(name = "dptName") String dptName) {
 
         GetAllDepartmentListResult departmentListResult = departmentService.getAllDepartments();
@@ -213,7 +213,7 @@ public class DepartmentController {
 
     }
 
-    @RequestMapping(value = "/confirmEditDepartment", method = RequestMethod.PUT)
+    @RequestMapping(value = "/confirmEditDepartment", method = RequestMethod.POST)
     public String confirmEditDepartment(@Valid EditDepartmentRequestModel confirmEditDepartment, BindingResult result, Model model) {
 
         try {
@@ -265,7 +265,7 @@ public class DepartmentController {
 
     }
 
-    @RequestMapping(value = "/editDepartment", method = RequestMethod.PUT)
+    @RequestMapping(value = "/editDepartment", method = RequestMethod.GET)
     public String editDepartment(@ModelAttribute EditDepartmentRequestModel confirmEditDepartment, BindingResult result, Model model) {
 
         try {
