@@ -211,6 +211,14 @@ public GetUserByPhoneResult getUserByPhone(String phoneNumber) {
                 userMap.put("usrEmail", ((User) user).getEmail());
                 userMap.put("usrGender", ((User) user).getGender());
                 userMap.put("usrDeaprtmentId", ((User) user).getDepartmentId());
+                Department filterDepartment = new Department();
+                filterDepartment.setDepartmentId(((User) user).getDepartmentId());
+                filterDepartment = (Department) sqlRepository.findOne(filterDepartment);
+
+                if (filterDepartment != null){
+                    userMap.put("deptName", filterDepartment.getNumberOfStaff());
+                }
+
                 selectedUserList.add(userMap);
             }
             responseModel.setStatusCode(0);
