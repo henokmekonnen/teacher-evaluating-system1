@@ -100,9 +100,9 @@ public class DepartmentController {
 
             }
 
-            GetDepartmentByNameResult result1 = departmentService.getDepartmentByName(confirmCreateDepartment.getDepartmentName());
+            boolean departmentExist = departmentService.departmentExist(confirmCreateDepartment.getDepartmentName());
 
-            if(result1.getStatusCode() != 0){
+            if(!departmentExist){
 
                 result.rejectValue("departmentName", "error.departmentName", "Department Already exists.");
                 model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
@@ -265,12 +265,22 @@ public class DepartmentController {
 
     }
 
+<<<<<<< HEAD
     @RequestMapping(value = "/editDepartment", method = RequestMethod.GET)
+=======
+    @RequestMapping(value = "/updateDepartment", method = RequestMethod.POST)
+>>>>>>> 6d05c428726d2f64672fbd0a0de1e5280f2900d9
     public String editDepartment(@ModelAttribute EditDepartmentRequestModel confirmEditDepartment, BindingResult result, Model model) {
 
         try {
 
             model.addAttribute("EditDepartmentRequestModel",confirmEditDepartment);
+
+            if(confirmEditDepartment.getDptId() == null){
+                model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
+                model.addAttribute(Constant.MESSAGE, " Invalid department id");
+                return "department/edit-department";
+            }
 
             EditDepartmentResponseModel responseModel = departmentService.editDepartment(confirmEditDepartment);
 

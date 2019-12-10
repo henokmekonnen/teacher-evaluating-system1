@@ -42,7 +42,11 @@
                             <strong>Edit Department</strong>
                         </div>
                         <div class="card-body card-block">
+<<<<<<< HEAD
                             <form th:action="@{/department/confirmEditDepartment}" th:object="${confirmEditDepartment}" method="POST" enctype="multipart/form-data" class="form-horizontal" id="create-org-frm">
+=======
+                            <form th:action="@{/department/updateDepartment}" th:object="${confirmEditDepartment}" method="POST" enctype="multipart/form-data" class="form-horizontal" id="create-org-frm">
+>>>>>>> 6d05c428726d2f64672fbd0a0de1e5280f2900d9
                                 <div th:replace="fragments/messageAlert :: alert(type=${type}, message=${message})"></div>
                                 <div class="row form-group">
 

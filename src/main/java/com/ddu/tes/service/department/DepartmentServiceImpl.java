@@ -137,21 +137,30 @@ public class DepartmentServiceImpl implements  DepartmentService{
         EditDepartmentResponseModel responseModel = new EditDepartmentResponseModel();
 
         try {
-            Department newDepartment = new Department();
+            Department filterdept = new Department();
 
-            newDepartment.setDepartmentName(confirmEditDepartment.getDepartmentName());
-            newDepartment.setNumberOfStaff(confirmEditDepartment.getNumberOfStaff());
-            newDepartment.setDescription(confirmEditDepartment.getDescription());
-            newDepartment.setCreatedBy(Constant.SYSTEM);
+            filterdept.setDepartmentId(confirmEditDepartment.getDptId());
 
-            newDepartment =(Department) sqlRepository.insert(newDepartment);
+            filterdept = (Department) sqlRepository.findOne(filterdept);
+
+            if(filterdept == null){
+
+                responseModel.setStatusCode(1000);
+                responseModel.setStatusMessage("Department not found");
+                return responseModel;
+            }
+
+            filterdept.setDepartmentName(confirmEditDepartment.getDepartmentName());
+            filterdept.setNumberOfStaff(confirmEditDepartment.getNumberOfStaff());
+            filterdept.setDescription(confirmEditDepartment.getDescription());
+
+            sqlRepository.update(filterdept);
 
             responseModel.setStatusCode(0);
             responseModel.setStatusMessage("Successfully Updated department");
-            responseModel.setDepartmentName(newDepartment.getDepartmentName());
-            responseModel.setDescription(newDepartment.getDescription());
-            responseModel.setNumberOfStaff(newDepartment.getNumberOfStaff());
-
+            responseModel.setDepartmentName(filterdept.getDepartmentName());
+            responseModel.setDescription(filterdept.getDescription());
+            responseModel.setNumberOfStaff(filterdept.getNumberOfStaff());
             return  responseModel;
 
         }catch (Exception ex) {
