@@ -1,6 +1,9 @@
 package com.ddu.tes.controller.model.user;
 
-public class EditUserRequestModel {
+import com.ddu.tes.controller.model.AbstractResponseModel;
+
+public class EditUserRequestModel extends AbstractResponseModel {
+    private Integer userId;
     private String firstName;
     private String lastName;
     private String grandFatherName;
@@ -101,5 +104,13 @@ public class EditUserRequestModel {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 }

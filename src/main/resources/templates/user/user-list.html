@@ -72,9 +72,10 @@
                                         <td th:text="${usr.usrPhoneNumber}"></td>
                                         <td th:text="${usr.usrEmail}"></td>
                                         <td th:text="${usr.usrGender}"></td>
+                                        <td th:text="${usr.deptName}"></td>
 
                                         <td>
-                                            <a  class="fa fa-edit btn btn-primary btn-sm "  style="margin-bottom: 20px" th:href="@{'/user/editUser/'+ ${usr.usrId}}">Edit</a>
+                                            <a  class="fa fa-edit btn btn-primary btn-sm "  style="margin-bottom: 20px" th:href="@{'/user/editUsers/'+ ${usr.usrEmail}}">Edit</a>
 
                                         </td>
                                     </tr>

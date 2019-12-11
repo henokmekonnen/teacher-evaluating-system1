@@ -39,10 +39,10 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header">
-                            <strong>Update User Success </strong>
+                            <strong>Edit User</strong>
                         </div>
                         <div class="card-body card-block">
-                            <form th:action="@{/user/editUser}" th:object="${responseModel}" method="PUT" enctype="multipart/form-data" class="form-horizontal" id="create-org-frm">
+                            <form th:action="@{/user/updateUser}" th:object="${confirmEditUser}" method="POST" enctype="multipart/form-data" class="form-horizontal" id="create-org-frm">
                                 <div th:replace="fragments/messageAlert :: alert(type=${type}, message=${message})"></div>
                                 <div class="row form-group">
 
@@ -130,6 +130,7 @@
 
 
                                 </div>
+
                                 <div class="row form-group">
 
                                     <div class="col-lg-4">
@@ -160,7 +161,10 @@
 
 
                                 <div class="btn pull-right" >
-                                    <a  th:href="@{'/user/userList'}" class="btn btn-secondary btn-sm"></i> Cancel</a>
+                                <a  th:href="@{'/user/confirmEditUser'}" class="btn btn-secondary btn-sm"></i> Cancel</a>
+                                    <button type="submit" class="btn  btn-primary btn-sm">
+                                        Update
+                                    </button>
 
                                 </div>
 

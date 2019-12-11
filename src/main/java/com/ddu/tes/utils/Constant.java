@@ -16,7 +16,7 @@ public class Constant {
     public static final String INVALID_OBJECT_PROVIDED_FOR_SQL_DATA_CONTEXT_BULK_INSERT_OPERATION = "invalid object provided for sql-DataContext , bulkInsert operation ";
     public static final String DEADLOCK_EXCEPTION_CAUGHT_EXECUTING_STATEMENT = "Deadlock exception caught executing statement: ";
     public static final String ERROR_SQLDAOMAPPER = "error.sqldaomapper";
-
+    public static final String Back_To_Create="createDepartment";
 
     // for errror pages
     public static final String ALERT_TYPE_SUCCESS = "success";

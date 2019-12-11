@@ -60,7 +60,7 @@ public class DepartmentController {
             return "department/create-department";
 
         }catch (Exception ex){
-           logger.error("error while creating dept"+ ex, ex.getCause());
+            logger.error("error while creating dept"+ ex, ex.getCause());
             model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
             model.addAttribute(Constant.MESSAGE, ex.getMessage());
             return "department/create-department";
@@ -70,13 +70,15 @@ public class DepartmentController {
 
     @RequestMapping(value = "/backtocreate", method = RequestMethod.GET)
     public String back(@ModelAttribute CreateDepartmentRequestModel confirmCreateDepartment, Model model, BindingResult result, HttpSession session, RedirectAttributes redirectAttributes) {
+        confirmCreateDepartment = (CreateDepartmentRequestModel) session.getAttribute(Constant.Back_To_Create);
+
         try {
 
-            model.addAttribute("createDepartmentRequestModel",confirmCreateDepartment);
+            model.addAttribute(Constant.Back_To_Create,confirmCreateDepartment);
             return "department/create-department";
 
         }catch (Exception ex){
-           logger.error("error while creating dept"+ ex, ex.getCause());
+            logger.error("error while creating dept"+ ex, ex.getCause());
             model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
             model.addAttribute(Constant.MESSAGE, ex.getMessage());
             return "department/create-department";
@@ -171,34 +173,34 @@ public class DepartmentController {
     }
 
 
-    @RequestMapping(value = "/editDepartmenent/{dptName}", method = RequestMethod.POST)
+    @RequestMapping(value = "/editDepartmenent/{dptName}", method = RequestMethod.GET)
     public String editDepartmenent(Model model, @PathVariable(name = "dptName") String dptName) {
 
         GetAllDepartmentListResult departmentListResult = departmentService.getAllDepartments();
         model.addAttribute("departmentList", departmentListResult.getDepartmentList());
 
         try {
-                if(dptName == null){
-                    model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
-                    model.addAttribute(Constant.MESSAGE, "Please provide id");
-                    return "department/department-list";
-                }
+            if(dptName == null){
+                model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
+                model.addAttribute(Constant.MESSAGE, "Please provide id");
+                return "department/department-list";
+            }
 
-               GetDepartmentByNameResult result =  departmentService.getDepartmentByName(dptName);
+            GetDepartmentByNameResult result =  departmentService.getDepartmentByName(dptName);
 
-                if (result.getStatusCode() != 0) {
-                    model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
-                    model.addAttribute(Constant.MESSAGE, result.getStatusMessage());
-                    return "department/department-list";
-                }
+            if (result.getStatusCode() != 0) {
+                model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
+                model.addAttribute(Constant.MESSAGE, result.getStatusMessage());
+                return "department/department-list";
+            }
             EditDepartmentRequestModel editDepartmentRequestModel = new EditDepartmentRequestModel();
 
             model.addAttribute("editDepartmentRequestModel", editDepartmentRequestModel);
 
-                editDepartmentRequestModel.setDepartmentName(result.getDptName());
-                editDepartmentRequestModel.setNumberOfStaff(result.getNumberOfStaff());
-                editDepartmentRequestModel.setDescription(result.getDescription());
-                editDepartmentRequestModel.setDptId(result.getDptId());
+            editDepartmentRequestModel.setDepartmentName(result.getDptName());
+            editDepartmentRequestModel.setNumberOfStaff(result.getNumberOfStaff());
+            editDepartmentRequestModel.setDescription(result.getDescription());
+            editDepartmentRequestModel.setDptId(result.getDptId());
 
 
 
@@ -230,8 +232,7 @@ public class DepartmentController {
 
             GetDepartmentByNameResult result1 = departmentService.getDepartmentByName(confirmEditDepartment.getDepartmentName());
 
-            if(result1.getStatusCode() == 0){
-
+            if (result1.getStatusCode() != 0) {
                 result.rejectValue("departmentName", "error.departmentName", "Department Already exists.");
                 model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
                 model.addAttribute(Constant.MESSAGE, "Department Already exists.");
@@ -265,11 +266,7 @@ public class DepartmentController {
 
     }
 
-<<<<<<< HEAD
-    @RequestMapping(value = "/editDepartment", method = RequestMethod.GET)
-=======
     @RequestMapping(value = "/updateDepartment", method = RequestMethod.POST)
->>>>>>> 6d05c428726d2f64672fbd0a0de1e5280f2900d9
     public String editDepartment(@ModelAttribute EditDepartmentRequestModel confirmEditDepartment, BindingResult result, Model model) {
 
         try {
@@ -308,4 +305,3 @@ public class DepartmentController {
 
     }
 }
-

@@ -12,7 +12,7 @@ import com.ddu.tes.data.modle.Department;
 public interface DepartmentService {
      public GetDepartmentByNameResult getDepartmentByName (final String departmentName);
      public CreateDepartmentResponseModel createDepartment(CreateDepartmentRequestModel confirmCreateDepartment);
-     public EditDepartmentResponseModel editDepartment(EditDepartmentRequestModel confirmeditDepartment);
+     public EditDepartmentResponseModel editDepartment(EditDepartmentRequestModel confirmEditDepartment);
 
      public GetAllDepartmentListResult getAllDepartments();
      public boolean departmentExist (String name );

@@ -3,6 +3,10 @@ package com.ddu.tes.controller.user;
 import com.ddu.tes.controller.model.user.CreateUserRequestModel;
 import com.ddu.tes.controller.model.user.CreateUserResponseModel;
 import com.ddu.tes.controller.model.user.EditUserRequestModel;
+import com.ddu.tes.controller.model.user.EditUserResponseModel;
+import com.ddu.tes.data.modle.Department;
+import com.ddu.tes.data.modle.User;
+import com.ddu.tes.data.repository.SqlRepository;
 import com.ddu.tes.service.department.DepartmentService;
 import com.ddu.tes.service.department.GetAllDepartmentListResult;
 import com.ddu.tes.service.user.*;
@@ -28,6 +32,8 @@ import java.util.Map;
 @SessionAttributes({"createUserRequestModel"})
 public class UserController {
     private static final Log logger = LogFactory.getLog(UserController.class);
+ @Autowired
+    SqlRepository sqlRepository;
 
     @Autowired
     UserService userService;
@@ -105,9 +111,9 @@ public class UserController {
                 return "user/create-user";
 
             }
-            GetUserByEmailResult result1 = userService.getUserByEmail(confirmCreateUser.getEmail());
+            boolean useremailExist = userService.useremailExist(confirmCreateUser.getEmail());
 
-            if(result1.getStatusCode() != 0){
+            if(!useremailExist){
 
                 result.rejectValue("email", "error.email", "user eamil Already exists change email.");
                 model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
@@ -236,38 +242,39 @@ public class UserController {
 
     }
 
-    @RequestMapping(value = "/editUser/{usrUuid}", method = RequestMethod.GET)
-    public String editDepartmenent(Model model, @PathVariable(name = "usrUuid") String usrName) {
+    @RequestMapping(value = "/editUsers/{usrEmail}", method = RequestMethod.GET)
+    public String editUsers(Model model, @PathVariable(name = "usrEmail") String userEmail) {
         GetAllDepartmentListResult departmentListResult = departmentService.getAllDepartments();
         GetAllUserListResult userListResult = userService.getAllUsers();
         model.addAttribute("userList", userListResult.getUserList());
         model.addAttribute("departmentListResult", departmentListResult.getDepartmentList());
 
         try {
-            if(usrName == null){
+            if(StringUtils.isBlank(userEmail)){
                 model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
-                model.addAttribute(Constant.MESSAGE, "Please provide id");
+                model.addAttribute(Constant.MESSAGE, "Please provide email");
                 return "user/user-list";
             }
 
-            GetUserByNameResult result =  userService.getUserByName(usrName);
+            GetUserByEmailResult result =  userService.getUserByEmail(userEmail);
 
             if (result.getStatusCode() != 0) {
                 model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
-                model.addAttribute(Constant.MESSAGE, result.getStatusMessage());
+                model.addAttribute(Constant.MESSAGE, "user Already exists.");
                 return "user/user-list";
             }
             EditUserRequestModel editUserRequestModel = new EditUserRequestModel();
 
             model.addAttribute("editUserRequestModel", editUserRequestModel);
-
-            editUserRequestModel.setFirstName(result.getUsrFirstName());
-            editUserRequestModel.setLastName(result.getUsrLastName());
-            editUserRequestModel.setGrandFatherName(result.getUsrGrandFatherName());
-            editUserRequestModel.setDateOfBirth(result.getUsrDateOfBirth());
-            editUserRequestModel.setEmail(result.getUsrEmail());
-            editUserRequestModel.setPhoneNumber(result.getUsrPhoneNumber());
-            editUserRequestModel.setGender(result.getUsrGender());
+            editUserRequestModel.setUserId(result.getUserId());
+            editUserRequestModel.setFirstName(result.getFirstName());
+            editUserRequestModel.setLastName(result.getLastName());
+            editUserRequestModel.setGrandFatherName(result.getGrandFatherName());
+            editUserRequestModel.setDateOfBirth(result.getDateOfBirth());
+            editUserRequestModel.setEmail(result.getEmail());
+            editUserRequestModel.setPhoneNumber(result.getPhoneNumber());
+            editUserRequestModel.setGender(result.getGender());
+            editUserRequestModel.setDepartmentId(result.getDepartmentId());
 
             return "user/edit-user";
 
@@ -279,8 +286,155 @@ public class UserController {
         }
 
     }
+    @RequestMapping(value = "/confirmEditUser", method = RequestMethod.POST)
+    public String confirmEditUser(@Valid EditUserRequestModel confirmEditUser, BindingResult result, Model model) {
+
+
+        try {
+    GetAllDepartmentListResult departmentListResult = departmentService.getAllDepartments();
+    GetAllUserListResult userListResult = userService.getAllUsers();
+    model.addAttribute("confirmEditUser", confirmEditUser);
+    model.addAttribute("departmentListResult", departmentListResult.getDepartmentList());
+    if (StringUtils.isBlank(confirmEditUser.getFirstName())) {
+        result.rejectValue("FirstName", "error.FirstName", "Please provide first name.");
+        model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
+        model.addAttribute(Constant.MESSAGE, "Please provide user name.");
+        return "user/edit-user";
+
+    }
+
+    if (StringUtils.isBlank(confirmEditUser.getEmail())) {
+        result.rejectValue("email", "error.email", "Please provide email");
+        model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
+        model.addAttribute(Constant.MESSAGE, "Please provide email.");
+        return "user/edit-user";
+
+    }
+    if (StringUtils.isBlank(confirmEditUser.getPhoneNumber())) {
+        result.rejectValue("phonenumber", "error.phoneNumber", "Please provide phonenumber");
+        model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
+        model.addAttribute(Constant.MESSAGE, "Please provide phonenumber.");
+        return "user/edit-user";
+
+    }
+    GetUserByEmailResult result1 =userService.getUserByEmail(confirmEditUser.getEmail());
+
+    if(result1.getStatusCode() != 0) {
+
+        result.rejectValue("email", "error.email", "user eamil Already exists change email.");
+        model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
+        model.addAttribute(Constant.MESSAGE, "user Already exists.");
+        return "user/edit-user";
+    }
+//    GetUserByPhoneResult phonevalue = userService.getUserByPhone(confirmEditUser.getPhoneNumber());
+//    if (phonevalue.getStatusCode() != 0) {
+//        result.rejectValue("phoneNumber", "error.phoneNumber", "user phone number Already exists change phone Number.");
+//        model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
+//        model.addAttribute(Constant.MESSAGE, "user Already exists.");
+//        return "user/edit-user";
+//    }
+
+    if (StringUtils.isBlank(confirmEditUser.getLastName())) {
+        result.rejectValue("lastname", "error.lastname", "Please provide lastname.");
+        model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
+        model.addAttribute(Constant.MESSAGE, "Please provide user.");
+        return "user/edit-user";
+
+    }
+
+    if (StringUtils.isBlank(confirmEditUser.getGrandFatherName())) {
+        result.rejectValue("grandfathername", "error.grandfathername", "Please provide grandfathername");
+        model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
+        model.addAttribute(Constant.MESSAGE, "Please provide grandfathername.");
+        return "user/edit-user";
+
+    }
+
+
+    if (StringUtils.isBlank(confirmEditUser.getDateOfBirth())) {
+        result.rejectValue("dd/mm/yyyy", "error.dateobirth", "Please provide dateOfBirth");
+        model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
+        model.addAttribute(Constant.MESSAGE, "Please provide dateOfBirth.");
+        return "user/edit-user";
+
+    }
+    if (StringUtils.isBlank(confirmEditUser.getGender())) {
+        result.rejectValue("gender", "error.gender", "Please provide gender");
+        model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
+        model.addAttribute(Constant.MESSAGE, "Please provide dateOfBirth.");
+        return "user/edit-user";
+
+    }
+
+    if (confirmEditUser.getDepartmentId() == null) {
+        result.rejectValue("departmentId", "error.departmentId", "Please provide Departmentname");
+        model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
+        model.addAttribute(Constant.MESSAGE, "Please provide Department name.");
+        return "user/edit-user";
+
+    }
+
+    for(Map<String, Object> deparment : departmentListResult.getDepartmentList()){
+
+        if(deparment.get("dptId").equals(confirmEditUser.getDepartmentId())){
+
+            confirmEditUser.setDepartmentName(deparment.get("dptName").toString());
+        }
+    }
+        return "user/edit-user-confirm";
+    }catch(Exception ex){
+
+        logger.error("error while creating dept" + ex, ex.getCause());
+        model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
+        model.addAttribute(Constant.MESSAGE, ex.getMessage());
+        return "user/edit-user";
+    }
 
 }
+    @RequestMapping(value = "/updateUser", method = RequestMethod.POST)
+    public String editUser(@ModelAttribute EditUserRequestModel confirmEditUser, BindingResult result, Model model) {
+
+        try {
+
+            GetAllDepartmentListResult departmentListResult = departmentService.getAllDepartments();
+
+            model.addAttribute("departmentListResult", departmentListResult.getDepartmentList());
+
+            model.addAttribute("confirmEditUser",confirmEditUser);
+
+            if(confirmEditUser.getUserId() == null){
+                model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
+                model.addAttribute(Constant.MESSAGE, " Invalid user id");
+                return "user/edit-user";
+            }
+
+            EditUserResponseModel responseModel = userService.editUser(confirmEditUser);
+
+            if(responseModel.getStatusCode() != 0){
+                model.addAttribute("EditUserRequestModel",confirmEditUser);
+                model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
+                model.addAttribute(Constant.MESSAGE, responseModel.getStatusMessage());
+                return "user/edit-user";
+            }
+
+            confirmEditUser = new EditUserRequestModel();
+
+            model.addAttribute("responseModel", responseModel);
+            model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_SUCCESS);
+            model.addAttribute(Constant.MESSAGE, responseModel.getStatusMessage());
+            return "user/edit-user-success";
+
+        }catch (Exception ex){
+            logger.error("error while creating user"+ ex, ex.getCause());
+            model.addAttribute("EditUserRequestModel",confirmEditUser);
+            model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
+            model.addAttribute(Constant.MESSAGE, ex.getMessage());
+            return "user/edit-user";
+        }
+
+    }
+}
+
 
 
 

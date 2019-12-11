@@ -1,11 +1,9 @@
-package com.ddu.tes.service.user;
+package com.ddu.tes.controller.model.user;
 
 import com.ddu.tes.controller.model.AbstractResponseModel;
 
-public class GetUserByEmailResult extends AbstractResponseModel {
-    private boolean userExists;
-    private Integer userId;
-    private String uuid;
+public class EditUserResponseModel extends AbstractResponseModel {
+
     private String firstName;
     private String lastName;
     private String grandFatherName;
@@ -16,30 +14,9 @@ public class GetUserByEmailResult extends AbstractResponseModel {
     private Integer departmentId;
     private String dateOfBirth;
     private String userName;
+    private String password;
 
-    public Integer getUserId() {
-        return userId;
-    }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-
-    public boolean isUserExists() {
-        return userExists;
-    }
-
-    public void setUserExists(boolean userExists) {
-        this.userExists = userExists;
-    }
-
-    public String getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
-    }
 
     public String getFirstName() {
         return firstName;
@@ -119,5 +96,13 @@ public class GetUserByEmailResult extends AbstractResponseModel {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

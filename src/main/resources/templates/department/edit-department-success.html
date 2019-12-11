@@ -42,7 +42,7 @@
                             <strong>Update Department Success </strong>
                         </div>
                         <div class="card-body card-block">
-                            <form th:action="@{/department/editDepartment}" th:object="${responseModel}" method="POST" enctype="multipart/form-data" class="form-horizontal" id="create-org-frm">
+                            <form th:action="@{/department/editDepartment}" th:object="${responseModel}" method="PUT" enctype="multipart/form-data" class="form-horizontal" id="create-org-frm">
                                 <div th:replace="fragments/messageAlert :: alert(type=${type}, message=${message})"></div>
                                 <div class="row form-group">
 
@@ -93,7 +93,7 @@
 
                                 </div>
                                 <div class="btn pull-right" >
-                                    <a  th:href="@{'/backtocreate'}" class="btn btn-secondary btn-sm"></i> Cancel</a>
+                                    <a  th:href="@{'/department/departmentList'}" class="btn btn-secondary btn-sm"></i> Cancel</a>
 
                                 </div>
 
@@ -110,4 +110,3 @@
 </div>
 </body>
 </html>
-
