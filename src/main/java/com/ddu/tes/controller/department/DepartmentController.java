@@ -195,13 +195,13 @@ public class DepartmentController {
             }
             EditDepartmentRequestModel editDepartmentRequestModel = new EditDepartmentRequestModel();
 
-            model.addAttribute("editDepartmentRequestModel", editDepartmentRequestModel);
-
             editDepartmentRequestModel.setDepartmentName(result.getDptName());
             editDepartmentRequestModel.setNumberOfStaff(result.getNumberOfStaff());
             editDepartmentRequestModel.setDescription(result.getDescription());
             editDepartmentRequestModel.setDptId(result.getDptId());
 
+
+            model.addAttribute("editDepartmentRequestModel", editDepartmentRequestModel);
 
 
             return "department/edit-department";

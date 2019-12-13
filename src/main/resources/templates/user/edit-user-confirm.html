@@ -42,11 +42,12 @@
                             <strong>Edit User</strong>
                         </div>
                         <div class="card-body card-block">
-                            <form th:action="@{/user/updateUser}" th:object="${confirmEditUser}" method="POST" enctype="multipart/form-data" class="form-horizontal" id="create-org-frm">
+                            <form th:action="@{/user/updateUser}" th:object="${editUserRequestModel}" method="POST" enctype="multipart/form-data" class="form-horizontal" id="create-org-frm">
                                 <div th:replace="fragments/messageAlert :: alert(type=${type}, message=${message})"></div>
                                 <div class="row form-group">
 
-
+                                    <input  hidden="hidden" type="text" class="form-control" id="usrId"
+                                            name="usrId" th:field="*{usrId}" required="required" >
                                     <div class="col-lg-4">
                                         <div class="form-group" >
                                             <label><strong>First Name</strong> <span class="text-danger">*</span></label>
