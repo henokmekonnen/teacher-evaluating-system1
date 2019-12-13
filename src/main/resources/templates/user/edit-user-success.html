@@ -42,7 +42,7 @@
                             <strong>Update User Success </strong>
                         </div>
                         <div class="card-body card-block">
-                            <form th:action="@{/user/editUser}" th:object="${responseModel}" method="PUT" enctype="multipart/form-data" class="form-horizontal" id="create-org-frm">
+                            <form th:action="@{/user/editUser}" th:object="${responseModel}" method="POST" enctype="multipart/form-data" class="form-horizontal" id="create-org-frm">
                                 <div th:replace="fragments/messageAlert :: alert(type=${type}, message=${message})"></div>
                                 <div class="row form-group">
 

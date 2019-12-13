@@ -2,8 +2,11 @@ package com.ddu.tes.controller.model.user;
 
 import com.ddu.tes.controller.model.AbstractResponseModel;
 
+/**
+ * @author GHabtamu
+ */
 public class EditUserRequestModel extends AbstractResponseModel {
-    private Integer userId;
+
     private String firstName;
     private String lastName;
     private String grandFatherName;
@@ -13,8 +16,7 @@ public class EditUserRequestModel extends AbstractResponseModel {
     private String departmentName;
     private Integer departmentId;
     private String dateOfBirth;
-    private String userName;
-    private String password;
+    private Integer usrId;
 
 
 
@@ -90,27 +92,12 @@ public class EditUserRequestModel extends AbstractResponseModel {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public String getUserName() {
-        return userName;
+
+    public Integer getUsrId() {
+        return usrId;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setUsrId(Integer usrId) {
+        this.usrId = usrId;
     }
 }

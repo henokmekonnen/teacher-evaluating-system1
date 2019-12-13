@@ -34,11 +34,11 @@ public class UserServiceImpl implements UserService {
 
         try {
 
-            if (StringUtils.isBlank(email)) {
+            if(StringUtils.isBlank(email)){
                 result.setStatusCode(1000);
-                result.setStatusMessage("user email not found");
+                result.setStatusMessage("department name not found");
                 result.setUserExists(Boolean.FALSE);
-                return null;
+                return  null;
             }
 
             User filter = new User();
@@ -46,26 +46,30 @@ public class UserServiceImpl implements UserService {
 
             User user = (User) sqlRepository.findOne(filter);
 
-            if (user == null) {
+
+            if(user == null ){
                 result.setStatusCode(1000);
-                result.setStatusMessage("user already exists");
+                result.setStatusMessage("department not found");
                 result.setUserExists(Boolean.FALSE);
-                return result;
+                return  result;
             }
 
             result.setStatusCode(0);
+            result.setUsrId(user.getUserId());
+            result.setUsrFirstName(user.getFirstName());
+            result.setUsrLastName(user.getLastName());
+            result.setUsrGrandFatherName(user.getGrandFatherName());
+            result.setUsrEmail(user.getEmail());
+            result.setUsrPhoneNumber(user.getPhoneNumber());
+            result.setUsrGender(user.getGender());
+            result.setUsrDepartmentId(user.getDepartmentId());
+            result.setUsrDateOfBirth(user.getDateOfBirth());
+
+
+
             result.setStatusMessage("Found");
             result.setUserExists(Boolean.TRUE);
-            result.setUserId(user.getUserId());
-            result.setFirstName(user.getFirstName());
-            result.setLastName(user.getLastName());
-            result.setGrandFatherName(user.getGrandFatherName());
-            result.setDateOfBirth(user.getDateOfBirth());
-            result.setEmail(user.getEmail());
-            result.setGender(user.getGender());
-            result.setPhoneNumber(user.getPhoneNumber());
-            result.setDepartmentId(user.getDepartmentId());
-            return result;
+            return  result;
 
         } catch (Exception ex) {
             logger.error(ex);
@@ -76,7 +80,7 @@ public class UserServiceImpl implements UserService {
         }
     }
     @Override
-    public boolean useremailExist (String email){
+    public boolean userEmailExist(String email){
         GetUserByEmailResult result = new GetUserByEmailResult();
 
         try {
@@ -238,32 +242,34 @@ public GetUserByPhoneResult getUserByPhone(String phoneNumber) {
             return responseModel;
         }
     }
-    @Override
-    public EditUserResponseModel editUser(EditUserRequestModel confirmEditUser) {
+@Override
+public EditUserResponseModel editUser(EditUserRequestModel confirmEditUser){
         EditUserResponseModel responseModel = new EditUserResponseModel();
 
         try {
             User filterUser = new User();
 
-            filterUser.setUserId(confirmEditUser.getUserId());
+            filterUser.setUserId(confirmEditUser.getUsrId());
 
             filterUser = (User) sqlRepository.findOne(filterUser);
 
             if(filterUser == null){
 
                 responseModel.setStatusCode(1000);
-                responseModel.setStatusMessage("User not found");
+                responseModel.setStatusMessage("Department not found");
                 return responseModel;
             }
 
             filterUser.setFirstName(confirmEditUser.getFirstName());
             filterUser.setLastName(confirmEditUser.getLastName());
             filterUser.setGrandFatherName(confirmEditUser.getGrandFatherName());
-              filterUser.setDateOfBirth(confirmEditUser.getDateOfBirth());
             filterUser.setEmail(confirmEditUser.getEmail());
             filterUser.setPhoneNumber(confirmEditUser.getPhoneNumber());
             filterUser.setGender(confirmEditUser.getGender());
             filterUser.setDepartmentId(confirmEditUser.getDepartmentId());
+            filterUser.setDateOfBirth(confirmEditUser.getDateOfBirth());
+
+
 
             sqlRepository.update(filterUser);
 
@@ -272,11 +278,11 @@ public GetUserByPhoneResult getUserByPhone(String phoneNumber) {
             responseModel.setFirstName(filterUser.getFirstName());
             responseModel.setLastName(filterUser.getLastName());
             responseModel.setGrandFatherName(filterUser.getGrandFatherName());
-            responseModel.setPhoneNumber(filterUser.getPhoneNumber());
-            responseModel.setDateOfBirth(filterUser.getDateOfBirth());
             responseModel.setEmail(filterUser.getEmail());
+            responseModel.setPhoneNumber(filterUser.getPhoneNumber());
             responseModel.setGender(filterUser.getGender());
             responseModel.setDepartmentId(filterUser.getDepartmentId());
+            responseModel.setDateOfBirth(filterUser.getDateOfBirth());
 
             return  responseModel;
 
@@ -287,6 +293,7 @@ public GetUserByPhoneResult getUserByPhone(String phoneNumber) {
             return  responseModel;
         }
     }
+
 
 }
 //    private static final Log logger = LogFactory.getLog(UserServiceImpl.class);

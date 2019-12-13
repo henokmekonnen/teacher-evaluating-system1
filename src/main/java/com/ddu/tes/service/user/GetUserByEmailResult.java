@@ -4,26 +4,18 @@ import com.ddu.tes.controller.model.AbstractResponseModel;
 
 public class GetUserByEmailResult extends AbstractResponseModel {
     private boolean userExists;
-    private Integer userId;
-    private String uuid;
-    private String firstName;
-    private String lastName;
-    private String grandFatherName;
-    private String email;
-    private String phoneNumber;
-    private String gender;
-    private String departmentName;
-    private Integer departmentId;
-    private String dateOfBirth;
-    private String userName;
+    private String usrUuid;
+    private String usrFirstName;
+    private String usrLastName;
+    private String usrGrandFatherName;
+    private String usrEmail;
+    private String usrPhoneNumber;
+    private String usrGender;
+    private String usrDepartmentName;
+    private Integer usrDepartmentId;
+    private String usrDateOfBirth;
+    private Integer usrId;
 
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
 
     public boolean isUserExists() {
         return userExists;
@@ -33,91 +25,91 @@ public class GetUserByEmailResult extends AbstractResponseModel {
         this.userExists = userExists;
     }
 
-    public String getUuid() {
-        return uuid;
+    public String getUsrUuid() {
+        return usrUuid;
     }
 
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
+    public void setUsrUuid(String usrUuid) {
+        this.usrUuid = usrUuid;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getUsrFirstName() {
+        return usrFirstName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setUsrFirstName(String usrFirstName) {
+        this.usrFirstName = usrFirstName;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getUsrLastName() {
+        return usrLastName;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setUsrLastName(String usrLastName) {
+        this.usrLastName = usrLastName;
     }
 
-    public String getGrandFatherName() {
-        return grandFatherName;
+    public String getUsrGrandFatherName() {
+        return usrGrandFatherName;
     }
 
-    public void setGrandFatherName(String grandFatherName) {
-        this.grandFatherName = grandFatherName;
+    public void setUsrGrandFatherName(String usrGrandFatherName) {
+        this.usrGrandFatherName = usrGrandFatherName;
     }
 
-    public String getEmail() {
-        return email;
+    public String getUsrEmail() {
+        return usrEmail;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUsrEmail(String usrEmail) {
+        this.usrEmail = usrEmail;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public String getUsrPhoneNumber() {
+        return usrPhoneNumber;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setUsrPhoneNumber(String usrPhoneNumber) {
+        this.usrPhoneNumber = usrPhoneNumber;
     }
 
-    public String getGender() {
-        return gender;
+    public String getUsrGender() {
+        return usrGender;
     }
 
-    public void setGender(String gender) {
-        this.gender = gender;
+    public void setUsrGender(String usrGender) {
+        this.usrGender = usrGender;
     }
 
-    public String getDepartmentName() {
-        return departmentName;
+    public String getUsrDepartmentName() {
+        return usrDepartmentName;
     }
 
-    public void setDepartmentName(String departmentName) {
-        this.departmentName = departmentName;
+    public void setUsrDepartmentName(String usrDepartmentName) {
+        this.usrDepartmentName = usrDepartmentName;
     }
 
-    public Integer getDepartmentId() {
-        return departmentId;
+    public Integer getUsrDepartmentId() {
+        return usrDepartmentId;
     }
 
-    public void setDepartmentId(Integer departmentId) {
-        this.departmentId = departmentId;
+    public void setUsrDepartmentId(Integer usrDepartmentId) {
+        this.usrDepartmentId = usrDepartmentId;
     }
 
-    public String getDateOfBirth() {
-        return dateOfBirth;
+    public String getUsrDateOfBirth() {
+        return usrDateOfBirth;
     }
 
-    public void setDateOfBirth(String dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
+    public void setUsrDateOfBirth(String usrDateOfBirth) {
+        this.usrDateOfBirth = usrDateOfBirth;
     }
 
-    public String getUserName() {
-        return userName;
+    public Integer getUsrId() {
+        return usrId;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsrId(Integer usrId) {
+        this.usrId = usrId;
     }
 }

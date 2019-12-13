@@ -3,7 +3,7 @@ package com.ddu.tes.controller.model.user;
 import com.ddu.tes.controller.model.AbstractResponseModel;
 
 public class EditUserResponseModel extends AbstractResponseModel {
-
+    private String uuid;
     private String firstName;
     private String lastName;
     private String grandFatherName;
@@ -15,8 +15,17 @@ public class EditUserResponseModel extends AbstractResponseModel {
     private String dateOfBirth;
     private String userName;
     private String password;
+    private Boolean isLocked;
+    private Boolean isEnable;
+    private Boolean changePasswordRequired;
 
+    public String getUuid() {
+        return uuid;
+    }
 
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
 
     public String getFirstName() {
         return firstName;
@@ -105,4 +114,13 @@ public class EditUserResponseModel extends AbstractResponseModel {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public Boolean getLocked() {
+        return isLocked;
+    }
+
+    public void setLocked(Boolean locked) {
+        isLocked = locked;
+    }
+
 }

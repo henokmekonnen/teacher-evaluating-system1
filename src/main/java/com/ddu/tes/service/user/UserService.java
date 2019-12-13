@@ -7,8 +7,8 @@ import com.ddu.tes.controller.model.user.EditUserResponseModel;
 
 public interface UserService {
     public CreateUserResponseModel createUser(CreateUserRequestModel confirmCreateUser);
+    public boolean userEmailExist(String email );
     public EditUserResponseModel editUser(EditUserRequestModel confirmEditUser);
-    public boolean useremailExist (String email );
 
     public GetUserByEmailResult getUserByEmail (final String email);
     public GetUserByPhoneResult getUserByPhone(final String phoneNumber);

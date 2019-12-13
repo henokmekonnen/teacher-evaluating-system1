@@ -270,7 +270,6 @@ public class DepartmentController {
     public String editDepartment(@ModelAttribute EditDepartmentRequestModel confirmEditDepartment, BindingResult result, Model model) {
 
         try {
-
             model.addAttribute("EditDepartmentRequestModel",confirmEditDepartment);
 
             if(confirmEditDepartment.getDptId() == null){
