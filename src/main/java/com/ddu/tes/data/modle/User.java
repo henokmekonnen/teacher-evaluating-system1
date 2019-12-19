@@ -1,6 +1,7 @@
 package com.ddu.tes.data.modle;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 import java.util.Objects;
 
 /**

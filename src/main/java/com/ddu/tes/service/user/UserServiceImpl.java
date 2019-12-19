@@ -7,6 +7,7 @@ import com.ddu.tes.controller.model.user.EditUserResponseModel;
 import com.ddu.tes.data.modle.Department;
 import com.ddu.tes.data.modle.User;
 import com.ddu.tes.data.repository.SqlRepository;
+import com.ddu.tes.service.phonenumber.PhoneNumberService;
 import com.ddu.tes.utils.Constant;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
@@ -24,10 +25,14 @@ public class UserServiceImpl implements UserService {
 
 
     private static final Log logger = LogFactory.getLog(UserServiceImpl.class);
+
     @Autowired
     SqlRepository sqlRepository;
 
-    @Override
+  @Autowired
+    PhoneNumberService phoneNumberService;
+
+  @Override
     public GetUserByEmailResult getUserByEmail(String email) {
 
         GetUserByEmailResult result = new GetUserByEmailResult();
@@ -117,7 +122,7 @@ public GetUserByPhoneResult getUserByPhone(String phoneNumber) {
     try {
         if (StringUtils.isBlank(phoneNumber)) {
             phoneuser.setStatusCode(1000);
-            phoneuser.setStatusMessage("user already exists");
+            phoneuser.setStatusMessage("insert phone number");
             phoneuser.setUserPhoneExists(Boolean.FALSE);
             return phoneuser;
         }
@@ -125,13 +130,16 @@ public GetUserByPhoneResult getUserByPhone(String phoneNumber) {
         filter.setPhoneNumber(phoneNumber);
 
     User useru = (User) sqlRepository.findOne(filter);
+
     if (useru != null) {
         phoneuser.setStatusCode(1000);
         phoneuser.setStatusMessage("user already exists");
         phoneuser.setUserPhoneExists(Boolean.FALSE);
         return phoneuser;
     }
-    phoneuser.setStatusCode(0);
+
+
+        phoneuser.setStatusCode(0);
     phoneuser.setStatusMessage("Found");
     phoneuser.setUserPhoneExists(Boolean.TRUE);
     return phoneuser;

@@ -1,16 +1,20 @@
 package com.ddu.tes.controller.model.user;
 
+import javax.validation.constraints.Pattern;
+
 public class CreateUserRequestModel {
      private String uuid;
     private String firstName;
     private String lastName;
     private String grandFatherName;
+    @Pattern(regexp ="^(.+)@(.+)$",message ="not valid email must be like this something@gmail.com")
     private String email;
+    @Pattern(regexp="^((?:\\+2519)[0-9]{8}|(?:2519)[0-9]{8}|(?:09)[0-9]{8})$",message="begin with +251 or 0 or check all characters are numbers ")
     private String phoneNumber;
     private String gender;
     private String departmentName;
     private Integer departmentId;
-    private String dateOfBirth;
+     private String dateOfBirth;
     private String userName;
     private String password;
     private Boolean isLocked;

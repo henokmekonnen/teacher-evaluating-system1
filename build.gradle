@@ -15,7 +15,8 @@ repositories {
 
 dependencies {
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: '2.2.1.RELEASE'
-
+    compile('joda-time:joda-time:2.10.5')
+    compile('org.apache.commons:commons-lang3:3.8')
     compile group: 'nz.net.ultraq.thymeleaf', name: 'thymeleaf-layout-dialect', version: '2.4.1'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.46'
@@ -29,6 +30,7 @@ dependencies {
         exclude group: 'commons-beanutils'
         exclude group: 'commons-collections'
     }
+
    compile group: 'org.liquibase', name: 'liquibase-gradle-plugin', version: '2.0.2'
    compile group: 'org.projectlombok', name: 'lombok', version: '1.18.10'
 }

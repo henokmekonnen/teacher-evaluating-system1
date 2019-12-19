@@ -48,10 +48,12 @@
 
                                     <input  hidden="hidden" type="text" class="form-control" id="usrId"
                                             name="usrId" th:field="*{usrId}" required="required" >
+
+
                                     <div class="col-lg-4">
                                         <div class="form-group" >
                                             <label><strong>First Name</strong> <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control" id="firstName" name="firstName"  disabled="disabled"
+                                            <input type="text" class="form-control"  id="firstName"  readonly="readonly"
                                                    th:field="*{firstName}" required="required" >
                                             <span class="form-error"
                                                   th:if="${#fields.hasErrors('firstName')}"
@@ -65,7 +67,7 @@
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label><strong>Last Name</strong> <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control" id="lastName"   disabled="disabled"
+                                            <input type="text" class="form-control" readonly="readonly"
                                                    name="firstName" th:field="*{lastName}" required="required" >
                                             <span class="form-error"
                                                   th:if="${#fields.hasErrors('lastName')}"
@@ -82,7 +84,7 @@
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label><strong>Grand FATHER NAME</strong> <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control" id="grandFatherName" disabled="disabled"
+                                            <input type="text" class="form-control"  readonly="readonly"
                                                    name="grandFatherName" th:field="*{grandFatherName}" required="required" >
                                             <span class="form-error"
                                                   th:if="${#fields.hasErrors('grandFatherName')}"
@@ -97,10 +99,10 @@
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label><strong>Gender</strong> <span class="text-danger">*</span></label>
-                                            <select class="form-control" name="gender" disabled="disabled" required="required"  th:field="*{gender}">
+                                            <select class="form-control" name="gender" readonly="readonly" required="required"  th:field="*{gender}">
                                                 <option value=""> please select gender </option>
-                                                <option th:value="F"  th:text="FEMALE"></option>
-                                                <option th:value="M"  th:text="MALE"></option>
+                                                <option th:value="FEMALE"  th:text="FEMALE"></option>
+                                                <option th:value="MALE"  th:text="MALE"></option>
                                             </select>
                                             <span class="form-error"
                                                   th:if="${#fields.hasErrors('gender')}"
@@ -111,7 +113,7 @@
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label><strong>Date of Birth</strong> <span class="text-danger">*</span></label>
-                                            <input type="date" class="form-control" id="dateOfBirth" disabled="disabled"
+                                            <input type="date" class="form-control" id="dateOfBirth" readonly="readonly"
                                                    name="dateOfBirth" th:field="*{dateOfBirth}" required="required" >
                                             <span class="form-error"
                                                   th:if="${#fields.hasErrors('dateOfBirth')}"
@@ -122,7 +124,7 @@
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label><strong>Phone Number</strong> <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control" id="phoneNumber" disabled="disabled"
+                                            <input type="text" class="form-control" id="phoneNumber" readonly="readonly"
                                                    name="phoneNumber" th:field="*{phoneNumber}" required="required" >
                                             <span class="form-error"
                                                   th:if="${#fields.hasErrors('phoneNumber')}"
@@ -137,7 +139,7 @@
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label><strong>Email</strong> <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control" id="email" disabled="disabled"
+                                            <input type="text" class="form-control"  readonly="readonly"
                                                    name="email" th:field="*{email}" required="required" >
                                             <span class="form-error"
                                                   th:if="${#fields.hasErrors('email')}"
@@ -147,7 +149,7 @@
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label><strong>Department</strong> <span class="text-danger">*</span></label>
-                                            <select class="form-control" name="departmentId" disabled="disabled" required="required"  th:field="*{departmentId}">
+                                            <select class="form-control" name="departmentId" readonly="readonly" required="required"  th:field="*{departmentId}">
                                                 <option value=""> please select department </option>
                                                 <option th:each="DepartmentId:${departmentListResult}" th:value="${DepartmentId.dptId}"
                                                         th:text="${DepartmentId.dptName}"></option>

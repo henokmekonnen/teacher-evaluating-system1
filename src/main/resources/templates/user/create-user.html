@@ -96,8 +96,8 @@
                                                 <label><strong>Gender</strong> <span class="text-danger">*</span></label>
                                                 <select class="form-control" name="gender" required="required"  th:field="*{gender}">
                                                     <option value=""> please select gender </option>
-                                                    <option th:value="F"  th:text="FEMALE"></option>
-                                                    <option th:value="M"  th:text="MALE"></option>
+                                                    <option th:value="FEMALE"  th:text="FEMALE"></option>
+                                                    <option th:value="MALE"  th:text="MALE"></option>
                                                 </select>
                                                 <span class="form-error"
                                                       th:if="${#fields.hasErrors('gender')}"
