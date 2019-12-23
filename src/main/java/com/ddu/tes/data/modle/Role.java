@@ -1,7 +1,6 @@
 package com.ddu.tes.data.modle;
 
 import javax.persistence.*;
-import java.sql.Date;
 import java.util.Objects;
 
 /**
@@ -12,6 +11,7 @@ import java.util.Objects;
 @Table(name = "role")
 public class Role extends  BaseModel{
     private Integer roleId;
+    private String name;
     private String description;
     private String lookUpId;
 
@@ -34,6 +34,15 @@ public class Role extends  BaseModel{
     @Override
     public void setId(Integer id) {
       setRoleId(id);
+    }
+    @Basic
+    @Column(name = "name", nullable = true, length = 100)
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Basic

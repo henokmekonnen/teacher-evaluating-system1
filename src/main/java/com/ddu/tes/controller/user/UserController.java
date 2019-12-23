@@ -403,13 +403,7 @@ public class UserController {
                 model.addAttribute(Constant.MESSAGE, "user Already exists.");
                 return "user/edit-user";
             }
-//            GetUserByPhoneResult phonevalue=userService.getUserByPhone(editUserRequestModel.getPhoneNumber());
-//            if(phonevalue.getStatusCode() !=0){
-//                result.rejectValue("phoneNumber", "error.phoneNumber", "user phone number Already exists change phone Number.");
-//                model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
-//                model.addAttribute(Constant.MESSAGE, "user Already exists.");
-//                return "user/edit-user";
-//            }
+
             if (!phoneNumberService.validatePhoneNumber(editUserRequestModel.getPhoneNumber())) {
                 result.rejectValue("phoneNumber", "error.phoneNumber", "Invalid phone number format");
 

@@ -7,6 +7,7 @@ import com.ddu.tes.controller.model.department.EditDepartmentResponseModel;
 import com.ddu.tes.service.department.DepartmentService;
 import com.ddu.tes.service.department.GetAllDepartmentListResult;
 import com.ddu.tes.service.department.GetDepartmentByNameResult;
+import com.ddu.tes.service.validation.ValidationService;
 import com.ddu.tes.utils.Constant;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
@@ -20,6 +21,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author GHabtamu
@@ -32,6 +35,8 @@ public class DepartmentController {
 
     @Autowired
     DepartmentService departmentService;
+    @Autowired
+    public ValidationService validationService;
 
     @RequestMapping(value = "/departmentList", method = RequestMethod.GET)
     public String departmentList(Model model, HttpSession session, RedirectAttributes redirectAttributes) {
@@ -91,7 +96,7 @@ public class DepartmentController {
     public String confirmCreateDepartmen(@Valid CreateDepartmentRequestModel confirmCreateDepartment, BindingResult result, Model model) {
 
         try {
-
+            List<String> errorList = new ArrayList<String>();
             model.addAttribute("createDepartmentRequestModel",confirmCreateDepartment);
 
             if (StringUtils.isBlank(confirmCreateDepartment.getDepartmentName())){
@@ -99,6 +104,13 @@ public class DepartmentController {
                 model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
                 model.addAttribute(Constant.MESSAGE, "Please provide department name.");
                 return "department/create-department";
+
+            }
+            if (!validationService.isValidName(confirmCreateDepartment.getDepartmentName())){
+                result.rejectValue("firstName", "error.firstName", "name must be valid.");
+
+                errorList.add("name must be valid");
+                return "user/create-user";
 
             }
 
@@ -218,7 +230,7 @@ public class DepartmentController {
     @RequestMapping(value = "/confirmEditDepartment", method = RequestMethod.POST)
     public String confirmEditDepartment(@Valid EditDepartmentRequestModel confirmEditDepartment, BindingResult result, Model model) {
 
-        try {
+        try {List<String> errorList = new ArrayList<String>();
 
             model.addAttribute("confirmEditDepartment",confirmEditDepartment);
 
@@ -229,6 +241,13 @@ public class DepartmentController {
                 return "department/edit-department";
 
             }
+            if (!validationService.isValidName(confirmEditDepartment.getDepartmentName())){
+                result.rejectValue("firstName", "error.firstName", "name must be valid.");
+                               errorList.add("name must be valid");
+                return "user/create-user";
+
+            }
+
 
             GetDepartmentByNameResult result1 = departmentService.getDepartmentByName(confirmEditDepartment.getDepartmentName());
 
