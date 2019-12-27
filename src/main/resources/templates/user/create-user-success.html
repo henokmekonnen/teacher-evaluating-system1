@@ -148,6 +148,19 @@
                                                   th:if="${#fields.hasErrors('departmentId')}"
                                                   th:errors="*{departmentId}">...</span>
                                         </div></div>
+                                    <div class="col-lg-4">
+
+                                        <div class="form-group">
+                                            <label><strong>Role In Department</strong> <span class="text-danger">*</span></label>
+                                            <select class="form-control" name="roleId" required="required" readonly="readonly" th:field="*{roleId}">
+                                                <option value=""> please select Role </option>
+                                                <option th:each="role:${roleListResult}" th:value="${role.roleId}"
+                                                        th:text="${role.roleName}"></option>
+                                            </select>
+                                            <span class="form-error"
+                                                  th:if="${#fields.hasErrors('roleId')}"
+                                                  th:errors="*{roleId}">...</span>
+                                        </div></div>
 
                                 </div>
 

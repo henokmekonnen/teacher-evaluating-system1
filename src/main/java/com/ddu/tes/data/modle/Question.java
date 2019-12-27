@@ -9,7 +9,7 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "question")
-public class Question {
+public class Question extends BaseModel {
     private Integer questionId;
     private String question;
     private Integer typeLookLp;
@@ -38,6 +38,20 @@ public class Question {
     public void setQuestion(String question) {
         this.question = question;
     }
+
+
+    @Override
+    @Transient
+    public Integer getId() {
+        return getQuestionId();
+    }
+
+    @Override
+    public void setId(Integer id) {
+        setQuestionId(id);
+    }
+
+
 
     @Basic
     @Column(name = "TypeLookLp", nullable = true)

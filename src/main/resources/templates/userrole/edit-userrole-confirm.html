@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+<head>
+    <meta charset="UTF-8">
+
+</head>
+<body>
+<div layout:fragment="wrapper">
+    <div class="breadcrumbs">
+        <div class="breadcrumbs-inner">
+            <div class="row m-0">
+                <div class="col-sm-4">
+                    <div class="page-header float-left">
+                        <div class="page-title">
+                            <h1>Manage User</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-8">
+                    <div class="page-header float-right">
+                        <div class="page-title">
+                            <ol class="breadcrumb text-right">
+
+
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="animated fadeIn">
+            <div class="row">
+
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong>Edit User</strong>
+                        </div>
+                        <div class="card-body card-block">
+                            <form th:action="@{/userrole/updateUserRole}" th:object="${editUserRoleRequestModel}" method="POST" enctype="multipart/form-data" class="form-horizontal" id="create-org-frm">
+                                <div th:replace="fragments/messageAlert :: alert(type=${type}, message=${message})"></div>
+                                <div class="row form-group">
+
+
+
+                                    <div class="form-group">
+                                        <label><strong>User Name</strong> <span class="text-danger">*</span></label>
+                                        <select class="form-control" name="userId" readonly="readonly" required="required"  th:field="*{userId}">
+                                            <option value=""> please select Role </option>
+                                            <option th:each="user:${userListResult}" th:value="${user.userId}"
+                                                    th:text="${user.userName}"></option>
+                                        </select>
+                                        <span class="form-error"
+                                              th:if="${#fields.hasErrors('userId')}"
+                                              th:errors="*{userId}">...</span>
+                                    </div>
+                                </div>
+
+                                <div class="row form-group">
+
+
+
+                                    <div class="form-group">
+                                        <label><strong>Role In Department</strong> <span class="text-danger">*</span></label>
+                                        <select class="form-control" name="usrRoleId" required="required"  th:field="*{usrRoleId}">
+                                            <option value=""> please select Role </option>
+                                            <option th:each="role:${roleListResult}" th:value="${role.roleId}"
+                                                    th:text="${role.roleName}"></option>
+                                        </select>
+                                        <span class="form-error"
+                                              th:if="${#fields.hasErrors('usrRoleId')}"
+                                              th:errors="*{usrRoleId}">...</span>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="btn pull-right" >
+                                    <a  th:href="@{'/user/confirmEditUser'}" class="btn btn-secondary btn-sm"></i> Cancel</a>
+                                    <button type="submit" class="btn  btn-primary btn-sm">
+                                        Update
+                                    </button>
+
+                                </div>
+
+                            </form>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

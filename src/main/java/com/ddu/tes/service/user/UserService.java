@@ -13,4 +13,5 @@ public interface UserService {
     public GetUserByEmailResult getUserByEmail (final String email);
     public GetUserByPhoneResult getUserByPhone(final String phoneNumber);
     public GetAllUserListResult getAllUsers();
+
 }

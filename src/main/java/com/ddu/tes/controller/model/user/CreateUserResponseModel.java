@@ -19,6 +19,9 @@ private String uuid;
     private Boolean isLocked;
     private Boolean isEnable;
     private Boolean changePasswordRequired;
+    private Integer roleId;
+    private String roleName;
+
     public String getFirstName() {
         return firstName;
     }
@@ -137,5 +140,21 @@ private String uuid;
 
     public void setChangePasswordRequired(Boolean changePasswordRequired) {
         this.changePasswordRequired = changePasswordRequired;
+    }
+
+    public Integer getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(Integer roleId) {
+        this.roleId = roleId;
+    }
+
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
     }
 }

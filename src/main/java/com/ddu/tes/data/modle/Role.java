@@ -7,13 +7,12 @@ import java.util.Objects;
  * @author GHabtamu
  */
 @Entity
-@IdClass(RolePK.class)
 @Table(name = "role")
 public class Role extends  BaseModel{
     private Integer roleId;
     private String name;
     private String description;
-    private String lookUpId;
+
 
     @Id
     @Column(name = "RoleId", nullable = false)
@@ -26,6 +25,7 @@ public class Role extends  BaseModel{
         this.roleId = roleId;
     }
 
+    @Transient
     @Override
     public Integer getId() {
         return getRoleId();
@@ -55,16 +55,6 @@ public class Role extends  BaseModel{
         this.description = description;
     }
 
-    @Id
-    @Column(name = "LookUpId", nullable = false, length = 10)
-    public String getLookUpId() {
-        return lookUpId;
-    }
-
-    public void setLookUpId(String lookUpId) {
-        this.lookUpId = lookUpId;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -73,12 +63,12 @@ public class Role extends  BaseModel{
         return Objects.equals(roleId, role.roleId) &&
                 Objects.equals(createdDate, role.createdDate) &&
                 Objects.equals(createdBy, role.createdBy) &&
-                Objects.equals(description, role.description) &&
-                Objects.equals(lookUpId, role.lookUpId);
+                Objects.equals(description, role.description) ;
+
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(roleId, createdDate, createdBy, description, lookUpId);
+        return Objects.hash(roleId, createdDate, createdBy, description);
     }
 }

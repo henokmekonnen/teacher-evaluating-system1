@@ -1,7 +1,6 @@
 package com.ddu.tes.data.modle;
 
 import javax.persistence.*;
-import java.sql.Date;
 import java.util.Objects;
 
 /**
@@ -9,7 +8,6 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "user_role")
-@IdClass(UserRolePK.class)
 public class UserRole extends BaseModel{
     private Integer userRole;
     private String description;
@@ -28,6 +26,7 @@ public class UserRole extends BaseModel{
     }
 
     @Override
+    @Transient
     public Integer getId() {
         return getUserRole();
     }
@@ -47,7 +46,7 @@ public class UserRole extends BaseModel{
         this.description = description;
     }
 
-    @Id
+    @Basic
     @Column(name = "RoleId", nullable = false)
     public Integer getRoleId() {
         return roleId;
@@ -57,7 +56,7 @@ public class UserRole extends BaseModel{
         this.roleId = roleId;
     }
 
-    @Id
+    @Basic
     @Column(name = "UserId", nullable = false)
     public Integer getUserId() {
         return userId;

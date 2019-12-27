@@ -5,7 +5,9 @@ import com.ddu.tes.controller.model.user.CreateUserResponseModel;
 import com.ddu.tes.controller.model.user.EditUserRequestModel;
 import com.ddu.tes.controller.model.user.EditUserResponseModel;
 import com.ddu.tes.data.modle.Department;
+import com.ddu.tes.data.modle.Role;
 import com.ddu.tes.data.modle.User;
+import com.ddu.tes.data.modle.UserRole;
 import com.ddu.tes.data.repository.SqlRepository;
 import com.ddu.tes.service.phonenumber.PhoneNumberService;
 import com.ddu.tes.utils.Constant;
@@ -46,6 +48,7 @@ public class UserServiceImpl implements UserService {
                 return  null;
             }
 
+
             User filter = new User();
             filter.setEmail(email);
 
@@ -59,7 +62,8 @@ public class UserServiceImpl implements UserService {
                 return  result;
             }
 
-            result.setStatusCode(0);
+
+             result.setStatusCode(0);
             result.setUsrId(user.getUserId());
             result.setUsrFirstName(user.getFirstName());
             result.setUsrLastName(user.getLastName());
@@ -159,6 +163,7 @@ public GetUserByPhoneResult getUserByPhone(String phoneNumber) {
 
         try {
             User newUser = new User();
+            UserRole userRole=new UserRole();
             newUser.setFirstName(confirmCreateUser.getFirstName());
             newUser.setLastName(confirmCreateUser.getLastName());
             newUser.setGrandFatherName(confirmCreateUser.getGrandFatherName());
@@ -174,7 +179,14 @@ public GetUserByPhoneResult getUserByPhone(String phoneNumber) {
             newUser.setEnabled(Boolean.TRUE);
             newUser.setCreatedBy(Constant.SYSTEM);
             newUser.setUuid(Constant.generatenumber());
-            newUser = (User) sqlRepository.insert(newUser);
+
+            User savedUser = (User) sqlRepository.insert(newUser);
+            userRole.setUserId(savedUser.getUserId());
+            userRole.setRoleId(confirmCreateUser.getRoleId());
+            userRole.setCreatedBy(Constant.SYSTEM);
+            userRole.setDescription(confirmCreateUser.getRoleName());
+
+            userRole = (UserRole) sqlRepository.insert(userRole);
 
             responseModel.setStatusCode(0);
             responseModel.setStatusMessage("Successfully created user");
@@ -186,6 +198,8 @@ public GetUserByPhoneResult getUserByPhone(String phoneNumber) {
             responseModel.setGender(confirmCreateUser.getGender());
             responseModel.setDateOfBirth(confirmCreateUser.getDateOfBirth());
             responseModel.setDepartmentId(confirmCreateUser.getDepartmentId());
+            responseModel.setRoleId(confirmCreateUser.getRoleId());
+
 
             return responseModel;
 
@@ -206,6 +220,8 @@ public GetUserByPhoneResult getUserByPhone(String phoneNumber) {
 
             List<Object> userList = sqlRepository.findAll(User.class);
             List<Object> depList=sqlRepository.findAll(Department.class);
+           List<Object> userRole=sqlRepository.findAll(UserRole.class);
+
             if (userList == null) {
                 responseModel.setStatusCode(1000);
                 responseModel.setStatusMessage("No user found");
@@ -235,7 +251,19 @@ public GetUserByPhoneResult getUserByPhone(String phoneNumber) {
                 if (filterDepartment != null){
                     userMap.put("deptName", filterDepartment.getDepartmentName());
                 }
+                UserRole filterUser = new UserRole();
+                filterUser.setUserId(((User) user).getUserId());
+                filterUser = (UserRole) sqlRepository.findOne(filterUser);
 
+                for(Object uR:userRole){
+
+                if (filterUser != null){
+                    Role filterRole = new Role();
+                    filterRole.setRoleId(((UserRole) uR).getRoleId());
+                    filterRole = (Role) sqlRepository.findOne(filterRole);
+                    if(filterUser != null)
+                    userMap.put("roleName", filterRole.getName());
+                }}
                 selectedUserList.add(userMap);
             }
             responseModel.setStatusCode(0);
@@ -256,18 +284,25 @@ public EditUserResponseModel editUser(EditUserRequestModel confirmEditUser){
 
         try {
             User filterUser = new User();
+            UserRole filterUserRole = new UserRole();
+
 
             filterUser.setUserId(confirmEditUser.getUsrId());
-
+            filterUserRole.setUserRole(confirmEditUser.getUsrUserRole());
             filterUser = (User) sqlRepository.findOne(filterUser);
-
+            filterUserRole = (UserRole) sqlRepository.findOne(filterUserRole);
             if(filterUser == null){
 
                 responseModel.setStatusCode(1000);
-                responseModel.setStatusMessage("Department not found");
+                responseModel.setStatusMessage("user not found");
                 return responseModel;
             }
+            if(filterUserRole == null){
 
+                responseModel.setStatusCode(1000);
+                responseModel.setStatusMessage("user not found");
+                return responseModel;
+            }
             filterUser.setFirstName(confirmEditUser.getFirstName());
             filterUser.setLastName(confirmEditUser.getLastName());
             filterUser.setGrandFatherName(confirmEditUser.getGrandFatherName());
@@ -277,12 +312,13 @@ public EditUserResponseModel editUser(EditUserRequestModel confirmEditUser){
             filterUser.setDepartmentId(confirmEditUser.getDepartmentId());
             filterUser.setDateOfBirth(confirmEditUser.getDateOfBirth());
 
-
-
             sqlRepository.update(filterUser);
+             filterUserRole.setRoleId(confirmEditUser.getUsrRoleId());
+            sqlRepository.update(filterUserRole);
+
 
             responseModel.setStatusCode(0);
-            responseModel.setStatusMessage("Successfully Updated department");
+            responseModel.setStatusMessage("Successfully Updated user");
             responseModel.setFirstName(filterUser.getFirstName());
             responseModel.setLastName(filterUser.getLastName());
             responseModel.setGrandFatherName(filterUser.getGrandFatherName());
@@ -291,7 +327,7 @@ public EditUserResponseModel editUser(EditUserRequestModel confirmEditUser){
             responseModel.setGender(filterUser.getGender());
             responseModel.setDepartmentId(filterUser.getDepartmentId());
             responseModel.setDateOfBirth(filterUser.getDateOfBirth());
-
+            responseModel.setUsrRoleId(filterUserRole.getRoleId());
             return  responseModel;
 
         }catch (Exception ex) {
@@ -301,6 +337,8 @@ public EditUserResponseModel editUser(EditUserRequestModel confirmEditUser){
             return  responseModel;
         }
     }
+
+
 
 
 }

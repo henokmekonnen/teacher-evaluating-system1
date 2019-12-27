@@ -59,12 +59,14 @@
                                         <th>Email</th>
                                         <th>Gender</th>
                                         <th>Department</th>
+                                        <th>Role IN Department</th>
                                         <th>Actions</th>
+                                        <th>Change Role</th>
                                     </tr>
                                     </thead>
 
                                     <tbody>
-                                    <tr th:each="usr: ${userList}">
+                                    <tr th:each="usr: ${userRoleList}">
                                         <td th:text="${usr.usrFirstName}"></td>
                                         <td th:text="${usr.usrLastName}"></td>
                                         <td th:text="${usr.usrGrandFatherName}"></td>
@@ -73,9 +75,13 @@
                                         <td th:text="${usr.usrEmail}"></td>
                                         <td th:text="${usr.usrGender}"></td>
                                         <td th:text="${usr.deptName}"></td>
-
+                                        <td th:text="${usr.roleName}"></td>
                                         <td>
                                             <a  class="fa fa-edit btn btn-primary btn-sm "  style="margin-bottom: 20px" th:href="@{'/user/editUsers/'+ ${usr.usrEmail}}">Edit</a>
+
+                                        </td>
+                                        <td>
+                                            <a  class="fa fa-edit btn btn-primary btn-sm "  style="margin-bottom: 20px" th:href="@{'/userrole/editUsersRole/'+ ${usr.usrRoleId}}">EditRole</a>
 
                                         </td>
                                     </tr>

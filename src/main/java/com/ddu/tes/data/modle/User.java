@@ -1,7 +1,6 @@
 package com.ddu.tes.data.modle;
 
 import javax.persistence.*;
-import javax.validation.constraints.Pattern;
 import java.util.Objects;
 
 /**
@@ -28,7 +27,7 @@ public class User extends BaseModel{
 
     @Id
     @Column(name = "UserId", nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+      @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getUserId() {
         return userId;
     }
@@ -191,7 +190,7 @@ public class User extends BaseModel{
     }
 
 
-    @Override
+@Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -217,6 +216,6 @@ public class User extends BaseModel{
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, uuid, firstName, lastName, grandFatherName, dateOfBirth, createdDate, createdBy, userName, password, email, phoneNumber, changePasswordRequired, isLocked, isEnabled, gender, DepartmentId);
+        return Objects.hash(userId, uuid, firstName, lastName, grandFatherName, dateOfBirth, createdDate, createdBy, userName, password, email, phoneNumber, changePasswordRequired, isLocked, isEnabled, gender);
     }
 }

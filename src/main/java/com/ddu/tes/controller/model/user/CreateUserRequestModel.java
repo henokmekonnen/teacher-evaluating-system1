@@ -14,13 +14,14 @@ public class CreateUserRequestModel {
     private String gender;
     private String departmentName;
     private Integer departmentId;
+    private Integer roleId;
      private String dateOfBirth;
     private String userName;
     private String password;
     private Boolean isLocked;
     private Boolean isEnable;
     private Boolean changePasswordRequired;
-
+private String roleName;
 
     public String getFirstName() {
         return firstName;
@@ -140,5 +141,21 @@ public class CreateUserRequestModel {
 
     public void setChangePasswordRequired(Boolean changePasswordRequired) {
         this.changePasswordRequired = changePasswordRequired;
+    }
+
+    public Integer getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(Integer roleId) {
+        this.roleId = roleId;
+    }
+
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
     }
 }

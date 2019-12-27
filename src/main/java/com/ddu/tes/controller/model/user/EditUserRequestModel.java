@@ -17,8 +17,17 @@ public class EditUserRequestModel extends AbstractResponseModel {
     private Integer departmentId;
     private String dateOfBirth;
     private Integer usrId;
+    private Integer usrRoleId;
+    private String usrRoleName;
+    private Integer usrUserRole;
 
+    public Integer getUsrUserRole() {
+        return usrUserRole;
+    }
 
+    public void setUsrUserRole(Integer usrUserRole) {
+        this.usrUserRole = usrUserRole;
+    }
 
     public String getFirstName() {
         return firstName;
@@ -99,5 +108,21 @@ public class EditUserRequestModel extends AbstractResponseModel {
 
     public void setUsrId(Integer usrId) {
         this.usrId = usrId;
+    }
+
+    public Integer getUsrRoleId() {
+        return usrRoleId;
+    }
+
+    public void setUsrRoleId(Integer usrRoleId) {
+        this.usrRoleId = usrRoleId;
+    }
+
+    public String getUsrRoleName() {
+        return usrRoleName;
+    }
+
+    public void setUsrRoleName(String usrRoleName) {
+        this.usrRoleName = usrRoleName;
     }
 }

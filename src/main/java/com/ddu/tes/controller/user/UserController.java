@@ -8,10 +8,14 @@ import com.ddu.tes.data.repository.SqlRepository;
 import com.ddu.tes.service.department.DepartmentService;
 import com.ddu.tes.service.department.GetAllDepartmentListResult;
 import com.ddu.tes.service.phonenumber.PhoneNumberService;
+import com.ddu.tes.service.role.GetAllRoleList;
+import com.ddu.tes.service.role.RoleService;
 import com.ddu.tes.service.user.GetAllUserListResult;
 import com.ddu.tes.service.user.GetUserByEmailResult;
 import com.ddu.tes.service.user.GetUserByPhoneResult;
 import com.ddu.tes.service.user.UserService;
+import com.ddu.tes.service.userrole.GetUserRoleList;
+import com.ddu.tes.service.userrole.UserRoleService;
 import com.ddu.tes.service.validation.ValidationService;
 import com.ddu.tes.utils.Constant;
 import org.apache.commons.lang.StringUtils;
@@ -39,11 +43,16 @@ import java.util.Map;
 @SessionAttributes({"createUserRequestModel, editUserRequestModel"})
 public class UserController {
     private static final Log logger = LogFactory.getLog(UserController.class);
+@Autowired
+    RoleService roleService;
+
  @Autowired
     SqlRepository sqlRepository;
 
     @Autowired
     UserService userService;
+    @Autowired
+    UserRoleService userRoleService;
 
     @Autowired
     DepartmentService departmentService;
@@ -60,10 +69,15 @@ public class UserController {
         try {
             GetAllDepartmentListResult departmentListResult = departmentService.getAllDepartments();
             GetAllUserListResult userListResult=userService.getAllUsers();
+
+            GetAllRoleList roleListResult = roleService.getAllRole();
             CreateUserRequestModel createUserRequestModel = new CreateUserRequestModel();
+            model.addAttribute("roleListResult", roleListResult.getRoleList());
             model.addAttribute("createUserRequestModel",createUserRequestModel);
             model.addAttribute("departmentListResult", departmentListResult.getDepartmentList());
             model.addAttribute("userListResult", userListResult);
+
+
             return "user/create-user";
 
         }catch (Exception ex){
@@ -98,10 +112,11 @@ public class UserController {
         try {
             List<String> errorList = new ArrayList<String>();
             GetAllDepartmentListResult departmentListResult = departmentService.getAllDepartments();
+            GetAllRoleList roleListResult = roleService.getAllRole();
 
             model.addAttribute("createUserRequestModel",confirmCreateUser);
             model.addAttribute("departmentListResult", departmentListResult.getDepartmentList());
-
+            model.addAttribute("roleListResult", roleListResult.getRoleList());
             if (StringUtils.isBlank(confirmCreateUser.getFirstName())){
                 result.rejectValue("firstName", "error.firstName", "name must be valid.");
                 model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
@@ -203,7 +218,7 @@ public class UserController {
 
                 if (maxAgentAgeAllowed > age.getYears() ) {
 
-                    result.rejectValue("dob", "error.dob", "User must be above 18 years old.");
+                    result.rejectValue("dateOfBirth", "error.dateOfBirth", "User must be above 18 years old.");
 
                     errorList.add("User must be above 18 years old.");
                     model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
@@ -237,6 +252,21 @@ public class UserController {
                 }
             }
 
+            for(Map<String, Object> role : roleListResult.getRoleList()){
+
+                if(role.get("roleId").equals(confirmCreateUser.getRoleId())){
+
+                    confirmCreateUser.setRoleName(role.get("roleName").toString());
+                }
+            }
+            if (confirmCreateUser.getRoleId() == null){
+                result.rejectValue("roleId", "error.roleId", "Please provide role name");
+                model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
+                model.addAttribute(Constant.MESSAGE, "Please provide role name.");
+                return "user/create-user";
+
+            }
+
 
             return "user/create-user-confirm";
 
@@ -254,9 +284,10 @@ public class UserController {
 
         try {
             GetAllDepartmentListResult departmentListResult = departmentService.getAllDepartments();
+             GetAllRoleList roleListResult=roleService.getAllRole();
             model.addAttribute("createUserRequestModel",confirmCreateUser);
             model.addAttribute("departmentListResult", departmentListResult.getDepartmentList());
-
+            model.addAttribute("roleListResult",roleListResult.getRoleList());
             CreateUserResponseModel responseModel = userService.createUser(confirmCreateUser);
 
             if(responseModel.getStatusCode() != 0){
@@ -285,11 +316,15 @@ public class UserController {
     @RequestMapping(value = "/userList", method = RequestMethod.GET)
     public String userList(Model model, HttpSession session, RedirectAttributes redirectAttributes) {
         try {
-
             GetAllUserListResult userListResult = userService.getAllUsers();
+            model.addAttribute("userListResult", userListResult.getUserList());
+            GetAllRoleList roleListResult =roleService.getAllRole();
+            GetUserRoleList userRoleList=userRoleService.getAllUsersRole();
             GetAllDepartmentListResult departmentListResult = departmentService.getAllDepartments();
-            model.addAttribute("departmentListResult", departmentListResult.getDepartmentList());
-            model.addAttribute("userList", userListResult.getUserList());
+//            model.addAttribute("departmentListResult", departmentListResult.getDepartmentList());
+//
+//            model.addAttribute("roleListResult", roleListResult.getRoleList());
+            model.addAttribute("userRoleList", userRoleList.getUserRoleList());
             return "user/user-list";
 
         } catch (Exception ex) {
@@ -306,6 +341,8 @@ public class UserController {
 
         GetAllDepartmentListResult departmentListResult = departmentService.getAllDepartments();
         model.addAttribute("departmentListResult", departmentListResult.getDepartmentList());
+GetAllRoleList roleList=roleService.getAllRole();
+        model.addAttribute("roleList", roleList.getRoleList());
 
         try {
             if(email == null){
@@ -321,6 +358,7 @@ public class UserController {
                 model.addAttribute(Constant.MESSAGE, result.getStatusMessage());
                 return "user/user-list";
             }
+
             EditUserRequestModel editUserRequestModel = new EditUserRequestModel();
 
             editUserRequestModel.setFirstName(result.getUsrFirstName());
@@ -332,6 +370,7 @@ public class UserController {
             editUserRequestModel.setDepartmentId(result.getUsrDepartmentId());
             editUserRequestModel.setDateOfBirth(result.getUsrDateOfBirth());
             editUserRequestModel.setUsrId(result.getUsrId());
+
 
             model.addAttribute("editUserRequestModel", editUserRequestModel);
 
@@ -353,7 +392,8 @@ public class UserController {
         try {
             List<String> errorList = new ArrayList<String>();
             GetAllDepartmentListResult departmentListResult = departmentService.getAllDepartments();
-
+            GetAllRoleList roleListResult =roleService.getAllRole();
+            model.addAttribute("roleListResult", roleListResult.getRoleList());
             model.addAttribute("editUserRequestModel",editUserRequestModel);
             model.addAttribute("departmentListResult", departmentListResult.getDepartmentList());
 
@@ -485,7 +525,20 @@ public class UserController {
                     editUserRequestModel.setDepartmentName(deparment.get("dptName").toString());
                 }
             }
+            for(Map<String, Object> role : roleListResult.getRoleList()){
 
+                if(role.get("roleId").equals(editUserRequestModel.getUsrRoleId())){
+
+                    editUserRequestModel.setUsrRoleName(role.get("roleName").toString());
+                }
+            }
+            if (editUserRequestModel.getUsrRoleId() == null){
+                result.rejectValue("usrRoleId", "error.usrRoleId", "Please provide role name");
+                model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
+                model.addAttribute(Constant.MESSAGE, "Please provide role name.");
+                return "user/edit-user";
+
+            }
             return "user/edit-user-confirm";
 
         }catch (Exception ex){
@@ -499,6 +552,8 @@ public class UserController {
     @RequestMapping(value = "/updateUser", method = RequestMethod.POST)
     public String editUser(@ModelAttribute EditUserRequestModel confirmEditUser, BindingResult result, Model model) {
         EditUserResponseModel responseModel= userService.editUser(confirmEditUser);
+        GetAllRoleList roleListResult =roleService.getAllRole();
+        model.addAttribute("roleListResult", roleListResult.getRoleList());
         GetAllDepartmentListResult departmentListResult = departmentService.getAllDepartments();
         model.addAttribute("departmentListResult", departmentListResult.getDepartmentList());
         try {
@@ -509,7 +564,11 @@ public class UserController {
                 model.addAttribute(Constant.MESSAGE, " Invalid user id");
                 return "user/edit-user";
             }
-
+            if(confirmEditUser.getUsrUserRole() == null){
+                model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
+                model.addAttribute(Constant.MESSAGE, " Invalid user id");
+                return "user/edit-user";
+            }
 
             if(responseModel.getStatusCode() != 0){
                 model.addAttribute("editUserRequestModel",confirmEditUser);

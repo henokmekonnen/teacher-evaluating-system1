@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+<head>
+    <meta charset="UTF-8">
+
+</head>
+<body>
+<div layout:fragment="wrapper">
+    <div class="breadcrumbs">
+        <div class="breadcrumbs-inner">
+            <div class="row m-0">
+                <div class="col-sm-4">
+                    <div class="page-header float-left">
+                        <div class="page-title">
+                            <h1>Manage Role</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-8">
+                    <div class="page-header float-right">
+                        <div class="page-title">
+                            <ol class="breadcrumb text-right">
+
+
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="animated fadeIn">
+            <div class="row">
+
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong>Title</strong>
+                        </div>
+                        <form th:action="@{question/createQuestion}" th:object="${responseModel}" method="post" enctype="multipart/form-data" class="form-horizontal" id="create-org-frm">
+                            <div th:replace="fragments/messageAlert :: alert(type=${type}, message=${message})"></div>
+
+
+                            <div class="row form-group">
+
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label><strong>Question</strong> <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="question" readonly="readonly"
+                                               name="question" th:field="*{question}" required="required" />
+                                        <span class="form-error"
+                                              th:if="${#fields.hasErrors('question')}"
+                                              th:errors="*{question}">...</span>
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+
+
+                            <div class="row form-group">
+
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label><strong>Description</strong> <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="description"  readonly="readonly"
+                                               name="description" th:field="*{description}" required="required" />
+                                        <span class="form-error"
+                                              th:if="${#fields.hasErrors('description')}"
+                                              th:errors="*{description}">...</span>
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+                            <div class="btn pull-right" >
+                                <a  th:href="@{'/home'}" class="btn btn-secondary btn-sm"></i> Cancel</a>
+
+                            </div>
+
+                        </form>
+
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>
+
+
+

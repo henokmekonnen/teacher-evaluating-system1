@@ -49,6 +49,9 @@
                                     <input  hidden="hidden" type="text" class="form-control" id="usrId"
                                             name="usrId" th:field="*{usrId}" required="required" >
 
+                                    <input  hidden="hidden" type="text" class="form-control" id="usrUserRole"
+                                    name="usrUserRole" th:field="*{usrUserRole}" required="required" >
+
 
                                     <div class="col-lg-4">
                                         <div class="form-group" >
@@ -157,6 +160,19 @@
                                             <span class="form-error"
                                                   th:if="${#fields.hasErrors('departmentId')}"
                                                   th:errors="*{departmentId}">...</span>
+                                        </div></div>
+                                    <div class="col-lg-4">
+
+                                        <div class="form-group">
+                                            <label><strong>Role In Department</strong> <span class="text-danger">*</span></label>
+                                            <select class="form-control" name="usrRoleId" required="required"  th:field="*{usrRoleId}">
+                                                <option value=""> please select Role </option>
+                                                <option th:each="role:${roleListResult}" th:value="${role.roleId}"
+                                                        th:text="${role.roleName}"></option>
+                                            </select>
+                                            <span class="form-error"
+                                                  th:if="${#fields.hasErrors('usrRoleId')}"
+                                                  th:errors="*{usrRoleId}">...</span>
                                         </div></div>
 
                                 </div>

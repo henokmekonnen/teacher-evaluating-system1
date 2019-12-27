@@ -112,4 +112,11 @@ public class GetUserByEmailResult extends AbstractResponseModel {
     public void setUsrId(Integer usrId) {
         this.usrId = usrId;
     }
+
+
+
+
+
+
+
 }
