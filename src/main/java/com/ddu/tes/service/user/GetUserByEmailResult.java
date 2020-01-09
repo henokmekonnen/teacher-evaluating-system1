@@ -15,7 +15,15 @@ public class GetUserByEmailResult extends AbstractResponseModel {
     private Integer usrDepartmentId;
     private String usrDateOfBirth;
     private Integer usrId;
+    private Integer usrRoleId;
 
+    public Integer getUsrRoleId() {
+        return usrRoleId;
+    }
+
+    public void setUsrRoleId(Integer usrRoleId) {
+        this.usrRoleId = usrRoleId;
+    }
 
     public boolean isUserExists() {
         return userExists;

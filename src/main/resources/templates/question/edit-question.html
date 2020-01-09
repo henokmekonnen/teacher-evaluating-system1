@@ -39,10 +39,10 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header">
-                            <strong>Insert Question</strong>
+                            <strong>Edit Question</strong>
                         </div>
                         <div class="card-body card-block">
-                            <form th:action="@{/question/confirmCreateQuestion}" th:object="${createQuestionRequestModel}" method="post" enctype="multipart/form-data" class="form-horizontal" id="create-org-frm">
+                            <form th:action="@{/question/confirmEditQuestion}" th:object="${editQuestionRequestModel}" method="POST" enctype="multipart/form-data" class="form-horizontal" id="create-org-frm">
                                 <div th:replace="fragments/messageAlert :: alert(type=${type}, message=${message})"></div>
                                 <div class="row form-group">
 
@@ -50,7 +50,7 @@
                                     <div class="col-lg-6">
 <!--                                        <div class="form-group" >-->
 <!--                                            <label><strong>Write question</strong> <span class="text-danger">*</span></label>-->
-<!--                                            <input type="textarea" class="form-control" id="question" name="question"-->
+<!--                                            <input type="text" class="form-control" id="question" name="question"-->
 <!--                                                   th:field="*{question}" required="required" >-->
 <!--                                            <span class="form-error"-->
 <!--                                                  th:if="${#fields.hasErrors('question')}"-->
@@ -66,14 +66,15 @@
 
                                 <div class="row form-group">
 
+
                                     <div class="col-lg-4">
 
                                         <div class="form-group">
                                             <label><strong>Question For</strong> <span class="text-danger">*</span></label>
                                             <select class="form-control" name="typeLookLp" required="required"  th:field="*{typeLookLp}">
-                                                <option value=""> please select Question Access </option>
-                                                <option th:each="lookUp:${lookUpList}" th:value="${lookUp.lookUpId}"
-                                                        th:text="${lookUp.descrption}"></option>
+                                                <option value=""> please select Role </option>
+                                                <option th:each="role:${lookUpList}" th:value="${role.lookUpId}"
+                                                        th:text="${role.descrption}"></option>
                                             </select>
                                             <span class="form-error"
                                                   th:if="${#fields.hasErrors('typeLookLp')}"
@@ -92,6 +93,7 @@
                                                   th:if="${#fields.hasErrors('questionType')}"
                                                   th:errors="*{questionType}">...</span>
                                         </div></div>
+
                                 </div>
 
                                 <div class="row form-group">
@@ -111,7 +113,7 @@
 
                                 </div>
                                 <div class="btn pull-right" >
-                                    <a  th:href="@{'/home'}" class="btn btn-secondary btn-sm"></i> Cancel</a>
+                                    <a  th:href="@{'/department/departmentList'}" class="btn btn-secondary btn-sm"></i> Cancel</a>
                                     <button type="submit" class="btn  btn-primary btn-sm">
                                         Confirm
                                     </button>
@@ -131,4 +133,3 @@
 </div>
 </body>
 </html>
-

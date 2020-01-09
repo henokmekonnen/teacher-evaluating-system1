@@ -111,7 +111,7 @@ public class UserRoleServiceImpl implements UserRoleService{
                 responseModel.setStatusMessage("user not found");
                 return responseModel;
             }
-
+            filterUserRole.setUserId(confirmEditUserRole.getUserId());
             filterUserRole.setRoleId(confirmEditUserRole.getRoleId());
             sqlRepository.update(filterUserRole);
 
@@ -119,6 +119,7 @@ public class UserRoleServiceImpl implements UserRoleService{
             responseModel.setStatusCode(0);
             responseModel.setStatusMessage("Successfully Updated user");
             responseModel.setRoleId(filterUserRole.getRoleId());
+            responseModel.setUserId(filterUserRole.getUserId());
             return  responseModel;
 
         }catch (Exception ex) {

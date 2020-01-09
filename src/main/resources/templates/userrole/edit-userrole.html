@@ -53,8 +53,8 @@
                                         <label><strong>User Name</strong> <span class="text-danger">*</span></label>
                                         <select class="form-control" name="userId" readonly="readonly" required="required"  th:field="*{userId}">
                                             <option value=""> please select Role </option>
-                                            <option th:each="user:${userListResult}" th:value="${user.userId}"
-                                                    th:text="${user.userName}"></option>
+                                            <option th:each="user:${userListResult}" th:value="${user.usrId}"
+                                                    th:text="${user.usrFirstName}"></option>
                                         </select>
                                         <span class="form-error"
                                               th:if="${#fields.hasErrors('userId')}"
@@ -68,14 +68,14 @@
 
                                         <div class="form-group">
                                             <label><strong>Role In Department</strong> <span class="text-danger">*</span></label>
-                                            <select class="form-control" name="usrRoleId" required="required"  th:field="*{usrRoleId}">
+                                            <select class="form-control" name="roleId" required="required"  th:field="*{roleId}">
                                                 <option value=""> please select Role </option>
                                                 <option th:each="role:${roleListResult}" th:value="${role.roleId}"
                                                         th:text="${role.roleName}"></option>
                                             </select>
                                             <span class="form-error"
-                                                  th:if="${#fields.hasErrors('usrRoleId')}"
-                                                  th:errors="*{usrRoleId}">...</span>
+                                                  th:if="${#fields.hasErrors('roleId')}"
+                                                  th:errors="*{roleId}">...</span>
                                         </div>
                                 </div>
 

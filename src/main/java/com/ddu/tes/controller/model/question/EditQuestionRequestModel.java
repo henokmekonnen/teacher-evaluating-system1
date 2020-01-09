@@ -1,14 +1,29 @@
-package com.ddu.tes.service.question;
+package com.ddu.tes.controller.model.question;
 
-import com.ddu.tes.controller.model.AbstractResponseModel;
-
-public class GetQuestionResult extends  AbstractResponseModel{
-   private boolean questionExists;
+public class EditQuestionRequestModel {
     private Integer  questionId;
     private String  question;
     private String description;
     private String typeLookLp;
     private String  questionType;
+    private String descName;
+    private String qstName;
+
+    public String getQstName() {
+        return qstName;
+    }
+
+    public void setQstName(String qstName) {
+        this.qstName = qstName;
+    }
+
+    public String getDescName() {
+        return descName;
+    }
+
+    public void setDescName(String descName) {
+        this.descName = descName;
+    }
 
     public String getQuestionType() {
         return questionType;
@@ -49,13 +64,4 @@ public class GetQuestionResult extends  AbstractResponseModel{
     public void setTypeLookLp(String typeLookLp) {
         this.typeLookLp = typeLookLp;
     }
-
-    public boolean isQuestionExists() {
-            return questionExists;
-        }
-
-        public void setQuestionExists(boolean questionExists) {
-            this.questionExists = questionExists;
-        }
-    }
-
+}

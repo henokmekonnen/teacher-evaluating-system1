@@ -69,7 +69,7 @@ public class QuestionAnswer {
         this.description = description;
     }
 
-    @Id
+    @Basic
     @Column(name = "QuestionId", nullable = false)
     public Integer getQuestionId() {
         return questionId;

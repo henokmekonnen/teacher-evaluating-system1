@@ -288,9 +288,8 @@ public EditUserResponseModel editUser(EditUserRequestModel confirmEditUser){
 
 
             filterUser.setUserId(confirmEditUser.getUsrId());
-            filterUserRole.setUserRole(confirmEditUser.getUsrUserRole());
             filterUser = (User) sqlRepository.findOne(filterUser);
-            filterUserRole = (UserRole) sqlRepository.findOne(filterUserRole);
+            filterUserRole = (UserRole) sqlRepository.findOne(filterUser);
             if(filterUser == null){
 
                 responseModel.setStatusCode(1000);

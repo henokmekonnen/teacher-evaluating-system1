@@ -14,7 +14,7 @@
                 <div class="col-sm-4">
                     <div class="page-header float-left">
                         <div class="page-title">
-                            <h1>Manage Role</h1>
+                            <h1>Manage Question</h1>
                         </div>
                     </div>
                 </div>
@@ -39,53 +39,96 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header">
-                            <strong>Title</strong>
+                            <strong>Insert Question Success </strong>
                         </div>
-                        <form th:action="@{question/createQuestion}" th:object="${responseModel}" method="post" enctype="multipart/form-data" class="form-horizontal" id="create-org-frm">
-                            <div th:replace="fragments/messageAlert :: alert(type=${type}, message=${message})"></div>
+                        <div class="card-body card-block">
+                            <form th:action="@{/question/createQuestion}" th:object="${responseModel}" method="post" enctype="multipart/form-data" class="form-horizontal" id="create-org-frm">
+                                <div th:replace="fragments/messageAlert :: alert(type=${type}, message=${message})"></div>
+                                <div class="row form-group">
 
 
-                            <div class="row form-group">
-
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label><strong>Question</strong> <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="question" readonly="readonly"
-                                               name="question" th:field="*{question}" required="required" />
-                                        <span class="form-error"
-                                              th:if="${#fields.hasErrors('question')}"
-                                              th:errors="*{question}">...</span>
+                                    <div class="col-lg-6">
+<!--                                        <div class="form-group" >-->
+<!--                                            <label><strong>Write Question</strong> <span class="text-danger">*</span></label>-->
+<!--                                            <input type="textarea" class="form-control" id="question" name="question"   readolny="readolny"-->
+<!--                                                   th:field="*{question}" required="required" >-->
+<!--                                            <span class="form-error"-->
+<!--                                                  th:if="${#fields.hasErrors('question')}"-->
+<!--                                                  th:errors="*{question}">...</span>-->
+<!--                                        </div>-->
+                                        <div class="form-group">
+                                            <label for="question" >Write question:</label>
+                                            <textarea class="form-control" rows="3" id="question" name="question"  readolny="readolny"
+                                                      th:field="*{question}" required="required"></textarea>
+                                        </div>
                                     </div>
+                                </div>
+
+                                <div class="row form-group">
+
+<!--                                    <div class="col-lg-6">-->
+<!--                                        <div class="form-group">-->
+<!--                                            <label><strong>Number Of Staff</strong> <span class="text-danger">*</span></label>-->
+<!--                                            <input type="text" class="form-control" id="code"    readolny="readolny"-->
+<!--                                                   name="code" th:field="*{typeLookLp}" required="required" >-->
+<!--                                            <span class="form-error"-->
+<!--                                                  th:if="${#fields.hasErrors('typeLookLp')}"-->
+<!--                                                  th:errors="*{typeLookLp}">...</span>-->
+<!--                                        </div>-->
+
+<!--                                    </div>-->
+                                    <div class="col-lg-4">
+
+                                        <div class="form-group">
+                                            <label><strong>Question For</strong> <span class="text-danger">*</span></label>
+                                            <select class="form-control" name="typeLookLp" required="required"  th:field="*{typeLookLp}">
+                                                <option value=""> please select Question Access </option>
+                                                <option th:each="role:${lookUpList}" th:value="${role.lookUpId}"
+                                                        th:text="${role.descrption}"></option>
+                                            </select>
+                                            <span class="form-error"
+                                                  th:if="${#fields.hasErrors('typeLookLp')}"
+                                                  th:errors="*{typeLookLp}">...</span>
+                                        </div></div>
+                                    <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label><strong>Question Type</strong> <span class="text-danger">*</span></label>
+                                        <select class="form-control" name="questionType" readonly="readonly" required="required"  th:field="*{questionType}">
+                                            <option value=""> please select Question Type </option>
+                                            <option th:each="lookUp:${questionTypeList}" th:value="${lookUp.questionTypeId}"
+                                                    th:text="${lookUp.description}"></option>
+                                        </select>
+                                        <span class="form-error"
+                                              th:if="${#fields.hasErrors('questionType')}"
+                                              th:errors="*{questionType}">...</span>
+                                    </div></div>
+
 
                                 </div>
 
+                                <div class="row form-group">
 
-                            </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label><strong>Description</strong> <span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" id="description"  readolny="readolny"
+                                                   name="description" th:field="*{description}" required="required" >
+                                            <span class="form-error"
+                                                  th:if="${#fields.hasErrors('description')}"
+                                                  th:errors="*{description}">...</span>
+                                        </div>
 
-
-                            <div class="row form-group">
-
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label><strong>Description</strong> <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="description"  readonly="readonly"
-                                               name="description" th:field="*{description}" required="required" />
-                                        <span class="form-error"
-                                              th:if="${#fields.hasErrors('description')}"
-                                              th:errors="*{description}">...</span>
                                     </div>
 
+
+                                </div>
+                                <div class="btn pull-right" >
+                                    <a  th:href="@{'/home'}" class="btn btn-secondary btn-sm"></i> Cancel</a>
+                                    <a  th:href="@{'/question/createQuestion'}" class="btn btn-primary btn-sm"></i> Add Question</a>
                                 </div>
 
-
-                            </div>
-                            <div class="btn pull-right" >
-                                <a  th:href="@{'/home'}" class="btn btn-secondary btn-sm"></i> Cancel</a>
-
-                            </div>
-
-                        </form>
-
+                            </form>
+                        </div>
 
                     </div>
 
@@ -97,6 +140,4 @@
 </div>
 </body>
 </html>
-
-
 

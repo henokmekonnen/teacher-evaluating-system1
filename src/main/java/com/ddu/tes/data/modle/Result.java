@@ -80,7 +80,7 @@ public class Result {
         this.questionAnswerId = questionAnswerId;
     }
 
-    @Id
+    @Basic
     @Column(name = "QuestionId", nullable = false)
     public Integer getQuestionId() {
         return questionId;

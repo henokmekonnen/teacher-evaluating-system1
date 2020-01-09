@@ -1,5 +1,6 @@
 package com.ddu.tes.data.modle;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Id;
 import java.io.Serializable;
@@ -35,7 +36,7 @@ public class ResultPK implements Serializable {
     }
 
     @Column(name = "QuestionAnswerId", nullable = false)
-    @Id
+    @Basic
     public Integer getQuestionAnswerId() {
         return questionAnswerId;
     }
@@ -45,7 +46,7 @@ public class ResultPK implements Serializable {
     }
 
     @Column(name = "QuestionId", nullable = false)
-    @Id
+    @Basic
     public Integer getQuestionId() {
         return questionId;
     }

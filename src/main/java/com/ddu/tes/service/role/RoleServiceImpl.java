@@ -1,10 +1,7 @@
 package com.ddu.tes.service.role;
 
-import com.ddu.tes.data.modle.Question;
 import com.ddu.tes.data.modle.Role;
 import com.ddu.tes.data.repository.SqlRepository;
-import com.ddu.tes.service.question.GetQuestionResult;
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;

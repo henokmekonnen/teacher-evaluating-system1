@@ -8,6 +8,7 @@ import com.ddu.tes.service.role.RoleService;
 import com.ddu.tes.service.user.GetAllUserListResult;
 import com.ddu.tes.service.user.UserService;
 import com.ddu.tes.service.userrole.GetUserRoleId;
+import com.ddu.tes.service.userrole.GetUserRoleList;
 import com.ddu.tes.service.userrole.UserRoleService;
 import com.ddu.tes.utils.Constant;
 import org.apache.commons.logging.Log;
@@ -36,10 +37,10 @@ public class UserRoleController {
 
     @RequestMapping(value = "/editUsersRole/{usrRoleId}", method = RequestMethod.GET)
     public String editUsersRole(Model model, @PathVariable(name = "usrRoleId") Integer roleId) {
-        GetAllUserListResult userListResult = userService.getAllUsers();
-        model.addAttribute("userListResult", userListResult.getUserList());
+        GetUserRoleList userListResult = userRoleService.getAllUsersRole();
+        model.addAttribute("userListResult", userListResult.getUserRoleList());
         GetAllRoleList roleList=roleService.getAllRole();
-        model.addAttribute("roleList", roleList.getRoleList());
+        model.addAttribute("roleListResult", roleList.getRoleList());
 
         try {
             if(roleId == null){
@@ -88,9 +89,11 @@ public class UserRoleController {
             model.addAttribute("editUserRoleRequestModel",editUserRoleRequestModel);
             GetAllUserListResult userListResult = userService.getAllUsers();
             model.addAttribute("userListResult", userListResult.getUserList());
+            GetUserRoleList userListResult1 = userRoleService.getAllUsersRole();
+            model.addAttribute("userListResult", userListResult1.getUserRoleList());
             for(Map<String, Object> user : userListResult.getUserList()){
 
-                if(user.get("userId").equals(editUserRoleRequestModel.getUserId())){
+                if(user.get("usrId").equals(editUserRoleRequestModel.getUserId())){
 
                     editUserRoleRequestModel.setUserName(user.get("usrFirstName").toString());
                 }
@@ -103,7 +106,7 @@ public class UserRoleController {
 
             }
 
-            for(Map<String, Object> role : roleListResult.getRoleList()){
+            for(Map<String, Object> role :roleListResult.getRoleList()){
 
                 if(role.get("roleId").equals(editUserRoleRequestModel.getRoleId())){
 
@@ -118,15 +121,15 @@ public class UserRoleController {
 
             }
 
-            GetUserRoleId result1 = userRoleService.getUserByRoleId(editUserRoleRequestModel.getRoleId());
-
-            if (result1.getStatusCode() != 0) {
-
-                result.rejectValue("roleId", "error.roleId", " Already exists change email.");
-                model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
-                model.addAttribute(Constant.MESSAGE, "user Already exists.");
-                return "userrole/edit-userrole";
-            }
+//            GetUserRoleId result1 = userRoleService.getUserByRoleId(editUserRoleRequestModel.getRoleId());
+//
+//            if (result1.getStatusCode() != 0) {
+//
+//                result.rejectValue("roleId", "error.roleId", " Already exists change email.");
+//                model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
+//                model.addAttribute(Constant.MESSAGE, "user Already exists.");
+//                return "userrole/edit-userrole";
+//            }
 
 
 
@@ -141,15 +144,18 @@ public class UserRoleController {
 
     }
     @RequestMapping(value = "/updateUserRole", method = RequestMethod.POST)
-    public String editUserRole(@ModelAttribute EditUserRoleRequestModel confirmEditUserRole, BindingResult result, Model model) {
-        EditUserRoleResponseModel responseModel= userRoleService.editUserRole(confirmEditUserRole);
-        GetAllRoleList roleListResult =roleService.getAllRole();
-        model.addAttribute("roleListResult", roleListResult.getRoleList());
-        GetAllUserListResult userListResult = userService.getAllUsers();
-        model.addAttribute("userListResult", userListResult.getUserList());
+    public String editUsersRole(@ModelAttribute EditUserRoleRequestModel confirmEditUserRole, BindingResult result, Model model) {
+
         try {
-            model.addAttribute("confirmEditUserRole",confirmEditUserRole);
+            EditUserRoleResponseModel responseModel= userRoleService.editUserRole(confirmEditUserRole);
+            GetAllRoleList roleListResult =roleService.getAllRole();
+            model.addAttribute("roleListResult", roleListResult.getRoleList());
+            GetAllUserListResult userListResult = userService.getAllUsers();
+            model.addAttribute("userListResult", userListResult.getUserList());
+
+            model.addAttribute("editUserRoleRequestModel",confirmEditUserRole);
             model.addAttribute("responseModel", responseModel);
+
             if(confirmEditUserRole.getUserRole() == null){
                 model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
                 model.addAttribute(Constant.MESSAGE, " Invalid user id");
@@ -164,8 +170,7 @@ public class UserRoleController {
             }
 
 
-
-            model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_SUCCESS);
+                      model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_SUCCESS);
             model.addAttribute(Constant.MESSAGE, responseModel.getStatusMessage());
             return "userrole/edit-userrole-success";
 

@@ -42,9 +42,12 @@
                             <strong>Update User Success </strong>
                         </div>
                         <div class="card-body card-block">
-                            <form th:action="@{/userrole/editUserRole}" th:object="${responseModel}" method="POST" enctype="multipart/form-data" class="form-horizontal" id="create-org-frm">
+                            <form th:action="@{/userrole/editUsersRole}" th:object="${responseModel}" method="POST" enctype="multipart/form-data" class="form-horizontal" id="create-org-frm">
                                 <div th:replace="fragments/messageAlert :: alert(type=${type}, message=${message})"></div>
                                 <div class="row form-group">
+                                    <input  hidden="hidden" type="text" class="form-control" id="userRole"
+                                            name="userRole" th:field="*{userRole}" required="required" >
+
 
 
 
@@ -52,8 +55,8 @@
                                         <label><strong>User Name</strong> <span class="text-danger">*</span></label>
                                         <select class="form-control" name="userId" readonly="readonly" required="required"  th:field="*{userId}">
                                             <option value=""> please select Role </option>
-                                            <option th:each="user:${userListResult}" th:value="${user.userId}"
-                                                    th:text="${user.userName}"></option>
+                                            <option th:each="user:${userListResult}" th:value="${user.usrId}"
+                                                    th:text="${user.usrFirstName}"></option>
                                         </select>
                                         <span class="form-error"
                                               th:if="${#fields.hasErrors('userId')}"
@@ -67,14 +70,14 @@
 
                                     <div class="form-group">
                                         <label><strong>Role In Department</strong> <span class="text-danger">*</span></label>
-                                        <select class="form-control" name="usrRoleId" required="required"  th:field="*{usrRoleId}">
+                                        <select class="form-control" name="roleId" required="required"  th:field="*{roleId}">
                                             <option value=""> please select Role </option>
                                             <option th:each="role:${roleListResult}" th:value="${role.roleId}"
                                                     th:text="${role.roleName}"></option>
                                         </select>
                                         <span class="form-error"
-                                              th:if="${#fields.hasErrors('usrRoleId')}"
-                                              th:errors="*{usrRoleId}">...</span>
+                                              th:if="${#fields.hasErrors('roleId')}"
+                                              th:errors="*{roleId}">...</span>
                                     </div>
                                 </div>
 

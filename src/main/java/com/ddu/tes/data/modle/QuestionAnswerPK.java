@@ -22,16 +22,6 @@ public class QuestionAnswerPK implements Serializable {
         this.questionAnswerId = questionAnswerId;
     }
 
-    @Column(name = "QuestionId", nullable = false)
-    @Id
-    public Integer getQuestionId() {
-        return questionId;
-    }
-
-    public void setQuestionId(Integer questionId) {
-        this.questionId = questionId;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

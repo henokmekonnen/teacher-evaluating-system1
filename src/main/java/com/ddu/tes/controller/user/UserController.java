@@ -370,7 +370,7 @@ GetAllRoleList roleList=roleService.getAllRole();
             editUserRequestModel.setDepartmentId(result.getUsrDepartmentId());
             editUserRequestModel.setDateOfBirth(result.getUsrDateOfBirth());
             editUserRequestModel.setUsrId(result.getUsrId());
-
+            editUserRequestModel.setUsrRoleId(result.getUsrRoleId());
 
             model.addAttribute("editUserRequestModel", editUserRequestModel);
 
@@ -393,6 +393,7 @@ GetAllRoleList roleList=roleService.getAllRole();
             List<String> errorList = new ArrayList<String>();
             GetAllDepartmentListResult departmentListResult = departmentService.getAllDepartments();
             GetAllRoleList roleListResult =roleService.getAllRole();
+            GetUserRoleList  usrList=userRoleService.getAllUsersRole();
             model.addAttribute("roleListResult", roleListResult.getRoleList());
             model.addAttribute("editUserRequestModel",editUserRequestModel);
             model.addAttribute("departmentListResult", departmentListResult.getDepartmentList());
@@ -525,20 +526,7 @@ GetAllRoleList roleList=roleService.getAllRole();
                     editUserRequestModel.setDepartmentName(deparment.get("dptName").toString());
                 }
             }
-            for(Map<String, Object> role : roleListResult.getRoleList()){
 
-                if(role.get("roleId").equals(editUserRequestModel.getUsrRoleId())){
-
-                    editUserRequestModel.setUsrRoleName(role.get("roleName").toString());
-                }
-            }
-            if (editUserRequestModel.getUsrRoleId() == null){
-                result.rejectValue("usrRoleId", "error.usrRoleId", "Please provide role name");
-                model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
-                model.addAttribute(Constant.MESSAGE, "Please provide role name.");
-                return "user/edit-user";
-
-            }
             return "user/edit-user-confirm";
 
         }catch (Exception ex){
@@ -594,58 +582,3 @@ GetAllRoleList roleList=roleService.getAllRole();
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//
-//@RestController
-//@RequestMapping("/user")
-//@SessionAttributes({"createUserRequestModel"})
-//public class UserController {
-//
-//    private static final Log logger = LogFactory.getLog(UserController.class);
-//
-//
-//   @Autowired
-//   DepartmentService departmentService;
-//   @Autowired
-//   public UserService userService;
-//    @RequestMapping(value = "/confirmCreateUser", method = RequestMethod.GET)
-//    public String createUser(Model model, HttpSession session, RedirectAttributes redirectAttributes) {
-//
-//       final Log logger = LogFactory.getLog(UserController.class);
-//
-//        try {
-//
-//            GetAllDepartmentListResult departmentListResult = departmentService.getAllDepartments();
-//             model.addAttribute("departmentListResult", departmentListResult);
-//
-//
-//            CreateUserRequestModel createUserRequestModel = new CreateUserRequestModel();
-//            model.addAttribute("createUserRequestModel", createUserRequestModel);
-//          model.addAttribute("departmentListResult", departmentListResult);
-//            return "user/user-home-page";
-//
-//        } catch (Exception ex) {
-//            logger.error("error homepage" + ex, ex.getCause());
-//            model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
-//            model.addAttribute(Constant.MESSAGE, ex.getMessage());
-//            return "user/user-home-page";
-//        }
-//
-//    }
-//}
