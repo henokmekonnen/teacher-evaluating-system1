@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+<head>
+    <meta charset="UTF-8">
+
+</head>
+<body>
+<div layout:fragment="wrapper">
+    <div class="breadcrumbs">
+        <div class="breadcrumbs-inner">
+            <div class="row m-0">
+                <div class="col-sm-4">
+                    <div class="page-header float-left">
+                        <div class="page-title">
+                            <h1>Manage Role</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-8">
+                    <div class="page-header float-right">
+                        <div class="page-title">
+                            <ol class="breadcrumb text-right">
+
+
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="animated fadeIn">
+            <div class="row">
+
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong>CHAIRED </strong>
+                        </div>
+                        <div class="col-lg-auto">
+                            <div class=" form-group" >
+                            <span  >Core Competency
+                            <pre class="form-control"   name="question" th:each="qst :${questionList}"   th:if="${qst.typeLookLp} == STUDENT and ${qst.questionType} == Core-Competency"
+                                 th:text="*{qst.question}" readonly="readonly" required="required">
+
+                            </pre>
+
+                        </span>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-auto">
+                            <div class=" form-group" >
+                            <span  >Professional-Competence
+                            <pre class="form-control"   name="question" th:each="qst :${questionList}"   th:if="${qst.typeLookLp} == STUDENT and ${qst.questionType} == Professional-Competence"
+                                 th:text="*{qst.question}" readonly="readonly" required="required">
+
+                            </pre>
+
+                        </span>
+                            </div>
+                        </div>
+                        <div class="col-lg-auto">
+                            <div class=" form-group" >
+                            <span  >Ethical-Competence
+                            <pre class="form-control"   name="question" th:each="qst :${questionList}"   th:if="${qst.typeLookLp} == STUDENT and ${qst.questionType} ==Ethical-Competence"
+                                 th:text="*{qst.question}" readonly="readonly" required="required">
+
+                            </pre>
+
+                        </span>
+                            </div>
+                        </div>
+                        <div class="col-lg-auto">
+                            <div class=" form-group" >
+                            <span  >Time-Management
+                            <pre class="form-control"   name="question" th:each="qst :${questionList}"   th:if="${qst.typeLookLp} == STUDENT and ${qst.questionType} ==Time-Management"
+                                 th:text="*{qst.question}" readonly="readonly" required="required">
+
+                            </pre>
+
+                        </span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>
+

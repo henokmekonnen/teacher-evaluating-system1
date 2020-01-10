@@ -7,10 +7,7 @@ import com.ddu.tes.controller.model.question.EditQuestionRequestModel;
 import com.ddu.tes.controller.model.question.EditQuestionResponseModel;
 import com.ddu.tes.service.lookup.GetAllLookUpList;
 import com.ddu.tes.service.lookup.LookUpService;
-import com.ddu.tes.service.question.GetAllQuestion;
-import com.ddu.tes.service.question.GetAllQuestionType;
-import com.ddu.tes.service.question.GetQuestionResult;
-import com.ddu.tes.service.question.QuestionServices;
+import com.ddu.tes.service.question.*;
 import com.ddu.tes.service.validation.ValidationService;
 import com.ddu.tes.utils.Constant;
 import org.apache.commons.lang.StringUtils;
@@ -203,7 +200,22 @@ public class QuestionController {
 
     }
 
+    @RequestMapping(value = "/teacherPage", method = RequestMethod.GET)
+    public String questionnList(Model model, HttpSession session, RedirectAttributes redirectAttributes) {
+        try {
 
+            GetAllQuestion questionListResult = questionServices.getAllQuestion();
+            model.addAttribute("questionList", questionListResult.getQuestionList());
+            return "question/teacher-page";
+
+        } catch (Exception ex) {
+            logger.error("error while creating dept" + ex, ex.getCause());
+            model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
+            model.addAttribute(Constant.MESSAGE, ex.getMessage());
+            return "question/teacher-page";
+        }
+
+    }
 
 
 
@@ -254,10 +266,13 @@ public class QuestionController {
 
     }
 
+
     @RequestMapping(value = "/confirmEditQuestion", method = RequestMethod.POST)
     public String confirmEditQuestion(@Valid EditQuestionRequestModel confirmEditQuestion, BindingResult result, Model model) {
 
-        try {List<String> errorList = new ArrayList<String>();
+        try {
+
+            List<String> errorList = new ArrayList<String>();
             GetAllLookUpList lookUpList=lookUpService.getAllLookUp();
             model.addAttribute("lookUpList",lookUpList.getLookUpList());
             GetAllQuestionType questionTypeList= questionServices.getAllQuestionType();
@@ -376,4 +391,5 @@ public class QuestionController {
         }
 
     }
+
 }

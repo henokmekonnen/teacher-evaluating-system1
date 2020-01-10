@@ -104,7 +104,50 @@ public class QuestionServicesImpl implements QuestionServices {
         }
     }
 
+@Override
+public GetAllTeacherQuestion getTeacherQuestion (final String question){
 
+    GetAllTeacherQuestion result = new GetAllTeacherQuestion();
+
+    try {
+
+        if (question == null) {
+            result.setStatusCode(1000);
+            result.setStatusMessage("department name not found");
+            result.setTeacherQuestionExists(Boolean.FALSE);
+            return null;
+        }
+
+        Question filter = new Question();
+        filter.setTypeLookLp(question);
+
+        Question quest = (Question) sqlRepository.findOne(filter);
+
+        if (quest == null) {
+            result.setStatusCode(1000);
+            result.setStatusMessage("department not found");
+            result.setTeacherQuestionExists(Boolean.FALSE);
+            return result;
+        }
+        if (quest.getTypeLookLp().equalsIgnoreCase("teacher")) {
+            result.setStatusCode(0);
+            result.setQuestionId(quest.getQuestionId());
+            result.setQuestion(quest.getQuestion());
+            result.setQuestionType(quest.getQuestionType());
+            result.setDescription(quest.getDescription());
+            result.setTypeLookLp(quest.getTypeLookLp());
+            result.setStatusMessage("Found");
+            result.setTeacherQuestionExists(Boolean.TRUE);
+        }
+        return result;
+    }catch (Exception ex){
+        logger.error(ex);
+        result.setStatusCode(1000);
+        result.setStatusMessage(ex.getMessage());
+        result.setTeacherQuestionExists(Boolean.FALSE);
+        return  result;
+    }
+    }
     @Override
     public boolean questionExist(String question){
         GetQuestionResult result = new GetQuestionResult();
