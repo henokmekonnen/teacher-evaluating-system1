@@ -9,8 +9,8 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "question_answer")
-@IdClass(QuestionAnswerPK.class)
-public class QuestionAnswer {
+
+public class QuestionAnswer extends BaseModel {
     private Integer questionAnswerId;
     private Integer answer;
     private Date createdDate;
@@ -27,6 +27,17 @@ public class QuestionAnswer {
 
     public void setQuestionAnswerId(Integer questionAnswerId) {
         this.questionAnswerId = questionAnswerId;
+    }
+
+    @Override
+    @Transient
+    public Integer getId() {
+        return getQuestionAnswerId();
+    }
+
+    @Override
+    public void setId(Integer id) {
+        setQuestionAnswerId(id);
     }
 
     @Basic

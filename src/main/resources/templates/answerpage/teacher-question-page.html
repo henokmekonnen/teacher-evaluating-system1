@@ -41,27 +41,32 @@
                         <div class="card-header">
                             <strong>TEACHER </strong>
                         </div>
+                        <form th:action="@{/answerpage/confirmAcceptAnswer}" th:object="${acceptAnswerRequestModel}" method="post" enctype="multipart/form-data" class="form-horizontal" id="create-org-frm">
+                            <div th:replace="fragments/messageAlert :: alert(type=${type}, message=${message})"></div>
                         <div class="col-lg-auto">
                         <div class=" form-group" >
                             <span  >Core Competency Subject matter
-                            <pre class="form-control"   name="question" th:each="qst :${questionList}"   th:if="${qst.typeLookLp} == TEACHER and ${qst.questionType} == Core-Competency-Subject-matter"
-                                      th:text="*{qst.question}" readonly="readonly" required="required">
-                            </pre>
+                            <div class="form-control"   name="question" th:each="qst :${questionList}"   th:if="${qst.typeLookLp} == TEACHER and ${qst.questionType} == Core-Competency-Subject-matter"
+                                 th:text="${qst.question}"  readonly="readonly" required="required">
+                            </div>
 
-                        </span>
+                             <input type="radio" id="mulAnswer" name="radios" th:field="*{mulAnswer}" value="5" class="form-check-input">
+                       </span>
                         </div>
                         </div>
                         <div class="col-lg-auto">
                         <div class="form-group" >
                             <span >Core-Competency-Research-and-Community-Services
                             <pre class="form-control"  name="question" th:each="qst :${questionList}"   th:if="${qst.typeLookLp} == TEACHER and ${qst.questionType} == Core-Competency-Research-and-Community-Services"
-                                      th:text="*{qst.question}" readonly="readonly" required="required"></pre>
+                                      th:text="*{qst.question}" readonly="readonly" required="required">
+                        <input type="radio" id="radio2" name="radios" value="option2" class="form-check-input" />
+                            </pre>
                                 </span >
                         </div>
                         </div>
                         <div class="col-lg-auto">
                             <div class=" form-group" >
-                            <span  >Professional-Competence
+                            <span>Professional-Competence
                             <pre class="form-control"   name="question" th:each="qst :${questionList}"   th:if="${qst.typeLookLp} == TEACHER and ${qst.questionType} == Professional-Competence"
                                  th:text="*{qst.question}" readonly="readonly" required="required">
 
@@ -72,7 +77,7 @@
                         </div>
                         <div class="col-lg-auto">
                             <div class=" form-group" >
-                            <span  >Ethical-Competence
+                            <span>Ethical-Competence
                             <pre class="form-control"   name="question" th:each="qst :${questionList}"   th:if="${qst.typeLookLp} == TEACHER and ${qst.questionType} ==Ethical-Competence"
                                  th:text="*{qst.question}" readonly="readonly" required="required">
 
@@ -92,8 +97,16 @@
                         </span>
                             </div>
                         </div>
-                    </div>
+                            <div class="btn pull-right" >
+                                <a  th:href="@{'/home'}" class="btn btn-secondary btn-sm"></i> Cancel</a>
+                                <button type="submit" class="btn  btn-primary btn-sm">
+                                    Confirm
+                                </button>
 
+                            </div>
+                        </form>
+                    </div>
+                </div>
                 </div>
             </div>
 

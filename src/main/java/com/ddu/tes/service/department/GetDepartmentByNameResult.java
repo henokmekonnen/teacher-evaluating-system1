@@ -3,7 +3,6 @@ package com.ddu.tes.service.department;
 import com.ddu.tes.controller.model.AbstractResponseModel;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.stereotype.Service;
 
 /**
  * @author GHabtamu
@@ -11,6 +10,7 @@ import org.springframework.stereotype.Service;
 @Getter
 @Setter
 public class GetDepartmentByNameResult extends AbstractResponseModel {
+
      private boolean departmentExists;
      private String dptName;
      private String description;
