@@ -45,13 +45,22 @@
 
                             <div class="col-lg-auto">
                             <div class=" form-group" >
-                            <span  >Core Competency
-                            <pre class="form-control"   name="question" th:each="qst :${questionList}"   th:if="${qst.typeLookLp} == STUDENT and ${qst.questionType} == Core-Competency"
-                                 th:text="*{qst.question}" readonly="readonly" required="required">
+                             <label style="font-weight: bold; padding: 10px;">Core Competency</label>
+                             <div th:each="qst :${questionList}"   th:if="${qst.typeLookLp} == STUDENT and ${qst.questionType} == Core-Competency">
+                            <span class="form-control"  style="margin-bottom: 10px; border: 0px"  name="question" th:text="*{qst.question}"  required="required"> </span>
+                               <div class="row">
 
-                            </pre>
+                               <select th:field="*{departmentId}>
+                                <option th:value="1">1</option>
+                                <option th:value="2">2</option>
+                                <option th:value="3">3</option>
+                                <option th:value="4">4</option>
+                                <option th:value="5">5</option>
 
-                        </span>
+                               </select>
+
+                             </div>
+                             </div>
                             </div>
                         </div>
 
