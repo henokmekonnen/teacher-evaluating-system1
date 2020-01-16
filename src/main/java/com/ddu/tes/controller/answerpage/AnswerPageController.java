@@ -4,11 +4,14 @@ package com.ddu.tes.controller.answerpage;
 import com.ddu.tes.controller.model.answer.AnswerQuestionRequestModel;
 import com.ddu.tes.controller.model.answer.AnswerQuestionResponseModel;
 import com.ddu.tes.service.answer.AnswerService;
+import com.ddu.tes.service.department.DepartmentService;
+import com.ddu.tes.service.department.GetAllDepartmentListResult;
 import com.ddu.tes.service.lookup.LookUpService;
 import com.ddu.tes.service.question.GetAllQuestion;
 import com.ddu.tes.service.question.QuestionServices;
+import com.ddu.tes.service.user.GetAllUserListResult;
+import com.ddu.tes.service.user.UserService;
 import com.ddu.tes.utils.Constant;
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +34,11 @@ import java.util.List;
 @SessionAttributes("answerQuestionRequestModel")
 public class AnswerPageController {
     private static final Log logger = LogFactory.getLog(AnswerPageController.class);
+     @Autowired
+    DepartmentService departmentService;
+
+     @Autowired
+     UserService userService;
 
     @Autowired
     AnswerService answerService;
@@ -64,75 +72,109 @@ public class AnswerPageController {
     public String confirmAcceptAnswer(@Valid AnswerQuestionRequestModel confirmAcceptAnswer, BindingResult result, Model model) {
 
         try {
+
             List<String> errorList = new ArrayList<String>();
+
+            GetAllDepartmentListResult departmentListResult = departmentService.getAllDepartments();
+            GetAllUserListResult    userList=userService.getAllUsers();
+
+            model.addAttribute("userList", userList.getUserList());
+            model.addAttribute("departmentList", departmentListResult.getDepartmentList());
+
             model.addAttribute("answerQuestionRequestModel",confirmAcceptAnswer);
+
             GetAllQuestion questionListResult = questionServices.getAllQuestion();
             model.addAttribute("questionList", questionListResult.getQuestionList());
 
-            if (confirmAcceptAnswer.getMulAnswer() == null){
-                result.rejectValue("mulAnswer", "error.mulAnswer", "Please provide mulAnswer.");
+
+
+            if (confirmAcceptAnswer.getCoreCompetence() == null){
+                result.rejectValue("coreCompetence", "error.mulAnswer", "Please provide mulAnswer.");
                 model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
                 model.addAttribute(Constant.MESSAGE, "Please provide mulAnswer.");
-                return "answerpage/teacher-question-page";
+                return "answerpage/student-question-page";
 
             }
 
-
-
-
-            if (StringUtils.isBlank(confirmAcceptAnswer.getDescription())){
-                result.rejectValue("description", "error.description", "Please provide valid description.");
+            if (confirmAcceptAnswer.getProfessionalCompetence() == null){
+                result.rejectValue("professionalCompetence", "error.mulAnswer", "Please provide mulAnswer.");
                 model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
-                model.addAttribute(Constant.MESSAGE, "Please provide description.");
-                return "answerpage/teacher-question-page";
+                model.addAttribute(Constant.MESSAGE, "Please provide mulAnswer.");
+                return "answerpage/student-question-page";
+
+            }
+
+            if (confirmAcceptAnswer.getEthicalCompetence() == null){
+                result.rejectValue("ethicalCompetence", "error.mulAnswer", "Please provide mulAnswer.");
+                model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
+                model.addAttribute(Constant.MESSAGE, "Please provide mulAnswer.");
+                return "answerpage/student-question-page";
+
+            }
+
+            if (confirmAcceptAnswer.getTimeManagement() == null){
+                result.rejectValue("timeManagement", "error.mulAnswer", "Please provide mulAnswer.");
+                model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
+                model.addAttribute(Constant.MESSAGE, "Please provide mulAnswer.");
+                return "answerpage/student-question-page";
 
             }
 
 
 
-            return "answerpage/teacher-question-page-confirm";
+            return "answerpage/student-question-page-confirm";
 
         }catch (Exception ex){
             logger.error("error while creating dept"+ ex, ex.getCause());
             model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
             model.addAttribute(Constant.MESSAGE, ex.getMessage());
-            return "answerpage/teacher-question-page";
+            return "answerpage/student-question-page";
         }
 
     }
+
+
     @RequestMapping(value = "/acceptAnswer", method = RequestMethod.POST)
-    public String createDepartment(@ModelAttribute AnswerQuestionRequestModel confirmAcceptAnswer, BindingResult result, Model model) {
+    public String acceptAnswer(@ModelAttribute AnswerQuestionRequestModel confirmAcceptAnswer, BindingResult result, Model model) {
 
         try {
+            GetAllDepartmentListResult departmentListResult = departmentService.getAllDepartments();
+            GetAllUserListResult    userList=userService.getAllUsers();
+            model.addAttribute("userList", userList.getUserList());
+            model.addAttribute("departmentList", departmentListResult.getDepartmentList());
+
             GetAllQuestion questionListResult = questionServices.getAllQuestion();
             model.addAttribute("questionList", questionListResult.getQuestionList());
-            model.addAttribute("acceptAnswerRequestModel",confirmAcceptAnswer);
+
 
             AnswerQuestionResponseModel responseModel = answerService.acceptAnswer(confirmAcceptAnswer);
 
             if(responseModel.getStatusCode() != 0){
-                model.addAttribute("acceptAnswerRequestModel",confirmAcceptAnswer);
+                model.addAttribute("answerQuestionRequestModel",confirmAcceptAnswer);
                 model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
                 model.addAttribute(Constant.MESSAGE, responseModel.getStatusMessage());
-                return "answerpage/teacher-question-page";
+                return "answerpage/student-question-page";
             }
 
             confirmAcceptAnswer = new AnswerQuestionRequestModel();
 
+            model.addAttribute("answerQuestionRequestModel",confirmAcceptAnswer);
             model.addAttribute("responseModel", responseModel);
             model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_SUCCESS);
             model.addAttribute(Constant.MESSAGE, responseModel.getStatusMessage());
-            return "department/create-department-success";
+
+            return "answerpage/student-question-page-success";
 
         }catch (Exception ex){
             logger.error("error while creating dept"+ ex, ex.getCause());
-            model.addAttribute("acceptAnswerRequestModel",confirmAcceptAnswer);
+            model.addAttribute("answerQuestionRequestModel",confirmAcceptAnswer);
             model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
             model.addAttribute(Constant.MESSAGE, ex.getMessage());
-            return "department/create-department";
+            return "answerpage/student-question-page";
         }
 
     }
+
     @RequestMapping(value = "/chairedpage", method = RequestMethod.GET)
     public String questioList(Model model, HttpSession session, RedirectAttributes redirectAttributes) {
         try {
@@ -149,19 +191,29 @@ public class AnswerPageController {
         }
 
     }
-    @RequestMapping(value = "/studentpage", method = RequestMethod.GET)
-    public String questList(Model model, HttpSession session, RedirectAttributes redirectAttributes) {
+
+    @RequestMapping(value = "/acceptAnswer", method = RequestMethod.GET)
+    public String acceptAnswer(Model model, HttpSession session, RedirectAttributes redirectAttributes) {
         try {
+
+            GetAllDepartmentListResult departmentListResult = departmentService.getAllDepartments();
+            GetAllUserListResult    userList=userService.getAllUsers();
+            model.addAttribute("userList", userList.getUserList());
+            model.addAttribute("departmentList", departmentListResult.getDepartmentList());
+
+            AnswerQuestionRequestModel confirmAcceptAnswer =new AnswerQuestionRequestModel();
+            model.addAttribute("answerQuestionRequestModel",confirmAcceptAnswer);
 
             GetAllQuestion questionListResult = questionServices.getAllQuestion();
             model.addAttribute("questionList", questionListResult.getQuestionList());
+
             return "answerpage/student-question-page";
 
         } catch (Exception ex) {
             logger.error("error while creating dept" + ex, ex.getCause());
             model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
             model.addAttribute(Constant.MESSAGE, ex.getMessage());
-            return "answerpage/answer-page";
+            return "answerpage/student-question-page";
         }
 
     }

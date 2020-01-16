@@ -1,18 +1,48 @@
 package com.ddu.tes.controller.model.answer;
 
 public class AnswerQuestionRequestModel {
-    private Integer[] mulAnswer;
-    private Integer answer;
+      private Integer answer;
     private String description;
     private Integer questionId;
+    private Integer[]  ethicalCompetence;
+    private Integer[]  professionalCompetence;
+    private Integer[]  timeManagement;
+    private Integer[]  coreCompetence;
 
-    public Integer[] getMulAnswer() {
-        return mulAnswer;
+    public Integer[] getCoreCompetence() {
+
+        return coreCompetence;
     }
 
-    public void setMulAnswer(Integer[] mulAnswer) {
-        this.mulAnswer = mulAnswer;
+    public void setCoreCompetence(Integer[] coreCompetence) {
+        this.coreCompetence = coreCompetence;
     }
+
+    public Integer[] getEthicalCompetence() {
+        return ethicalCompetence;
+    }
+
+    public void setEthicalCompetence(Integer[] ethicalCompetence) {
+        this.ethicalCompetence = ethicalCompetence;
+    }
+
+    public Integer[] getProfessionalCompetence() {
+        return professionalCompetence;
+    }
+
+    public void setProfessionalCompetence(Integer[] professionalCompetence) {
+        this.professionalCompetence = professionalCompetence;
+    }
+
+    public Integer[] getTimeManagement() {
+        return timeManagement;
+    }
+
+    public void setTimeManagement(Integer[] timeManagement) {
+        this.timeManagement = timeManagement;
+    }
+
+
 
     public Integer getAnswer() {
         return answer;

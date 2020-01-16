@@ -67,7 +67,7 @@ public class AnswerServiceImpl implements AnswerService {
         }
     }
     @Override
-    public GetAnswerResult getAnswer (final Integer answer){
+    public GetAnswerResult getAnswer(final Integer answer){
 
         GetAnswerResult result = new GetAnswerResult();
 

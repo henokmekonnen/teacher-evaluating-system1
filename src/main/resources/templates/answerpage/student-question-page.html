@@ -39,26 +39,54 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header">
-                            <strong>CHAIRED </strong>
+                            <strong>STUDENT </strong>
                         </div>
+
+                        <form th:action="@{/answerpage/confirmAcceptAnswer}" th:object="${answerQuestionRequestModel}" method="post" enctype="multipart/form-data" class="form-horizontal" id="create-org-frm">
+                            <div th:replace="fragments/messageAlert :: alert(type=${type}, message=${message})"></div>
+
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label><strong>Department</strong> <span class="text-danger">*</span></label>
+                                    <select class="form-control" id="departmentId" name="departmentId" required="required"  >
+<!--                                        <option value=""> please select department </option>-->
+<!--                                        <option th:each="DepartmentId:${departmentList}" th:value="${DepartmentId.dptId}"-->
+<!--                                                th:text="${DepartmentId.dptName}"></option>-->
+                                    </select>
+
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label><strong>User</strong> <span class="text-danger">*</span></label>
+                                    <select class="form-control" id="userId" name="userId" required="required"  >
+<!--                                        <option value=""> please select user </option>-->
+<!--                                        <option th:each="user:${userList}" th:value="${user.usrId}"-->
+<!--                                                th:text="${user.usrFirstName}" ></option>-->
+                                    </select>
+
+                                </div>
+                            </div>
 
 
                             <div class="col-lg-auto">
                             <div class=" form-group" >
                              <label style="font-weight: bold; padding: 10px;">Core Competency</label>
                              <div th:each="qst :${questionList}"   th:if="${qst.typeLookLp} == STUDENT and ${qst.questionType} == Core-Competency">
-                            <span class="form-control"  style="margin-bottom: 10px; border: 0px"  name="question" th:text="*{qst.question}"  required="required"> </span>
+                            <span class="form-control"  style="margin-bottom: 10px; border: 0px"  name="question" th:text="${qst.question}"  required="required"> </span>
                                <div class="row">
-
-                               <select th:field="*{departmentId}>
-                                <option th:value="1">1</option>
-                                <option th:value="2">2</option>
-                                <option th:value="3">3</option>
-                                <option th:value="4">4</option>
-                                <option th:value="5">5</option>
+                                   <div class="col-lg-2">
+                               <select select class="form-control" name="" style="margin-top: 10px; " required="required"  th:field="*{coreCompetence}" >
+                                   <option value=""> please select </option>
+                                <option th:value="1">በጣም ዝቅተኛ</option>
+                                <option th:value="2">ዝቅተኛ</option>
+                                <option th:value="3">መካከለኛ</option>
+                                <option th:value="4">ከፍተኛ</option>
+                                <option th:value="5">በጣም ከፍተኛ</option>
 
                                </select>
-
+                                   </div>
                              </div>
                              </div>
                             </div>
@@ -67,36 +95,83 @@
 
                         <div class="col-lg-auto">
                             <div class=" form-group" >
-                            <span  >Professional-Competence
-                            <pre class="form-control"   name="question" th:each="qst :${questionList}"   th:if="${qst.typeLookLp} == STUDENT and ${qst.questionType} == Professional-Competence"
-                                 th:text="*{qst.question}" readonly="readonly" required="required">
+                                <label style="font-weight: bold; padding: 10px;">Professional-Competence</label>
+                                <div th:each="qst :${questionList}"   th:if="${qst.typeLookLp} == STUDENT and ${qst.questionType} ==Professional-Competence">
+                                    <span class="form-control"  style="margin-bottom: 10px; border: 0px"  name="question" th:text="${qst.question}"  required="required"> </span>
 
-                            </pre>
+                                        <div class="row">
+                                            <div class="col-lg-2">
+                                                <select select class="form-control" name="" style="margin-top: 10px;"  required="required" th:field="*{professionalCompetence}" >
+                                                    <option value=""> please select </option>
+                                                    <option  th:value="1">በጣም ዝቅተኛ</option>
+                                                    <option th:value="2">ዝቅተኛ</option>
+                                                    <option th:value="3">መካከለኛ</option>
+                                                    <option th:value="4">ከፍተኛ</option>
+                                                    <option th:value="5">በጣም ከፍተኛ</option>
 
-                        </span>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                </div>
                             </div>
                         </div>
+
+
                         <div class="col-lg-auto">
                             <div class=" form-group" >
-                            <span  >Ethical-Competence
-                            <pre class="form-control"   name="question" th:each="qst :${questionList}"   th:if="${qst.typeLookLp} == STUDENT and ${qst.questionType} ==Ethical-Competence"
-                                 th:text="*{qst.question}" readonly="readonly" required="required">
+                             <label style="font-weight: bold; padding: 10px;">Ethical-Competence</label>
+                                <div th:each="qst :${questionList}"   th:if="${qst.typeLookLp} == STUDENT and ${qst.questionType} ==Ethical-Competence">
+                                    <span class="form-control"  style="margin-bottom: 10px; border: 0px"  name="question" th:text="${qst.question}"  required="required"> </span>
+                                        <div class="row">
 
-                            </pre>
+                                            <div class="col-lg-2">
+                                                <select select class="form-control" name="" style="margin-top: 10px;"  required="required" th:field="*{ethicalCompetence}" >
+                                                    <option value=""> please select </option>
+                                                    <option th:value="1">በጣም ዝቅተኛ</option>
+                                                    <option th:value="2">ዝቅተኛ</option>
+                                                    <option th:value="3">መካከለኛ</option>
+                                                    <option th:value="4">ከፍተኛ</option>
+                                                    <option th:value="5">በጣም ከፍተኛ</option>
 
-                        </span>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                </div>
                             </div>
                         </div>
-                        <div class="col-lg-auto">
+
+                         <div class="col-lg-auto">
                             <div class=" form-group" >
-                            <span  >Time-Management
-                            <pre class="form-control"   name="question" th:each="qst :${questionList}"   th:if="${qst.typeLookLp} == STUDENT and ${qst.questionType} ==Time-Management"
-                                 th:text="*{qst.question}" readonly="readonly" required="required">
+                             <label style="font-weight: bold; padding: 10px;">Time-Management</label>
+                                <div th:each="qst :${questionList}"   th:if="${qst.typeLookLp} == STUDENT and ${qst.questionType} ==Time-Management">
+                                    <span class="form-control"  style="margin-bottom: 10px; border: 0px"  name="question" th:text="${qst.question}"  required="required"> </span>
+                                    <div class="row">
 
-                            </pre>
+                                            <div class="col-lg-2">
+                                                <select select class="form-control" name="" style="margin-top: 10px;" required="required" th:field="*{timeManagement}" >
+                                                    <option value=""> please select </option>
+                                                    <option th:value="1">በጣም ዝቅተኛ</option>
+                                                    <option th:value="2">ዝቅተኛ</option>
+                                                    <option th:value="3">መካከለኛ</option>
+                                                    <option th:value="4">ከፍተኛ</option>
+                                                    <option th:value="5">በጣም ከፍተኛ</option>
 
-                        </span>
+                                                </select>
+                                            </div>
+                                        </div>
+                                </div>
+                                </div>
                             </div>
+                            <div class="btn pull-right" >
+                                <a  th:href="@{'/home'}" class="btn btn-secondary btn-sm"></i> Cancel</a>
+                                <button type="submit" class="btn  btn-primary btn-sm">
+                                    Confirm
+                                </button>
+
+                            </div>
+                        </form>
                         </div>
 
                     </div>
@@ -106,6 +181,32 @@
 
         </div>
     </div>
+</div>
+
+<div layout:fragment="footer-script">
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#departmentList").change(function () {
+                var dID= $(this).val();
+                $.get("http://localhost:8089/tes/answerpage/acceptAnswer",
+                    function (data) {
+                        var select = $("#userList");
+                        select.empty();
+                        select.append($('<option/>', {
+                            value: 0,
+                            text: "Select a user"
+                        }));
+                        $.each(data, function (index, itemData) {
+                            select.append($('<option/>', {
+                                value: itemData.Value,
+                                text: itemData.Text
+                            }));
+                        });
+                    });
+            });
+        });
+
+    </script>
 </div>
 </body>
 </html>
