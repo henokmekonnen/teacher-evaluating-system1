@@ -6,6 +6,8 @@ import com.ddu.tes.controller.model.department.EditDepartmentRequestModel;
 import com.ddu.tes.controller.model.department.EditDepartmentResponseModel;
 import com.ddu.tes.data.modle.Department;
 
+import java.util.Map;
+
 /**
  * @author GHabtamu
  */
@@ -16,4 +18,6 @@ public interface DepartmentService {
 
      public GetAllDepartmentListResult getAllDepartments();
      public boolean departmentExist (String name );
+
+    Map<Integer, String> getDepartmentUsersByDepartmentId(String departmentId);
 }

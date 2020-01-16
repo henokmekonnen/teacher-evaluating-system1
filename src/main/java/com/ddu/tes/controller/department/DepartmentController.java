@@ -22,7 +22,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author GHabtamu
@@ -322,4 +324,24 @@ public class DepartmentController {
         }
 
     }
+
+    @RequestMapping(value = "/getDepartmentTeachers", method = RequestMethod.GET)
+    public @ResponseBody
+    Map<Integer, String> getDepartmentTeachers(@RequestParam(value = "departmentId", required = true) String departmentId) {
+
+        Map <Integer,String> departmentMap =  new HashMap<Integer, String>();
+
+        try {
+            departmentMap = departmentService.getDepartmentUsersByDepartmentId(departmentId);
+        } catch (Exception ex){
+
+            logger.error("wasnt able to fetch address");
+        }
+
+        return departmentMap;
+
+    }
+
+
+
 }

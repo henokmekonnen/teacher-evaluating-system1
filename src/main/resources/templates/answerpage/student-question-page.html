@@ -187,55 +187,36 @@
     <script src="~/Scripts/jquery-1.10.2.js"></script>
     <script>
         $(document).ready(function () {
+           $('#departmentId').change(function () {
+                var id = $('#departmentId option:selected').val();
 
-            var department = $('#departmentId');
-            department.append($("<option></option>").val('').html('Please Select department'));
-            $.ajax({
-                url: 'http://localhost:8089/tes/answerpage/acceptAnswer',
-                type: 'GET',
+                var dptName =$('#departmentId option:selected').text();
+                $.ajax({
+                    type: 'GET',
+                    url: contextRoot + "department/getDepartmentTeachers",
+                    data: {
+                        'departmentId': id
+                    },
 
-                success: function (department) {
-                    $.each(department, function (list, departmentList) {
-                        department.append($("<option></option>").val(departmentList.departmentId).html(departmentList.departmentName));
-                    });
-                },
-                error: function () {
-                    alert('Error!');
-                }
-            });
+                    success: function (data) {
+                        // the next thing you want to do
 
-            //State details by country id
+                        alert(JSON.stringify(data))
 
-            $("#departmentId").change(function () {
-                var departmentId = parseInt($(this).val());
+                        var $field = $('#userId');
 
-                if (!isNaN(departmentId)) {
-                    var userName = $('#userId');
-                    userName.empty();
-                    userName.append($("<option></option>").val('').html('Please wait ...'));
+                        $field.empty();
+                        $field.append(new Option("please select User", "-1"));
 
-                debugger;
-                    $.ajax({
-                        url: 'http://localhost:8089/tes/answerpage/acceptAnswer',
-                        type: 'GET',
+                        $.each(data, function (id, value) {
+                            $field.append('<option value=' + id + '>' + value + '</option>');
 
-                        data: { departmentId: departmentId },
-                        success: function () {
-
-                            userName.empty(); // Clear the please wait
-                            userName.append($("<option></option>").val('').html('Select user'));
-                            $.each(function (userList) {
-                                userName.append($("<option></option>").val(userList.firstName).html(userList.lastName));
-                            });
-                        },
-                        error: function () {
-                            alert('Error!');
-                        }
-                    });
-                }
-
+                        });
+                    }
+                });
 
             });
+
 
         });
     </script>

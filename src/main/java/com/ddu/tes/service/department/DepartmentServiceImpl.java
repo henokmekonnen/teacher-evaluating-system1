@@ -208,4 +208,15 @@ public class DepartmentServiceImpl implements  DepartmentService{
         return  responseModel;
     }
     }
+
+    @Override
+    public Map<Integer, String> getDepartmentUsersByDepartmentId(String departmentId) {
+        Map<Integer, String> dptUser = new HashMap<>();
+
+        dptUser.put(1, "girum");
+        dptUser.put(2, "henok");
+        dptUser.put(3, "dan");
+
+        return dptUser;
+    }
 }
