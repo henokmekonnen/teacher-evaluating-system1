@@ -49,9 +49,9 @@
                                 <div class="form-group">
                                     <label><strong>Department</strong> <span class="text-danger">*</span></label>
                                     <select class="form-control" id="departmentId" name="departmentId" required="required"  >
-<!--                                        <option value=""> please select department </option>-->
-<!--                                        <option th:each="DepartmentId:${departmentList}" th:value="${DepartmentId.dptId}"-->
-<!--                                                th:text="${DepartmentId.dptName}"></option>-->
+                                        <option value=""> please select department </option>
+                                        <option th:each="DepartmentId:${departmentList}" th:value="${DepartmentId.dptId}"
+                                                th:text="${DepartmentId.dptName}"></option>
                                     </select>
 
                                 </div>
@@ -60,10 +60,10 @@
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label><strong>User</strong> <span class="text-danger">*</span></label>
-                                    <select class="form-control" id="userId" name="userId" required="required"  >
-<!--                                        <option value=""> please select user </option>-->
-<!--                                        <option th:each="user:${userList}" th:value="${user.usrId}"-->
-<!--                                                th:text="${user.usrFirstName}" ></option>-->
+                                    <select class="form-control" id="userId"  name="userId" required="required"  >
+                                        <option value=""> please select user </option>
+                                        <option  th:each="user:${userList}"   th:value="${user.usrId}"
+                                                th:text="${user.usrFirstName}" ></option>
                                     </select>
 
                                 </div>
@@ -184,28 +184,60 @@
 </div>
 
 <div layout:fragment="footer-script">
-    <script type="text/javascript">
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    <script>
         $(document).ready(function () {
-            $("#departmentList").change(function () {
-                var dID= $(this).val();
-                $.get("http://localhost:8089/tes/answerpage/acceptAnswer",
-                    function (data) {
-                        var select = $("#userList");
-                        select.empty();
-                        select.append($('<option/>', {
-                            value: 0,
-                            text: "Select a user"
-                        }));
-                        $.each(data, function (index, itemData) {
-                            select.append($('<option/>', {
-                                value: itemData.Value,
-                                text: itemData.Text
-                            }));
-                        });
-                    });
-            });
-        });
 
+            var department = $('#departmentId');
+            department.append($("<option></option>").val('').html('Please Select department'));
+            $.ajax({
+                url: 'http://localhost:8089/tes/answerpage/acceptAnswer',
+                type: 'GET',
+
+                success: function (department) {
+                    $.each(department, function (list, departmentList) {
+                        department.append($("<option></option>").val(departmentList.departmentId).html(departmentList.departmentName));
+                    });
+                },
+                error: function () {
+                    alert('Error!');
+                }
+            });
+
+            //State details by country id
+
+            $("#departmentId").change(function () {
+                var departmentId = parseInt($(this).val());
+
+                if (!isNaN(departmentId)) {
+                    var userName = $('#userId');
+                    userName.empty();
+                    userName.append($("<option></option>").val('').html('Please wait ...'));
+
+                debugger;
+                    $.ajax({
+                        url: 'http://localhost:8089/tes/answerpage/acceptAnswer',
+                        type: 'GET',
+
+                        data: { departmentId: departmentId },
+                        success: function () {
+
+                            userName.empty(); // Clear the please wait
+                            userName.append($("<option></option>").val('').html('Select user'));
+                            $.each(function (userList) {
+                                userName.append($("<option></option>").val(userList.firstName).html(userList.lastName));
+                            });
+                        },
+                        error: function () {
+                            alert('Error!');
+                        }
+                    });
+                }
+
+
+            });
+
+        });
     </script>
 </div>
 </body>
