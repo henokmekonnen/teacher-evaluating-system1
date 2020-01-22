@@ -17,6 +17,12 @@ public class Constant {
     public static final String DEADLOCK_EXCEPTION_CAUGHT_EXECUTING_STATEMENT = "Deadlock exception caught executing statement: ";
     public static final String ERROR_SQLDAOMAPPER = "error.sqldaomapper";
     public static final String Back_To_Create="createDepartment";
+    public static final String TEACHER_ROLE="TEACHER";
+    public static final String STUDENT_ROLE="STUDENT";
+    public static final String CHAIRED_ROLE="CHAIRED";
+    public static final String DEAN_ROLE="DEAN";
+    public static final String ADMIN_ROLE="ADMIN";
+
     public static final String EMAIL_ADDRESS_VALIDATOR_REGEX = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
             + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
@@ -24,6 +30,7 @@ public class Constant {
     public static final String WEBSITE_VALIDATOR_REGEX = "^(http:\\/\\/www\\.|https:\\/\\/www\\.|http:\\/\\/|https:\\/\\/)?[a-z0-9]+([\\-\\.]{1}[a-z0-9]+)*\\.[a-z]{2,5}(:[0-9]{1,5})?(\\/.*)?$";
 
     // for errror pages
+    public static final String UserRole="Teacher";
     public static final String ALERT_TYPE_SUCCESS = "success";
     public static final String TYPE = "type";
     public static final String MESSAGE = "message";

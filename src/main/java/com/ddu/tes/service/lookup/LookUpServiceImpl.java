@@ -55,5 +55,28 @@ public class LookUpServiceImpl implements LookUpService {
                 return  responseModel;
             }
         }
+    @Override
+    public LookUp getLookupById(String lookupId) {
+
+        try {
+
+            if (lookupId == null) {
+
+                System.err.print("null value");
+            }
+
+            LookUp filter = new LookUp();
+            filter.setLookUpId(lookupId);
+
+            LookUp result = (LookUp) sqlRepository.findOne(filter);
+
+            return  result != null ? result : null;
+
+        } catch (Exception ex) {
+            logger.error("Error while fetching organization type status type  ", ex);
+            throw ex;
+        }
+
+    }
 
 }

@@ -6,6 +6,7 @@ import com.ddu.tes.controller.model.department.CreateDepartmentResponseModel;
 import com.ddu.tes.controller.model.department.EditDepartmentRequestModel;
 import com.ddu.tes.controller.model.department.EditDepartmentResponseModel;
 import com.ddu.tes.data.modle.Department;
+import com.ddu.tes.data.modle.User;
 import com.ddu.tes.data.repository.SqlRepository;
 import com.ddu.tes.utils.Constant;
 import org.apache.commons.lang.StringUtils;
@@ -210,12 +211,18 @@ public class DepartmentServiceImpl implements  DepartmentService{
     }
 
     @Override
-    public Map<Integer, String> getDepartmentUsersByDepartmentId(String departmentId) {
+    public Map<Integer, String> getDepartmentUsersByDepartmentId(Integer departmentId) {
         Map<Integer, String> dptUser = new HashMap<>();
 
-        dptUser.put(1, "girum");
-        dptUser.put(2, "henok");
-        dptUser.put(3, "dan");
+        User user = new User();
+        user.setDepartmentId(departmentId);
+
+        User user3 = (User) sqlRepository.findOne(user);
+        dptUser.put(departmentId, ((User) user3).getFirstName().toString());
+
+//        dptUser.put(1, "girum");
+//        dptUser.put(2, "henok");
+//        dptUser.put(3, "dan");
 
         return dptUser;
     }

@@ -242,6 +242,8 @@ public GetUserByPhoneResult getUserByPhone(String phoneNumber) {
                 userMap.put("usrDOB", ((User) user).getDateOfBirth());
                 userMap.put("usrPhoneNumber", ((User) user).getPhoneNumber());
                 userMap.put("usrEmail", ((User) user).getEmail());
+                userMap.put("userName",((User) user).getUserName());
+                userMap.put("password",((User) user).getPassword());
                 userMap.put("usrGender", ((User) user).getGender());
                 userMap.put("usrDeaprtmentId", ((User) user).getDepartmentId());
                      Department filterDepartment = new Department();
@@ -336,7 +338,6 @@ public EditUserResponseModel editUser(EditUserRequestModel confirmEditUser){
             return  responseModel;
         }
     }
-
 
 
 

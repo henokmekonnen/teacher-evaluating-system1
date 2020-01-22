@@ -49,7 +49,7 @@
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label><strong>Department</strong> <span class="text-danger">*</span></label>
-                                    <select class="form-control" name="departmentId" required="required"  >
+                                    <select class="form-control" id="departmentId" name="departmentId" required="required"  >
                                         <option value=""> please select department </option>
                                         <option th:each="DepartmentId:${departmentList}" th:value="${DepartmentId.dptId}"
                                                 th:text="${DepartmentId.dptName}"></option>
@@ -61,7 +61,7 @@
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label><strong>User</strong> <span class="text-danger">*</span></label>
-                                    <select class="form-control" name="userId" required="required"  >
+                                    <select class="form-control" id="userId" name="userId" required="required"  >
                                         <option value=""> please select user </option>
                                         <option th:each="user:${userList}" th:value="${user.usrId}"
                                                 th:text="${user.usrFirstName}" ></option>
@@ -179,6 +179,46 @@
     </div>
 </div>
 </div>
+
+<div layout:fragment="footer-script">
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#departmentId').change(function () {
+                var id = $('#departmentId option:selected').val();
+
+                var dptName =$('#departmentId option:selected').text();
+                $.ajax({
+                    type: 'GET',
+                    url: contextRoot + "department/getDepartmentTeachers",
+                    data: {
+                        'departmentId': id
+                    },
+
+                    success: function (data) {
+                        // the next thing you want to do
+
+                        alert(JSON.stringify(data))
+
+                        var $field = $('#userId');
+
+                        $field.empty();
+                        $field.append(new Option("please select User", "-1"));
+
+                        $.each(data, function (id, value) {
+                            $field.append('<option value=' + id + '>' + value + '</option>');
+
+                        });
+                    }
+                });
+
+            });
+
+
+        });
+    </script>
+</div>
+
 </body>
 </html>
 

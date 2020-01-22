@@ -49,6 +49,8 @@ public class AnswerQuestionRequestModel {
     }
 
     public void setAnswer(Integer answer) {
+
+
         this.answer = answer;
     }
 

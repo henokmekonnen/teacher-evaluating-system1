@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+<head>
+    <meta charset="UTF-8">
+
+
+</head>
+<body>
+<div layout:fragment="wrapper">
+    <div class="breadcrumbs">
+        <div class="breadcrumbs-inner">
+            <div class="row m-0">
+                <div class="col-sm-4">
+                    <div class="page-header float-left">
+                        <div class="page-title">
+                            <h1>Manage User</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-8">
+                    <div class="page-header float-right">
+                        <div class="page-title">
+                            <ol class="breadcrumb text-right">
+
+
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="content">
+                <div class="animated fadeIn">
+                    <div class="row">
+
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <strong>Login</strong>
+                                </div>
+                                <div class="card-body card-block">
+<div class="col-sm-6" style="padding: 40px;">
+            <form class="login100-form validate-form" th:action="@{/perform_login}" method="post">
+
+                <div class="row" style="padding-left: 15px; padding-right: 15px;">
+                    <div class="col-sm-8 welcome-div">
+                        <h6 class="text-left" style="padding-bottom: 20px; font-weight: bolder">
+
+                        </h6>
+                    </div>
+                    <div class="col-sm-4" style="background-color: white;">
+                        <!-- <img
+                           src="images/ellogo.png"
+                           style="padding: 10px;"
+                           width="100%"
+                           class="text-center"
+                           height="auto"
+                         />-->
+                    </div>
+                </div>
+                <div th:replace="fragments/messageAlert :: alert(type=${type}, message=${message})"></div>
+                <div class="wrap-login100">
+                    <div class="alert alert-dismissable alert-danger" th:if="${param.error}" th:with="errorMsg=${session['SPRING_SECURITY_LAST_EXCEPTION'].message}">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <span th:text="${errorMsg}">!</span>
+                    </div>
+                    <span class="text-black"> Username</span>
+                    <div class="wrap-input100 validate-input" data-validate="Username is required" style="margin-bottom: 20px;">
+                        <input class="input100" type="text" id="credential" name="credential" required="required" />
+                        <span class="focus-input100"></span>
+                    </div>
+
+                    <span class="text-black">Password</span>
+
+                    <div class="wrap-input100 validate-input m-b-12" data-validate="Password is required" style="margin-bottom: 10px;">
+                               <span class="btn-show-pass">
+                                 <i class="fa fa-eye-slash"></i>
+                               </span>
+                        <input class="input100" type="password" id="password" name="password" required="required"/>
+                        <span class="focus-input100"></span>
+                    </div>
+
+
+                    <div class="row" style="padding: 20px;">
+                        <div class="" style="min-width: 100%;">
+                            <a th:href="@{'/forgetPassword'}" id="forgot_password">
+                                Forgot Password?
+                            </a>
+
+
+                        </div>
+                    </div>
+
+                    <div class="container-login100-form-btn">
+                        <button type="submit" class="btn-success btn-lg btn-block">
+                            Login
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+                            </div>
+                        </div>
+                </div>
+                </div>
+    </div>
+</div>
+</body>
+
+</html>
+
+
+
+
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org"-->
+<!--      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"-->
+<!--      layout:decorate="~{layouts/layout}">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+
+<!--</head>-->
+<!--<body>-->
+<!--<div layout:fragment="wrapper">-->
+<!--    <div class="breadcrumbs">-->
+<!--        <div class="breadcrumbs-inner">-->
+<!--            <div class="row m-0">-->
+<!--                <div class="col-sm-4">-->
+<!--                    <div class="page-header float-left">-->
+<!--                        <div class="page-title">-->
+<!--                            <h1>Manage User</h1>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="col-sm-8">-->
+<!--                    <div class="page-header float-right">-->
+<!--                        <div class="page-title">-->
+<!--                            <ol class="breadcrumb text-right">-->
+
+
+<!--                            </ol>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    <div class="content">-->
+<!--        <div class="animated fadeIn">-->
+<!--            <div class="row">-->
+
+<!--                <div class="col-lg-12">-->
+<!--                    <div class="card">-->
+<!--                        <div class="card-header">-->
+<!--                            <strong>Login</strong>-->
+<!--                        </div>-->
+<!--                        <div class="card-body card-block">-->
+<!--                            <form th:action="@{/perform_login}" method="POST" enctype="multipart/form-data" class="form-horizontal" id="create-org-frm">-->
+<!--                                <div th:replace="fragments/messageAlert :: alert(type=${type}, message=${message})"></div>-->
+
+<!--                                <div class="wrap-login100">-->
+<!--                                    <div class="alert alert-dismissable alert-danger" th:if="${param.error}" th:with="errorMsg='Invalid Username and Password'">-->
+<!--                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>-->
+<!--                                        <span th:text="${errorMsg}">!</span>-->
+<!--                                    </div>-->
+<!--                                    <span class="text-black"> Username</span>-->
+<!--                                    <div class="wrap-input100 validate-input" data-validate="Username is required" style="margin-bottom: 20px;">-->
+<!--                                        <input class="input100" type="text" name="credential" required="required" >-->
+<!--                                        <span class="focus-input100"></span>-->
+<!--                                    </div>-->
+
+<!--                                    <span class="text-black">Password</span>-->
+
+<!--                                    <div class="wrap-input100 validate-input m-b-12" data-validate="Password is required" style="margin-bottom: 10px;">-->
+<!--                               <span class="btn-show-pass">-->
+<!--                                 <i class="fa fa-eye-slash"></i>-->
+<!--                               </span>-->
+<!--                                        <input class="input100" type="password" name="password" required="required" >-->
+<!--                                        <span class="focus-input100"></span>-->
+<!--                                    </div>-->
+
+<!--                                <div class="btn pull-right" >-->
+
+<!--                                    <a  th:href="@{'/user/userList'}" class="btn btn-secondary btn-sm"></i> Cancel</a>-->
+<!--                                    <button type="submit" class="btn  btn-primary btn-sm">-->
+<!--                                        login-->
+<!--                                    </button>-->
+
+<!--                                </div>-->
+<!--                                </div>-->
+<!--                            </form>-->
+<!--                        </div>-->
+
+<!--                    </div>-->
+
+<!--                </div>-->
+<!--            </div>-->
+
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+<!--</body>-->
+<!--</html>-->

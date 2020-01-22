@@ -327,7 +327,7 @@ public class DepartmentController {
 
     @RequestMapping(value = "/getDepartmentTeachers", method = RequestMethod.GET)
     public @ResponseBody
-    Map<Integer, String> getDepartmentTeachers(@RequestParam(value = "departmentId", required = true) String departmentId) {
+    Map<Integer, String> getDepartmentTeachers(@RequestParam(value = "departmentId", required = true) Integer departmentId) {
 
         Map <Integer,String> departmentMap =  new HashMap<Integer, String>();
 

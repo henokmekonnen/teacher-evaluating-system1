@@ -41,7 +41,7 @@
                         <div class="card-header">
                             <strong>TEACHER </strong>
                         </div>
-                        <form th:action="@{/answerpage/confirmTeacherAcceptAnswer}" th:object="${answerTeacherQuestionRequestModel}" method="post" enctype="multipart/form-data" class="form-horizontal" id="create-org-frm">
+                        <form th:action="@{/answerpage/acceptTeacherAnswer}" th:object="${responseModel}" method="post" enctype="multipart/form-data" class="form-horizontal" id="create-org-frm">
                             <div th:replace="fragments/messageAlert :: alert(type=${type}, message=${message})"></div>
 
                             <div class="col-lg-4">
@@ -164,19 +164,17 @@
                             </div>
                             <div class="btn pull-right" >
                                 <a  th:href="@{'/home'}" class="btn btn-secondary btn-sm"></i> Cancel</a>
-                                <button type="submit" class="btn  btn-primary btn-sm">
-                                    Confirm
-                                </button>
+
 
                             </div>
                         </form>
                     </div>
                 </div>
-                </div>
             </div>
-
         </div>
+
     </div>
+</div>
 </div>
 
 <div layout:fragment="footer-script">
@@ -218,6 +216,5 @@
     </script>
 </div>
 </body>
-
 </html>
 
