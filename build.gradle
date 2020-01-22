@@ -14,7 +14,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.bgigti pull oot:spring-boot-starter-security'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: '2.2.1.RELEASE'
     compile('joda-time:joda-time:2.10.5')
     compile('org.apache.commons:commons-lang3:3.8')
