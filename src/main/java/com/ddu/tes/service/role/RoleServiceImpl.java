@@ -57,4 +57,29 @@ public class RoleServiceImpl implements RoleService {
             }
         }
 
+    @Override
+    public Role getRoleById(Integer roleId) {
+
+        try {
+
+            if (roleId == null) {
+
+                System.err.print("null value");
+            }
+
+            Role filter = new Role();
+            filter.setRoleId(roleId);
+
+            Role result = (Role) sqlRepository.findOne(filter);
+
+            return  result != null ? result : null;
+
+        } catch (Exception ex) {
+            logger.error("Error while fetching organization type status type  ", ex);
+            throw ex;
+        }
+
+    }
+
+
 }

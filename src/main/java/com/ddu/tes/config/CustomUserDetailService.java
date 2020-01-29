@@ -1,6 +1,6 @@
 package com.ddu.tes.config;
 
-import com.ddu.tes.data.modle.LookUp;
+import com.ddu.tes.data.modle.Role;
 import com.ddu.tes.data.modle.User;
 import com.ddu.tes.security.SecurityInfoMgn;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 
 @Component
 public class CustomUserDetailService implements UserDetailsService {
-    /**
+   /* *//**
      *
      */
     @Autowired
@@ -54,17 +54,16 @@ public class CustomUserDetailService implements UserDetailsService {
 //        }
 
 
-        Collection<LookUp> roleLookUp =  securityManager.getRolesByUserId(user.getUserId());
+        Collection<Role> roleLookUp =  securityManager.getRolesByUserId(user.getUserId());
 
         List<GrantedAuthority> authorities =new ArrayList<>();
         if(roleLookUp!=null) {
             authorities = roleLookUp.stream().map(role ->
-                    new SimpleGrantedAuthority("ROLE_" + role.getLookUpId())
+                    new SimpleGrantedAuthority("ROLE_" + role.getName())
             ).collect(Collectors.toList());
         }
 
         UserDetails userDetails = UserPrincipal.create(user, authorities);
         return userDetails;
     }
-
 }

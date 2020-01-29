@@ -172,7 +172,7 @@ public GetUserByPhoneResult getUserByPhone(String phoneNumber) {
             newUser.setGender(confirmCreateUser.getGender());
             newUser.setDateOfBirth(confirmCreateUser.getDateOfBirth());
             newUser.setDepartmentId(confirmCreateUser.getDepartmentId());
-            newUser.setUserName(Constant.USER_SYSTEM);
+            newUser.setUserName(confirmCreateUser.getEmail());
             newUser.setPassword(Constant.PASSWORD_SYSTEM);
             newUser.setChangePasswordRequired(Boolean.TRUE);
             newUser.setLocked(Boolean.FALSE);
@@ -312,6 +312,8 @@ public EditUserResponseModel editUser(EditUserRequestModel confirmEditUser){
             filterUser.setGender(confirmEditUser.getGender());
             filterUser.setDepartmentId(confirmEditUser.getDepartmentId());
             filterUser.setDateOfBirth(confirmEditUser.getDateOfBirth());
+            filterUser.setDateOfBirth(confirmEditUser.getDateOfBirth());
+
 
             sqlRepository.update(filterUser);
              filterUserRole.setRoleId(confirmEditUser.getUsrRoleId());

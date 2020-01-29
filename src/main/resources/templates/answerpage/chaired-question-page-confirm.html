@@ -42,7 +42,7 @@
                             <strong>CHAIRED </strong>
                         </div>
 
-                        <form th:action="@{/answerpage/chairedConfirmAcceptAnswer}" th:object="${answerTeacherQuestionRequestModel}" method="post" enctype="multipart/form-data" class="form-horizontal" id="create-org-frm">
+                        <form th:action="@{/answerpage/chairedAcceptAnswer}" th:object="${answerChairedQuestionRequestModel}" method="post" enctype="multipart/form-data" class="form-horizontal" id="create-org-frm">
                             <div th:replace="fragments/messageAlert :: alert(type=${type}, message=${message})"></div>
 
                             <div class="col-lg-4">
@@ -167,7 +167,7 @@
                             <div class="btn pull-right" >
                                 <a  th:href="@{'/home'}" class="btn btn-secondary btn-sm"></i> Cancel</a>
                                 <button type="submit" class="btn  btn-primary btn-sm">
-                                    Confirm
+                                    Save
                                 </button>
 
                             </div>

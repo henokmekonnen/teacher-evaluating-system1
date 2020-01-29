@@ -45,8 +45,8 @@
                             <form th:action="@{/userrole/editUsersRole}" th:object="${responseModel}" method="POST" enctype="multipart/form-data" class="form-horizontal" id="create-org-frm">
                                 <div th:replace="fragments/messageAlert :: alert(type=${type}, message=${message})"></div>
                                 <div class="row form-group">
-                                    <input  hidden="hidden" type="text" class="form-control" id="userRole"
-                                            name="userRole" th:field="*{userRole}" required="required" >
+                                   <!-- <input  hidden="hidden" type="text" class="form-control"
+                                             th:field="*{userRole}" required="required" >-->
 
 
 

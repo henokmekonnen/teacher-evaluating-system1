@@ -11,7 +11,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
-public class UserPrincipal implements UserDetails {
+public class UserPrincipal  implements UserDetails {
 
 
     private Integer id;

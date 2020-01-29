@@ -206,6 +206,70 @@ public class AnswerPageController {
 
     }
 
+    @RequestMapping(value = "/chairedConfirmAcceptAnswer", method = RequestMethod.POST)
+    public String chairedConfirmAcceptAnswer(@Valid AnswerQuestionRequestModel confirmAcceptAnswer, BindingResult result, Model model) {
+
+        try {
+
+            List<String> errorList = new ArrayList<String>();
+
+            GetAllDepartmentListResult departmentListResult = departmentService.getAllDepartments();
+            GetAllUserListResult    userList=userService.getAllUsers();
+
+            model.addAttribute("userList", userList.getUserList());
+            model.addAttribute("departmentList", departmentListResult.getDepartmentList());
+
+            model.addAttribute("answerChairedQuestionRequestModel",confirmAcceptAnswer);
+
+            GetAllQuestion questionListResult = questionServices.getAllQuestion();
+            model.addAttribute("questionList", questionListResult.getQuestionList());
+
+
+
+            if (confirmAcceptAnswer.getCoreCompetence() == null){
+                result.rejectValue("coreCompetence", "error.coreCompetence", "Please provide mulAnswer.");
+                model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
+                model.addAttribute(Constant.MESSAGE, "Please provide mulAnswer.");
+                return "answerpage/chaired-question-page";
+
+            }
+
+            if (confirmAcceptAnswer.getProfessionalCompetence() == null){
+                result.rejectValue("professionalCompetence", "error.professionalCompetence", "Please provide mulAnswer.");
+                model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
+                model.addAttribute(Constant.MESSAGE, "Please provide mulAnswer.");
+                return "answerpage/chaired-question-page";
+
+            }
+
+            if (confirmAcceptAnswer.getEthicalCompetence() == null){
+                result.rejectValue("ethicalCompetence", "error.ethicalCompetence", "Please provide mulAnswer.");
+                model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
+                model.addAttribute(Constant.MESSAGE, "Please provide mulAnswer.");
+                return "answerpage/chaired-question-page";
+
+            }
+
+            if (confirmAcceptAnswer.getTimeManagement() == null){
+                result.rejectValue("timeManagement", "error.timeManagement", "Please provide mulAnswer.");
+                model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
+                model.addAttribute(Constant.MESSAGE, "Please provide mulAnswer.");
+                return "answerpage/chaired-question-page";
+
+            }
+
+
+
+            return "answerpage/chaired-question-page-confirm";
+
+        }catch (Exception ex){
+            logger.error("error while creating dept"+ ex, ex.getCause());
+            model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
+            model.addAttribute(Constant.MESSAGE, ex.getMessage());
+            return "answerpage/chaired-question-page";
+        }
+
+    }
 
     @RequestMapping(value = "/acceptAnswer", method = RequestMethod.POST)
     public String acceptAnswer(@ModelAttribute AnswerQuestionRequestModel confirmAcceptAnswer, BindingResult result, Model model) {
@@ -291,13 +355,62 @@ public class AnswerPageController {
 
     }
 
+    @RequestMapping(value = "/chairedAcceptAnswer", method = RequestMethod.POST)
+    public String chairedAcceptAnswer(@ModelAttribute AnswerQuestionRequestModel confirmAcceptAnswer, BindingResult result, Model model) {
+
+        try {
+
+            GetAllDepartmentListResult departmentListResult = departmentService.getAllDepartments();
+             GetAllUserListResult    userList=userService.getAllUsers();
+
+            model.addAttribute("userList", userList.getUserList());
+            model.addAttribute("departmentList", departmentListResult.getDepartmentList());
+
+            GetAllQuestion questionListResult = questionServices.getAllQuestion();
+            model.addAttribute("questionList", questionListResult.getQuestionList());
+
+
+            AnswerQuestionResponseModel responseModel = answerService.acceptAnswer(confirmAcceptAnswer);
+
+            if(responseModel.getStatusCode() != 0){
+                model.addAttribute("answerChairedQuestionRequestModel",confirmAcceptAnswer);
+                model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
+                model.addAttribute(Constant.MESSAGE, responseModel.getStatusMessage());
+                return "answerpage/chaired-question-page";
+            }
+
+            confirmAcceptAnswer = new AnswerQuestionRequestModel();
+
+            model.addAttribute("answerChairedQuestionRequestModel",confirmAcceptAnswer);
+            model.addAttribute("responseModel", responseModel);
+            model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_SUCCESS);
+            model.addAttribute(Constant.MESSAGE, responseModel.getStatusMessage());
+
+            return "answerpage/chaired-question-page-success";
+
+        }catch (Exception ex){
+            logger.error("error while creating dept"+ ex, ex.getCause());
+            model.addAttribute("answerQuestionRequestModel",confirmAcceptAnswer);
+            model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
+            model.addAttribute(Constant.MESSAGE, ex.getMessage());
+            return "answerpage/chaired-question-page-page";
+        }
+
+    }
 
     @RequestMapping(value = "/chairedpage", method = RequestMethod.GET)
     public String questioList(Model model, HttpSession session, RedirectAttributes redirectAttributes) {
         try {
 
+            GetAllDepartmentListResult departmentListResult = departmentService.getAllDepartments();
+            GetAllUserListResult    userList=userService.getAllUsers();
+            model.addAttribute("userList", userList.getUserList());
+            model.addAttribute("departmentList", departmentListResult.getDepartmentList());
+            AnswerQuestionRequestModel confirmAcceptAnswer =new AnswerQuestionRequestModel();
+            model.addAttribute("answerTeacherQuestionRequestModel",confirmAcceptAnswer);
             GetAllQuestion questionListResult = questionServices.getAllQuestion();
             model.addAttribute("questionList", questionListResult.getQuestionList());
+
             return "answerpage/chaired-question-page";
 
         } catch (Exception ex) {

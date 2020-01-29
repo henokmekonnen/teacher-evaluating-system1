@@ -102,7 +102,7 @@ public class UserRoleServiceImpl implements UserRoleService{
 
             UserRole filterUserRole = new UserRole();
 
-            filterUserRole.setUserRole(confirmEditUserRole.getUserRole());
+            filterUserRole.setUserId(confirmEditUserRole.getUserId());
             filterUserRole = (UserRole) sqlRepository.findOne(filterUserRole);
 
             if(filterUserRole == null){
@@ -145,7 +145,7 @@ public class UserRoleServiceImpl implements UserRoleService{
 
 
             UserRole filter = new UserRole();
-            filter.setRoleId(roleId);
+            filter.setUserId(roleId);
 
             UserRole user = (UserRole) sqlRepository.findOne(filter);
 

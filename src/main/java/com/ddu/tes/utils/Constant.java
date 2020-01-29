@@ -1,5 +1,8 @@
 package com.ddu.tes.utils;
 
+
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import java.util.UUID;
 
 /**
@@ -17,11 +20,11 @@ public class Constant {
     public static final String DEADLOCK_EXCEPTION_CAUGHT_EXECUTING_STATEMENT = "Deadlock exception caught executing statement: ";
     public static final String ERROR_SQLDAOMAPPER = "error.sqldaomapper";
     public static final String Back_To_Create="createDepartment";
-    public static final String TEACHER_ROLE="TEACHER";
+    public static final String TEACHER_ROLE="Teacher";
     public static final String STUDENT_ROLE="STUDENT";
-    public static final String CHAIRED_ROLE="CHAIRED";
-    public static final String DEAN_ROLE="DEAN";
-    public static final String ADMIN_ROLE="ADMIN";
+    public static final String CHAIRED_ROLE="head_of_Department";
+    public static final String DEAN_ROLE="Dean_of_Department";
+    public static final String ADMIN_ROLE="Admin";
 
     public static final String EMAIL_ADDRESS_VALIDATOR_REGEX = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
             + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
@@ -36,10 +39,17 @@ public class Constant {
     public static final String MESSAGE = "message";
     public static final String MESSAGE_LIST = "messageList";
     public static final String ALERT_TYPE_DANGER = "danger";
+
+
+   static String password = "password";
+   static BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    static  String hashedPassword =passwordEncoder.encode(password);
+
     public static final String SYSTEM = "system";
     public static final int Department_system=1;
     public static final String USER_SYSTEM="user";
-    public static final String PASSWORD_SYSTEM="password";
+
+    public static final String PASSWORD_SYSTEM=hashedPassword;
     public static String generatenumber(){
         UUID uuid = UUID.randomUUID();
         String result=String.valueOf(uuid);

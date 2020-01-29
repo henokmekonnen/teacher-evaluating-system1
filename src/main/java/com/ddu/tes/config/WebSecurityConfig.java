@@ -21,6 +21,7 @@ import org.springframework.security.web.firewall.HttpFirewall;
 import org.springframework.security.web.firewall.StrictHttpFirewall;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
 
+
 /**
  * @author ghabtamu
  */
@@ -44,21 +45,23 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             http.formLogin()
                     .loginPage("/login")
                     .loginProcessingUrl("/perform_login")
-                    .defaultSuccessUrl("/home",true)
+                    .defaultSuccessUrl("/",true)
                     .failureUrl("/login?error")
                     .usernameParameter("credential").passwordParameter("password")
                     .and()
                     .logout().logoutSuccessUrl("/login?logout").deleteCookies("JSESSIONID").invalidateHttpSession(true)
                     .and()
-                    .exceptionHandling().accessDeniedPage("/403");
+                    .exceptionHandling().accessDeniedPage("/403")
+                    .setBuilder(http);
 
             http.authorizeRequests()
                     .antMatchers("/").authenticated()
-                    .antMatchers("/home/**").access("hasAnyRole('"+Constant.TEACHER_ROLE+"')")
-                    .antMatchers("/answerpage/teacherpage/**").access("hasAnyRole('"+Constant.TEACHER_ROLE+"')")
-                    .antMatchers("/answerpage/acceptAnswer/**").access("hasAnyRole('"+Constant.STUDENT_ROLE+"')")
-                    .antMatchers("/forgetPassword").anonymous()
-                    .antMatchers("/").authenticated();
+                    .antMatchers("/home").access("hasAnyRole('"+ Constant.ADMIN_ROLE+"')")
+                    .antMatchers("/user/**").access("hasAnyRole('"+ Constant.ADMIN_ROLE+"')")
+                    .antMatchers("/answerpage/**").access("hasAnyRole('"+Constant.CHAIRED_ROLE+"','"+ Constant.TEACHER_ROLE+"')")
+//                    .antMatchers("/answerpage/**").access("hasAnyRole('"+Constant.STUDENT_ROLE+"')")
+                    .antMatchers("/forgetPassword").anonymous();
+
 
             http.sessionManagement().maximumSessions(1). maxSessionsPreventsLogin(true);
             http.sessionManagement().sessionFixation().migrateSession()
@@ -70,7 +73,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             System.out.println("Exception here");
         }
     }
-
 
     @Override
     public void configure(WebSecurity web) throws Exception {
@@ -95,8 +97,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
         authenticationManagerBuilder
-                .userDetailsService(customUserDetailService)
-                .passwordEncoder(passwordEncoder());
+                .userDetailsService(customUserDetailService).passwordEncoder(passwordEncoder())
+              ;
     }
 
     @Bean
@@ -116,8 +118,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new ServletListenerRegistrationBean<HttpSessionEventPublisher>(new HttpSessionEventPublisher());
     }
 
-
-
     @Bean
     public HttpFirewall allowUrlEncodedSlashHttpFirewall() {
         StrictHttpFirewall firewall = new StrictHttpFirewall();
@@ -130,5 +130,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
 }

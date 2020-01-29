@@ -35,8 +35,8 @@ public class UserRoleController {
     @Autowired
     UserService userService;
 
-    @RequestMapping(value = "/editUsersRole/{usrRoleId}", method = RequestMethod.GET)
-    public String editUsersRole(Model model, @PathVariable(name = "usrRoleId") Integer roleId) {
+    @RequestMapping(value = "/editUsersRole/{usrId}", method = RequestMethod.GET)
+    public String editUsersRole(Model model, @PathVariable(name = "usrId") Integer roleId) {
         GetUserRoleList userListResult = userRoleService.getAllUsersRole();
         model.addAttribute("userListResult", userListResult.getUserRoleList());
         GetAllRoleList roleList=roleService.getAllRole();
@@ -154,9 +154,8 @@ public class UserRoleController {
             model.addAttribute("userListResult", userListResult.getUserList());
 
             model.addAttribute("editUserRoleRequestModel",confirmEditUserRole);
-            model.addAttribute("responseModel", responseModel);
 
-            if(confirmEditUserRole.getUserRole() == null){
+            if(confirmEditUserRole.getUserId() == null){
                 model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
                 model.addAttribute(Constant.MESSAGE, " Invalid user id");
                 return "userrole/edit-userrole";
@@ -169,9 +168,11 @@ public class UserRoleController {
                 return "userrole/edit-userrole";
             }
 
+            model.addAttribute("responseModel", responseModel);
 
                       model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_SUCCESS);
             model.addAttribute(Constant.MESSAGE, responseModel.getStatusMessage());
+
             return "userrole/edit-userrole-success";
 
         }catch (Exception ex){

@@ -1,32 +1,50 @@
 package com.ddu.tes.security;
-import com.ddu.tes.data.modle.User;
+
 import com.ddu.tes.config.UserPrincipal;
-import com.ddu.tes.data.modle.LookUp;
+import com.ddu.tes.controller.ChangePasswordRequest;
+import com.ddu.tes.controller.ChangePasswordResponse;
+import com.ddu.tes.data.modle.Role;
+import com.ddu.tes.data.modle.User;
 import com.ddu.tes.data.modle.UserRole;
 import com.ddu.tes.data.repository.SqlRepository;
-import com.ddu.tes.service.lookup.LookUpService;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import com.ddu.tes.service.role.RoleService;
+import com.ddu.tes.service.validation.ValidationService;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.juli.logging.Log;
+import org.apache.juli.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
 @Service
-public class SecurityInfoMgnImpl implements SecurityInfoMgn {
-    private static final Log logger = LogFactory.getLog(SecurityInfoMgnImpl.class);
+public class SecurityInfoMgnImpl implements SecurityInfoMgn{
+
+
+
+
+     private static final Log logger = LogFactory.getLog(SecurityInfoMgnImpl.class);
+
+
     @Autowired
     private SqlRepository repository;
 
     @Autowired
-    private LookUpService lookUpService;
+    private RoleService roleService;
+
+    @Autowired
+    private ValidationService validationService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
-    public Collection<LookUp> getRolesByUserId(int userId) {
+    public Collection<Role> getRolesByUserId(int userId) {
 
         try {
             UserRole filter = new UserRole();
@@ -38,19 +56,19 @@ public class SecurityInfoMgnImpl implements SecurityInfoMgn {
 
                  }
 
-            Collection<LookUp> roleList = new ArrayList<>();
+            Collection<Role> roleList = new ArrayList<>();
 
             for (Object role : userRoles) {
 
                 UserRole userRole = (UserRole) role;
 
-                LookUp lookup = lookUpService.getLookupById(userRole.getRoleId().toString());
+                Role role2 = roleService.getRoleById(userRole.getRoleId());
 
-                if (lookup == null) {
+                if (role2 == null) {
                        logger.error("Error while fetching lookup type status type  ");
                      }
 
-                roleList.add(lookup);
+                roleList.add(role2);
             }
 
 
@@ -112,6 +130,80 @@ public class SecurityInfoMgnImpl implements SecurityInfoMgn {
         }
 
         return null;
+    }
+
+    @Override
+    public ChangePasswordResponse changePassword(ChangePasswordRequest changePasswordRequest) {
+
+        ChangePasswordResponse restResponse = new ChangePasswordResponse();
+
+        User user = getCurrentUser();
+
+        if(user == null) {
+
+            restResponse.setHasError(true);
+            restResponse.setDescription("User not found");
+            return restResponse;
+        }
+
+        if(StringUtils.isBlank(changePasswordRequest.getOldPassword())) {
+
+            restResponse.setHasError(true);
+            restResponse.setDescription("Please provide old password");
+            return restResponse;
+
+        }
+
+        if(StringUtils.isBlank(changePasswordRequest.getNewPassword())) {
+
+            restResponse.setHasError(true);
+            restResponse.setDescription("Please provide new password");
+            return restResponse;
+
+        }
+
+        //Validate old password
+        if(!passwordEncoder.matches(changePasswordRequest.getOldPassword(), user.getPassword())) {
+
+            restResponse.setHasError(true);
+            restResponse.setDescription("Please must be different from existing one");
+            return restResponse;
+
+        }
+
+        // validate new password
+        if(!validationService.isPasswordValid(changePasswordRequest.getNewPassword())) {
+
+            restResponse.setHasError(true);
+            restResponse.setDescription("Please follow the password standard ");
+            return restResponse;
+        }
+
+        if(!changePasswordRequest.getNewPassword().equals(changePasswordRequest.getConfirmPassword())) {
+
+
+        }
+
+        try {
+
+            user.setPassword(passwordEncoder.encode(changePasswordRequest.getNewPassword()));
+            /*user.setTempPassword(null);
+            user.setPasswordChangeRequired(false);*/
+
+            repository.update(user);
+
+            restResponse.setDescription("Successfully changed password");
+
+            return restResponse;
+
+        } catch (Exception ex) {
+
+            restResponse.setHasError(true);
+            restResponse.setDescription(StringUtils.isNotBlank(ex.getMessage()) ? ex.getMessage() : "error changing password, please try again later");
+
+            return restResponse;
+        }
+
     }
 
 }
