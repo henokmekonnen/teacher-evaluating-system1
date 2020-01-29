@@ -11,7 +11,7 @@
         <nav class="navbar navbar-expand-sm navbar-default">
             <div id="main-menu" class="main-menu collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li class="active">
+                    <li >
                         <a href="index.html"><i class="menu-icon fa fa-laptop"></i>Admin Dashboard </a>
                     </li>
                     <li class="menu-title">Monitor</li><!-- /.menu-title -->
@@ -34,7 +34,7 @@
 
                         </ul>
                     </li>
-                    <li sec:authorize-url="/question/* or /answerpage/*" class="menu-item-has-children dropdown">
+                    <li class="menu-item-has-children dropdown">
                         <a  class="dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-cogs"></i>Questions</a>
                         <ul class="sub-menu children dropdown-menu">
                             <li sec:authorize="hasRole('ROLE_Admin')" ><i class="fa fa-puzzle-piece"></i><a  th:href="@{'/question/createQuestion'}">create question</a></li>
