@@ -17,31 +17,31 @@
                     <li class="menu-title">Monitor</li><!-- /.menu-title -->
                     <li sec:authorize-url="/user/*" class="menu-item-has-children dropdown">
 
-                        <a sec:authorize="hasRole('ROLE_Admin')" herf="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-cogs"></i>User</a>
+                        <a sec:authorize="hasRole('ROLE_Admin')" herf="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-users"></i>User</a>
                         <ul class="sub-menu children dropdown-menu">
 <!--                            @{'/user/createUser'}-->
 <!--                            @{'/user/userList'}-->
-                            <li><i class="fa fa-puzzle-piece"></i><a herf="#" th:href="@{'/user/createUser'}">Create user</a></li>
-                            <li><i class="fa fa-puzzle-piece"></i><a herf="#"  th:href="@{'/user/userList'}">User list</a></li>
+                            <li><i class="sub-menu-icon fa fa-user-plus"></i><a herf="#" th:href="@{'/user/createUser'}">Create user</a></li>
+                            <li><i class="sub-menu-icon fa fa-list"></i><a herf="#"  th:href="@{'/user/userList'}">User list</a></li>
                         </ul>
                     </li>
                     <li sec:authorize-url="/department/*" class="menu-item-has-children dropdown">
                         <a sec:authorize="hasRole('ROLE_Admin')" herf="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-table"></i>Department</a>
                         <ul class="sub-menu children dropdown-menu">
-                            <li><i class="fa fa-table"></i><a herf="#" th:href="@{'/department/departmentList'}">Department List</a></li>
-                            <li><i class="fa fa-table"></i><a herf="#" th:href="@{'/department/createDepartment'}">Create Department</a></li>
+                            <li><i class="fa fa-list"></i><a herf="#" th:href="@{'/department/departmentList'}">Department List</a></li>
+                            <li><i class="fa fa-building"></i><a herf="#" th:href="@{'/department/createDepartment'}">Create Department</a></li>
 
 
                         </ul>
                     </li>
                     <li sec:authorize-url="/question/* or /answerpage/*" class="menu-item-has-children dropdown">
-                        <a  class="dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-cogs"></i>Questions</a>
+                        <a  class="dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-question"></i>Questions</a>
                         <ul class="sub-menu children dropdown-menu">
-                            <li sec:authorize="hasRole('ROLE_Admin')" ><i class="fa fa-puzzle-piece"></i><a  th:href="@{'/question/createQuestion'}">create question</a></li>
-                            <li sec:authorize="hasRole('ROLE_Admin')"><i class="fa fa-table"></i><a  herf="#" th:href="@{'/question/questionList'}">Question List</a></li>
-                            <li sec:authorize="hasRole('ROLE_Teacher')"><i class="fa fa-table"></i><a  herf="#" th:href="@{'/answerpage/teacherpage'}">Teacher Question</a></li>
-                            <li sec:authorize=" hasRole('ROLE_Dean_of_Department') or hasRole('ROLE_head_of_Department') " ><i class="fa fa-table"></i><a  herf="#" th:href="@{'/answerpage/chairedpage'}">Chaired Question</a></li>
-                            <li><i class="fa fa-table"></i><a  herf="#" th:href="@{'/answerpage/acceptAnswer'}">student Question</a></li>
+                            <li sec:authorize="hasRole('ROLE_Admin')" ><i class="sub-menu-icon fa fa-question"></i><a  th:href="@{'/question/createQuestion'}">create question</a></li>
+                            <li sec:authorize="hasRole('ROLE_Admin')"><i class="fa fa-question"></i><a  herf="#" th:href="@{'/question/questionList'}">Question List</a></li>
+                            <li sec:authorize="hasRole('ROLE_Teacher')"><i class="fa fa-question"></i><a  herf="#" th:href="@{'/answerpage/teacherpage'}">Teacher Question</a></li>
+                            <li sec:authorize=" hasRole('ROLE_Dean_of_Department') or hasRole('ROLE_head_of_Department') " ><i class="fa fa-question"></i><a  herf="#" th:href="@{'/answerpage/chairedpage'}">Chaired Question</a></li>
+                            <li sec:authorize="hasRole('ROLE_Admin') or isAnonymous()"><i class="fa fa-question"></i><a  herf="#" th:href="@{'/answerpage/acceptAnswer'}">student Question</a></li>
                         </ul>
                     </li>
 

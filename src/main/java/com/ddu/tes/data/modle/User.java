@@ -24,6 +24,8 @@ public class User extends BaseModel{
     private Boolean isEnabled;
     private String gender;
     private Integer DepartmentId;
+    private String createdBy;
+
 
     @Id
     @Column(name = "UserId", nullable = false)
@@ -64,6 +66,17 @@ public class User extends BaseModel{
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+
+    @Basic
+    @Column(name = "CreatedBy", nullable = true, length = 50)
+     public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
     }
 
     @Basic

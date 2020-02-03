@@ -1,7 +1,6 @@
 package com.ddu.tes.data.modle;
 
 import javax.persistence.*;
-import java.sql.Date;
 import java.util.Objects;
 
 /**
@@ -14,6 +13,8 @@ public class Department extends BaseModel {
     private String departmentName;
     private String description;
     private Integer numberOfStaff;
+    private String createdBy;
+
 
     @Id
     @Column(name = "DepartmentId", nullable = false)
@@ -24,6 +25,16 @@ public class Department extends BaseModel {
 
     public void setDepartmentId(Integer departmentId) {
         this.departmentId = departmentId;
+    }
+
+    @Basic
+    @Column(name = "CreatedBy", nullable = true, length = 50)
+     public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
     }
 
     @Basic

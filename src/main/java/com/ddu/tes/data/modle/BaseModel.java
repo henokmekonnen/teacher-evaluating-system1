@@ -17,13 +17,19 @@ import java.util.Date;
 @MappedSuperclass
 public abstract class BaseModel implements Serializable {
 
-    @Column
-    protected String createdBy;
 
     @Column
     @CreationTimestamp
     @Convert(converter = DateTimeConverter.class)
     protected Date createdDate;
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
 
     @Column
     @UpdateTimestamp
@@ -44,11 +50,11 @@ public abstract class BaseModel implements Serializable {
     @Transient
     public abstract void setId(final Integer id);
 
-    public String getCreatedBy() {
+    /*public String getCreatedBy() {
         return createdBy;
     }
 
     public void setCreatedBy(String createdBy) {
         this.createdBy = createdBy;
-    }
+    }*/
 }

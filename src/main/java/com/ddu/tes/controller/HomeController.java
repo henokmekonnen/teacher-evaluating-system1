@@ -1,5 +1,6 @@
 package com.ddu.tes.controller;
 
+import com.ddu.tes.data.modle.User;
 import com.ddu.tes.security.SecurityInfoMgn;
 import com.ddu.tes.service.user.UserService;
 import com.ddu.tes.utils.Constant;
@@ -44,6 +45,24 @@ public class HomeController {
         }*/
 
         return "index";
+    }
+    @RequestMapping(value = {"/dashboard"}, method = RequestMethod.GET)
+    public String dashboard(Model model) {
+        User currentUser = securityInfoManager.getCurrentUser();
+        /*if(!currentUser.getChangePasswordRequired()){
+
+            model.addAttribute(Constant.TYPE, Constant.ALERT_TYPE_DANGER);
+            model.addAttribute(Constant.MESSAGE, "Please change your system generated password.");
+            return "redirect:/changePassword?fistTime="+Boolean.TRUE ;
+        }
+*/
+        if (currentUser != null) {
+
+            model.addAttribute("loggedInUserName", currentUser.getFirstName());
+
+        }
+
+        return "dashboard";
     }
 
     @RequestMapping(value = "/login" , method = RequestMethod.GET)

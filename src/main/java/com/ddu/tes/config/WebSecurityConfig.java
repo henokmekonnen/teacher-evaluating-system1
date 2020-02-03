@@ -45,7 +45,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             http.formLogin()
                     .loginPage("/login")
                     .loginProcessingUrl("/perform_login")
-                    .defaultSuccessUrl("/",true)
+                    .defaultSuccessUrl("/dashboard",true)
                     .failureUrl("/login?error")
                     .usernameParameter("credential").passwordParameter("password")
                     .and()
@@ -55,7 +55,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .setBuilder(http);
 
             http.authorizeRequests()
-                    .antMatchers("/").authenticated()
+                    .antMatchers("/").permitAll()
+                    .antMatchers("/dashboard").authenticated()
                     .antMatchers("/home").access("hasAnyRole('"+ Constant.ADMIN_ROLE+"')")
                     .antMatchers("/user/**").access("hasAnyRole('"+ Constant.ADMIN_ROLE+"')")
                     .antMatchers("/answerpage/**").access("hasAnyRole('"+Constant.CHAIRED_ROLE+"','"+ Constant.TEACHER_ROLE+"')")

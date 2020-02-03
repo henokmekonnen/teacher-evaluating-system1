@@ -4,6 +4,7 @@ import com.ddu.tes.controller.model.user.CreateUserRequestModel;
 import com.ddu.tes.controller.model.user.CreateUserResponseModel;
 import com.ddu.tes.controller.model.user.EditUserRequestModel;
 import com.ddu.tes.controller.model.user.EditUserResponseModel;
+import com.ddu.tes.data.enums.ChannelEnum;
 import com.ddu.tes.data.repository.SqlRepository;
 import com.ddu.tes.service.department.DepartmentService;
 import com.ddu.tes.service.department.GetAllDepartmentListResult;
@@ -288,7 +289,7 @@ public class UserController {
             model.addAttribute("createUserRequestModel",confirmCreateUser);
             model.addAttribute("departmentListResult", departmentListResult.getDepartmentList());
             model.addAttribute("roleListResult",roleListResult.getRoleList());
-            CreateUserResponseModel responseModel = userService.createUser(confirmCreateUser);
+            CreateUserResponseModel responseModel = userService.createUser(confirmCreateUser, ChannelEnum.ADMIN);
 
             if(responseModel.getStatusCode() != 0){
                 model.addAttribute("createUserRequestModel",confirmCreateUser);

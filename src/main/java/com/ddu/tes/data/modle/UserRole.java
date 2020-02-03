@@ -13,6 +13,8 @@ public class UserRole extends BaseModel{
     private String description;
     private Integer roleId;
     private Integer userId;
+    private String createdBy;
+
 
     @Id
     @Column(name = "user_role", nullable = false)
@@ -46,6 +48,15 @@ public class UserRole extends BaseModel{
         this.description = description;
     }
 
+    @Basic
+    @Column(name = "CreatedBy", nullable = true, length = 50)
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
     @Basic
     @Column(name = "RoleId", nullable = false)
     public Integer getRoleId() {

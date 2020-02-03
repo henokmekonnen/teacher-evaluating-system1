@@ -1,84 +1,80 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-	<title>Login V19</title>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-<!--===============================================================================================-->
-	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="login/vendor/bootstrap/css/bootstrap.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
-<!--===============================================================================================-->
+    <title>Login V19</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}" href="../static/assets/css/bootstrap.min.css" />
 
-	<link rel="stylesheet" th:href="@{/assets/login/vendor/bootstrap/css/bootstrap.min.css}" href="../static/login/vendor/bootstrap/css/bootstrap.min.css" />
-	<link rel="stylesheet" th:href="@{/assets/login/css/util.css}" href="../static/assets/login/css/util.css" />
-	<link rel="stylesheet" th:href="@{/assets/login/css/main.css}" href="../static/assets/login/css/main.css" />
-<!--===============================================================================================-->
+
+
+    <link rel="stylesheet" th:href="@{/assets/login/css/util.css}" href="../static/assets/login/css/util.css" />
+    <link rel="stylesheet" th:href="@{/assets/login/css/main.css}" href="../static/assets/login/css/main.css" />
+    <!--===============================================================================================-->
 </head>
 <body>
 
-	<div class="limiter">
-		<div class="container-login100">
-			<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-50">
+<div class="limiter">
+    <div class="container-login100">
+        <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-50">
 
-				<form class="login100-form validate-form" th:action="@{/perform_login}" method="post">
+            <form class="login100-form validate-form" th:action="@{/perform_login}" method="post">
 					<span class="login100-form-title p-b-33">
 						Account Login
 					</span>
 
- <div class="alert alert-dismissable alert-danger" th:if="${param.error}" th:with="errorMsg=${session['SPRING_SECURITY_LAST_EXCEPTION'].message}">
-                                               <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                                  <span th:text="${errorMsg}">!</span>
-                                             </div>
-					<div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
-						<input class="input100" type="text" name="credential" required="required" placeholder="Email">
-						<span class="focus-input100-1"></span>
-						<span class="focus-input100-2"></span>
-					</div>
+                <div class="alert alert-dismissable alert-danger" th:if="${param.error}" th:with="errorMsg=${session['SPRING_SECURITY_LAST_EXCEPTION'].message}">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <span th:text="${errorMsg}">!</span>
+                </div>
+                <div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
+                    <input class="input100" type="text" name="credential" required="required" placeholder="Email">
+                    <span class="focus-input100-1"></span>
+                    <span class="focus-input100-2"></span>
+                </div>
 
-					<div class="wrap-input100 rs1 validate-input" data-validate="Password is required">
-						<input class="input100" type="password" name="password" placeholder="Password">
-						<span class="focus-input100-1"></span>
-						<span class="focus-input100-2"></span>
-					</div>
+                <div class="wrap-input100 rs1 validate-input" data-validate="Password is required">
+                    <input class="input100" type="password" name="password" placeholder="Password">
+                    <span class="focus-input100-1"></span>
+                    <span class="focus-input100-2"></span>
+                </div>
 
-					<div class="container-login100-form-btn m-t-20">
-						<button class="login100-form-btn">
-							Sign in
-						</button>
-					</div>
+                <div class="container-login100-form-btn m-t-20">
+                    <button class="login100-form-btn">
+                        Sign in
+                    </button>
+                </div>
 
-					<div class="text-center p-t-45 p-b-4">
-						<a th:href="@{'/forgetPassword'}" id="forgot_password">
-							Forgot Password?
-						</a>
-					</div>
+                <div class="text-center p-t-45 p-b-4">
+                    <a th:href="@{'/forgetPassword'}" id="forgot_password">
+                        Forgot Password?
+                    </a>
+                </div>
 
-					<div class="text-center">
+                <div class="text-center">
 						<span class="txt1">
 							<a href="/answerpage/acceptAnswer" class="txt2 hov1">For Students?</a>
 						</span>
 
-						<a href="#" class="txt2 hov1">
-							Review Here
-						</a>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
+                    <a href="#" class="txt2 hov1">
+                        Review Here
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 
 
-<!--===============================================================================================-->
-<script th:src="@{/assets/login/vendor/jquery/jquery-3.2.1.min.js}" href="../static/assets/login/vendor/jquery/jquery-3.2.1.min.js"></script>
-<script th:src="@{/assets/login/vendor/animsition/js/animsition.min.js}" href="../static/assets/login/vendor/animsition/js/animsition.min.js"></script>
-<script th:src="@{/assets/login/vendor/bootstrap/js/popper.js}" href="../static/assets/login/vendor/bootstrap/js/popper.js"></script>
-<script th:src="@{/assets/login/vendor/bootstrap/js/bootstrap.min.js}" href="../static/assets/login/vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--====nnnn===========================================================================================-->
+
+
+
+<script th:src="@{/assets/js/jquery.min.js}" href="../static/assets/js/jquery.min.js"></script>
+<script th:src="@{/assets/js/popper.min.js}" href="../static/assets/js/popper.min.js"></script>
+<script th:src="@{/assets/js/bootstrap.min.js}" href="../static/assets/js/bootstrap.min.js"></script>
 <script th:src="@{/assets/login/js/main.js}" href="../static/assets/login/js/main.js"></script>
 
 

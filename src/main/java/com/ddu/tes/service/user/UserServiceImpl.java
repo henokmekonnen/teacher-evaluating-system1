@@ -4,12 +4,14 @@ import com.ddu.tes.controller.model.user.CreateUserRequestModel;
 import com.ddu.tes.controller.model.user.CreateUserResponseModel;
 import com.ddu.tes.controller.model.user.EditUserRequestModel;
 import com.ddu.tes.controller.model.user.EditUserResponseModel;
-import com.ddu.tes.data.modle.Department;
-import com.ddu.tes.data.modle.Role;
-import com.ddu.tes.data.modle.User;
-import com.ddu.tes.data.modle.UserRole;
+import com.ddu.tes.data.enums.ChannelEnum;
+import com.ddu.tes.data.enums.ProcessTypeEnum;
+import com.ddu.tes.data.modle.Process;
+import com.ddu.tes.data.modle.*;
 import com.ddu.tes.data.repository.SqlRepository;
+import com.ddu.tes.security.SecurityInfoMgn;
 import com.ddu.tes.service.phonenumber.PhoneNumberService;
+import com.ddu.tes.service.process.ProcessService;
 import com.ddu.tes.utils.Constant;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
@@ -17,10 +19,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -33,6 +32,12 @@ public class UserServiceImpl implements UserService {
 
   @Autowired
     PhoneNumberService phoneNumberService;
+
+    @Autowired
+    ProcessService processService;
+
+  @Autowired
+    SecurityInfoMgn securityInfoManager;
 
   @Override
     public GetUserByEmailResult getUserByEmail(String email) {
@@ -158,10 +163,21 @@ public GetUserByPhoneResult getUserByPhone(String phoneNumber) {
 }
 
     @Override
-    public CreateUserResponseModel createUser(CreateUserRequestModel confirmCreateUser) {
+    public CreateUserResponseModel createUser(CreateUserRequestModel confirmCreateUser, ChannelEnum channelEnum) {
         CreateUserResponseModel responseModel = new CreateUserResponseModel();
+        Process createFanProcess = null;
 
         try {
+
+            User currentUser = securityInfoManager.getCurrentUser();
+
+            HashMap<String, String> processData = new HashMap<>();
+            processData.put("createdByUserId", currentUser.getUserId().toString());
+
+            createFanProcess = processService.registerPendingProcess(ProcessTypeEnum.REGISTER_User
+                    , processData, channelEnum,  null, currentUser.getUserId(), null);
+
+
             User newUser = new User();
             UserRole userRole=new UserRole();
             newUser.setFirstName(confirmCreateUser.getFirstName());
@@ -178,17 +194,20 @@ public GetUserByPhoneResult getUserByPhone(String phoneNumber) {
             newUser.setLocked(Boolean.FALSE);
             newUser.setEnabled(Boolean.TRUE);
             newUser.setCreatedBy(Constant.SYSTEM);
+            newUser.setCreatedDate(Calendar.getInstance().getTime());
             newUser.setUuid(Constant.generatenumber());
 
             User savedUser = (User) sqlRepository.insert(newUser);
+
             userRole.setUserId(savedUser.getUserId());
             userRole.setRoleId(confirmCreateUser.getRoleId());
             userRole.setCreatedBy(Constant.SYSTEM);
+            userRole.setCreatedDate(Calendar.getInstance().getTime());
             userRole.setDescription(confirmCreateUser.getRoleName());
 
-            userRole = (UserRole) sqlRepository.insert(userRole);
+            UserRole savedUserRole = (UserRole) sqlRepository.insert(userRole);
 
-            responseModel.setStatusCode(0);
+                       responseModel.setStatusCode(0);
             responseModel.setStatusMessage("Successfully created user");
             responseModel.setFirstName(confirmCreateUser.getFirstName());
             responseModel.setLastName(confirmCreateUser.getLastName());
@@ -200,6 +219,10 @@ public GetUserByPhoneResult getUserByPhone(String phoneNumber) {
             responseModel.setDepartmentId(confirmCreateUser.getDepartmentId());
             responseModel.setRoleId(confirmCreateUser.getRoleId());
 
+            createFanProcess.setInitiatingUserId(currentUser.getUserId());
+            processService.updateProcess(createFanProcess);
+
+            processService.completePendingProcess(createFanProcess.getProcessId(), "successfully registerd user");
 
             return responseModel;
 

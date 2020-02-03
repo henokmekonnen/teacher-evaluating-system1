@@ -45,6 +45,18 @@ public class Role extends  BaseModel{
         this.name = name;
     }
 
+    private String createdBy;
+    @Basic
+    @Column(name = "CreatedBy", nullable = true, length = 50)
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+
     @Basic
     @Column(name = "Description", nullable = true, length = 100)
     public String getDescription() {
