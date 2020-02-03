@@ -19,8 +19,8 @@
 
                         <a sec:authorize="hasRole('ROLE_Admin')" herf="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-users"></i>User</a>
                         <ul class="sub-menu children dropdown-menu">
-<!--                            @{'/user/createUser'}-->
-<!--                            @{'/user/userList'}-->
+                            <!--                            @{'/user/createUser'}-->
+                            <!--                            @{'/user/userList'}-->
                             <li><i class="sub-menu-icon fa fa-user-plus"></i><a herf="#" th:href="@{'/user/createUser'}">Create user</a></li>
                             <li><i class="sub-menu-icon fa fa-list"></i><a herf="#"  th:href="@{'/user/userList'}">User list</a></li>
                         </ul>
