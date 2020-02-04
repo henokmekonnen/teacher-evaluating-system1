@@ -22,9 +22,10 @@ import org.springframework.security.web.firewall.StrictHttpFirewall;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
 
 
-/**
+/*
+*
  * @author ghabtamu
- */
+*/
 @Configuration
 @EnableWebSecurity
 @EnableAspectJAutoProxy(proxyTargetClass=true)

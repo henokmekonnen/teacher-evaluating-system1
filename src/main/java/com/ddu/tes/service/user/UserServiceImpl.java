@@ -165,7 +165,7 @@ public GetUserByPhoneResult getUserByPhone(String phoneNumber) {
     @Override
     public CreateUserResponseModel createUser(CreateUserRequestModel confirmCreateUser, ChannelEnum channelEnum) {
         CreateUserResponseModel responseModel = new CreateUserResponseModel();
-        Process createFanProcess = null;
+        Process createUserProcess = null;
 
         try {
 
@@ -174,8 +174,9 @@ public GetUserByPhoneResult getUserByPhone(String phoneNumber) {
             HashMap<String, String> processData = new HashMap<>();
             processData.put("createdByUserId", currentUser.getUserId().toString());
 
-            createFanProcess = processService.registerPendingProcess(ProcessTypeEnum.REGISTER_User
-                    , processData, channelEnum,  null, currentUser.getUserId(), null);
+
+            createUserProcess = processService.registerPendingProcess(ProcessTypeEnum.REGISTER_User
+                    ,processData , channelEnum,  null, currentUser.getUserId(), null);
 
 
             User newUser = new User();
@@ -219,10 +220,10 @@ public GetUserByPhoneResult getUserByPhone(String phoneNumber) {
             responseModel.setDepartmentId(confirmCreateUser.getDepartmentId());
             responseModel.setRoleId(confirmCreateUser.getRoleId());
 
-            createFanProcess.setInitiatingUserId(currentUser.getUserId());
-            processService.updateProcess(createFanProcess);
+            createUserProcess.setInitiatingUserId(currentUser.getUserId());
+            processService.updateProcess(createUserProcess);
 
-            processService.completePendingProcess(createFanProcess.getProcessId(), "successfully registerd user");
+            processService.completePendingProcess(createUserProcess.getProcessId(), "successfully registerd user");
 
             return responseModel;
 

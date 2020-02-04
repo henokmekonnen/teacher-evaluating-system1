@@ -14,7 +14,6 @@ public class ProcessData extends BaseModel {
 
     @Id
     @Column(name = "ProcessDataId", nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getProcessDataId() {
         return processDataId;
     }
@@ -63,10 +62,9 @@ public class ProcessData extends BaseModel {
         this.dataValue = dataValue;
     }
 
-
-    @Transient
     @Override
-    public Integer getId() {
+    @Transient
+   public Integer getId() {
         return getProcessId();
     }
 
@@ -74,6 +72,7 @@ public class ProcessData extends BaseModel {
     public void setId(Integer id) {
         setProcessId(id);
     }
+
 
     @Override
     public boolean equals(Object o) {

@@ -44,6 +44,7 @@ public class ProcessServiceImpl implements ProcessService {
             process.setExecutingUserId(executingUserId != null ? executingUserId : null);
             process.setCreatedByUserId(securityInfoManager.getCurrentUser() != null ? securityInfoManager.getCurrentUser().getUserId() : executingUserId);
             process.setStartedTimestamp(Calendar.getInstance().getTime());
+            process.setStatusMessage(ProcessRelationTypeEnum.REGISTER_PROGRESS.toString());
 
             processCodeLength = processCodeLength == null ? DEFAULT_PROCESS_CODE_LENGTH : processCodeLength;
 
@@ -62,11 +63,12 @@ public class ProcessServiceImpl implements ProcessService {
                 for (Map.Entry<String, String> entry : processData.entrySet()) {
 
                     ProcessData pData = new ProcessData();
+                    pData.setProcessDataId(processId);
                     pData.setDataName(entry.getKey());
                     pData.setDataValue(entry.getValue());
                     pData.setProcessId(processId);
                     pData.setCreatedByUserId(securityInfoManager.getCurrentUser().getUserId());
-
+                    pData.setCreatedDate(Calendar.getInstance().getTime());
                     processDataList.add(pData);
                 }
 

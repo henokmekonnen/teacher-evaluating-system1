@@ -10,7 +10,7 @@ import java.util.Map;
 
 public interface ProcessService {
 
-    public Process registerPendingProcess(ProcessTypeEnum processTypeId, Map<String, String> processData, ChannelEnum processChannel, Integer initiatingUserId, Integer executingUserId, Integer processCodeLength);
+    public Process registerPendingProcess(ProcessTypeEnum processTypeId,Map<String, String> processData,ChannelEnum processChannel, Integer initiatingUserId, Integer executingUserId, Integer processCodeLength);
 
     public Process completePendingProcess(Integer processId, String statusMessage);
 
