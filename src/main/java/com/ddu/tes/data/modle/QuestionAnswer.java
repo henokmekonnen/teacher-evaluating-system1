@@ -17,6 +17,8 @@ public class QuestionAnswer extends BaseModel {
     private String createdBy;
     private String description;
     private Integer questionId;
+    private Integer answerdByUserId;
+    private Integer answerdForUserId;
 
     @Id
     @Column(name = "QuestionAnswerId", nullable = false)
@@ -88,6 +90,23 @@ public class QuestionAnswer extends BaseModel {
 
     public void setQuestionId(Integer questionId) {
         this.questionId = questionId;
+    }
+
+    @Column(name = "AnswerdByUserId", nullable = false)
+    public Integer getAnswerdByUserId() {
+        return answerdByUserId;
+    }
+
+    public void setAnswerdByUserId(Integer answerdByUserId) {
+        this.answerdByUserId = answerdByUserId;
+    }
+    @Column(name = "AnswerdForUserId", nullable = false)
+    public Integer getAnswerdForUserId() {
+        return answerdForUserId;
+    }
+
+    public void setAnswerdForUserId(Integer answerdForUserId) {
+        this.answerdForUserId = answerdForUserId;
     }
 
     @Override

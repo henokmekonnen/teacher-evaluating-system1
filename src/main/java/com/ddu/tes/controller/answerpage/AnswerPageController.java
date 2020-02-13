@@ -128,7 +128,7 @@ public class AnswerPageController {
 
             }
 
-
+            answerService.acceptAnswer(confirmAcceptAnswer);
 
             return "answerpage/student-question-page-confirm";
 
@@ -422,8 +422,8 @@ public class AnswerPageController {
 
     }
 
-    @RequestMapping(value = "/acceptAnswer", method = RequestMethod.GET)
-    public String acceptAnswer(Model model, HttpSession session, RedirectAttributes redirectAttributes) {
+    @RequestMapping(value = "/acceptStudentAnswer", method = RequestMethod.GET)
+    public String acceptStudentAnswer(Model model, HttpSession session, RedirectAttributes redirectAttributes) {
         try {
 
             GetAllDepartmentListResult departmentListResult = departmentService.getAllDepartments();

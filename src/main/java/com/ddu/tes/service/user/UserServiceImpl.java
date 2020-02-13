@@ -17,6 +17,8 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -304,7 +306,34 @@ public GetUserByPhoneResult getUserByPhone(String phoneNumber) {
             return responseModel;
         }
     }
-@Override
+
+    @Override
+    public GetUserByEmailResult  getCurrentUser() {
+
+        try{
+
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+            if (null == authentication) {
+                return null;
+            }
+
+            final String username = (String) authentication.getPrincipal();
+
+            GetUserByEmailResult result = getUserByEmail(username);
+
+            if (result != null) {
+                return result;
+            }
+
+        } catch (Exception ex){
+            logger.error(ex.getMessage(), ex);
+        }
+
+        return null;
+    }
+
+    @Override
 public EditUserResponseModel editUser(EditUserRequestModel confirmEditUser){
         EditUserResponseModel responseModel = new EditUserResponseModel();
 

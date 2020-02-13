@@ -4,11 +4,14 @@ import com.ddu.tes.controller.model.answer.AnswerQuestionRequestModel;
 import com.ddu.tes.controller.model.answer.AnswerQuestionResponseModel;
 import com.ddu.tes.data.modle.QuestionAnswer;
 import com.ddu.tes.data.repository.SqlRepository;
+import com.ddu.tes.service.user.GetUserByEmailResult;
+import com.ddu.tes.service.user.UserService;
 import com.ddu.tes.utils.Constant;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,12 +25,11 @@ public class AnswerServiceImpl implements AnswerService {
     @Autowired
     SqlRepository sqlRepository;
 
-
+    @Autowired
+    UserService userService;
 
     @Override
     public GetAllAnswerList getAllAnswer() {
-
-
 
         GetAllAnswerList responseModel = new GetAllAnswerList();
         try {
@@ -115,20 +117,28 @@ public class AnswerServiceImpl implements AnswerService {
         AnswerQuestionResponseModel responseModel = new AnswerQuestionResponseModel();
 
         try {
-            QuestionAnswer newDepartment = new QuestionAnswer();
 
-            newDepartment.setAnswer(confirmAcceptAnswer.getAnswer());
-             newDepartment.setDescription(confirmAcceptAnswer.getDescription());
-            newDepartment.setCreatedBy(Constant.SYSTEM);
+            GetUserByEmailResult result = userService.getCurrentUser();
 
+            for (String coreAnswer :confirmAcceptAnswer.getCoreCompetence()) {
+                 processAnswer(confirmAcceptAnswer.getUserId(), result != null ? result.getUsrId() : null, coreAnswer);
+            }
 
-            newDepartment = (QuestionAnswer)  sqlRepository.insert(newDepartment);
+            for (String ethicalAnswer :confirmAcceptAnswer.getEthicalCompetence()) {
+                 processAnswer(confirmAcceptAnswer.getUserId(), result != null ? result.getUsrId() : null, ethicalAnswer);
+            }
+
+            for (String profAnswer :confirmAcceptAnswer.getProfessionalCompetence()) {
+                 processAnswer(confirmAcceptAnswer.getUserId(), result != null ? result.getUsrId() : null, profAnswer);
+            }
+
+            for (String timeAnswer :confirmAcceptAnswer.getTimeManagement()) {
+                 processAnswer(confirmAcceptAnswer.getUserId(), result != null ? result.getUsrId() : null, timeAnswer);
+            }
+
 
             responseModel.setStatusCode(0);
             responseModel.setStatusMessage("Successfully created question");
-            responseModel.setAnswer(newDepartment.getAnswer());
-            responseModel.setDescription(newDepartment.getDescription());
-
             return  responseModel;
 
         }catch (Exception ex) {
@@ -137,5 +147,22 @@ public class AnswerServiceImpl implements AnswerService {
             responseModel.setStatusMessage(ex.getMessage());
             return  responseModel;
         }
+    }
+
+    private void processAnswer(Integer userId, Integer answeringUserId, String answer) {
+
+        try {
+            QuestionAnswer questionAnswer = new QuestionAnswer();
+
+            questionAnswer.setAnswerdByUserId(answeringUserId);//if student null else id
+            questionAnswer.setAnswerdForUserId(userId); // teacher
+            questionAnswer.setQuestionId(Integer.valueOf(answer.split("_")[0].toString()));
+            questionAnswer.setAnswer(Integer.valueOf(answer.split("_")[1].toString()));
+
+            sqlRepository.insert(questionAnswer);
+        } catch (Exception ex) {
+            logger.error(ex.getMessage());
+        }
+
     }
 }

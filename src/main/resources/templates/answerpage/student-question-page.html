@@ -48,7 +48,7 @@
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label><strong>Department</strong> <span class="text-danger">*</span></label>
-                                    <select class="form-control" id="departmentId" name="departmentId" required="required"  >
+                                    <select class="form-control" id="departmentId" name="departmentId" th:field="*{departmentId}" required="required"  >
                                         <option value=""> please select department </option>
                                         <option th:each="DepartmentId:${departmentList}" th:value="${DepartmentId.dptId}"
                                                 th:text="${DepartmentId.dptName}"></option>
@@ -60,7 +60,7 @@
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label><strong>User</strong> <span class="text-danger">*</span></label>
-                                    <select class="form-control" id="userId"  name="userId" required="required"  >
+                                    <select class="form-control" id="userId"  name="userId" th:field="*{userId}"  required="required"  >
                                         <option value=""> please select user </option>
                                         <option  th:each="user:${userList}"   th:value="${user.usrId}"
                                                 th:text="${user.usrFirstName}" ></option>
@@ -79,11 +79,11 @@
                                    <div class="col-lg-2">
                                <select select class="form-control" name="" style="margin-top: 10px; " required="required"   th:field="*{coreCompetence}" >
                                    <option value=""> please select </option>
-                                <option th:value="1">በጣም ዝቅተኛ</option>
-                                <option th:value="2">ዝቅተኛ</option>
-                                <option th:value="3">መካከለኛ</option>
-                                <option th:value="4">ከፍተኛ</option>
-                                <option th:value="5">በጣም ከፍተኛ</option>
+                                <option th:value="|${qst.questionId}_1|">በጣም ዝቅተኛ</option>
+                                <option th:value="|${qst.questionId}_2|">ዝቅተኛ</option>
+                                <option th:value="|${qst.questionId}_3|">መካከለኛ</option>
+                                <option th:value="|${qst.questionId}_4|">ከፍተኛ</option>
+                                <option th:value="|${qst.questionId}_5|">በጣም ከፍተኛ</option>
 
                                </select>
                                    </div>
@@ -103,11 +103,11 @@
                                             <div class="col-lg-2">
                                                 <select select class="form-control" name="" style="margin-top: 10px;"  required="required" th:field="*{professionalCompetence}" >
                                                     <option value=""> please select </option>
-                                                    <option  th:value="1">በጣም ዝቅተኛ</option>
-                                                    <option th:value="2">ዝቅተኛ</option>
-                                                    <option th:value="3">መካከለኛ</option>
-                                                    <option th:value="4">ከፍተኛ</option>
-                                                    <option th:value="5">በጣም ከፍተኛ</option>
+                                                    <option  th:value="|${qst.questionId}_1|">በጣም ዝቅተኛ</option>
+                                                    <option th:value="|${qst.questionId}_2|">ዝቅተኛ</option>
+                                                    <option th:value="|${qst.questionId}_3|">መካከለኛ</option>
+                                                    <option th:value="|${qst.questionId}_4|">ከፍተኛ</option>
+                                                    <option th:value="|${qst.questionId}_5|">በጣም ከፍተኛ</option>
 
                                                 </select>
                                             </div>
@@ -128,11 +128,11 @@
                                             <div class="col-lg-2">
                                                 <select select class="form-control" name="" style="margin-top: 10px;"  required="required" th:field="*{ethicalCompetence}" >
                                                     <option value=""> please select </option>
-                                                    <option th:value="1">በጣም ዝቅተኛ</option>
-                                                    <option th:value="2">ዝቅተኛ</option>
-                                                    <option th:value="3">መካከለኛ</option>
-                                                    <option th:value="4">ከፍተኛ</option>
-                                                    <option th:value="5">በጣም ከፍተኛ</option>
+                                                    <option th:value="|${qst.questionId}_1|">በጣም ዝቅተኛ</option>
+                                                    <option th:value="|${qst.questionId}_2|">ዝቅተኛ</option>
+                                                    <option th:value="|${qst.questionId}_3|">መካከለኛ</option>
+                                                    <option th:value="|${qst.questionId}_4|">ከፍተኛ</option>
+                                                    <option th:value="|${qst.questionId}_5|">በጣም ከፍተኛ</option>
 
                                                 </select>
                                             </div>
@@ -152,11 +152,11 @@
                                             <div class="col-lg-2">
                                                 <select select class="form-control" name="" style="margin-top: 10px;" required="required" th:field="*{timeManagement}" >
                                                     <option value=""> please select </option>
-                                                    <option th:value="1">በጣም ዝቅተኛ</option>
-                                                    <option th:value="2">ዝቅተኛ</option>
-                                                    <option th:value="3">መካከለኛ</option>
-                                                    <option th:value="4">ከፍተኛ</option>
-                                                    <option th:value="5">በጣም ከፍተኛ</option>
+                                                    <option th:value="|${qst.questionId}_1|">በጣም ዝቅተኛ</option>
+                                                    <option th:value="|${qst.questionId}_2|">ዝቅተኛ</option>
+                                                    <option th:value="|${qst.questionId}_3|">መካከለኛ</option>
+                                                    <option th:value="|${qst.questionId}_4|">ከፍተኛ</option>
+                                                    <option th:value="|${qst.questionId}_5|">በጣም ከፍተኛ</option>
 
                                                 </select>
                                             </div>
