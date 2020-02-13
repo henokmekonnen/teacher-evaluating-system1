@@ -9,9 +9,9 @@ import org.springframework.data.jpa.repository.Query;
  */
 public interface DepartmentRepository extends JpaRepository <Department,Long>{
 
-    @Query("select count(*) from department d")
+    @Query(value = "select count(*) from department d",nativeQuery= true)
     int countDepartment();
 
-    @Query("select count(*) from department d where d.departmentName = :name")
+    @Query(value = "select count(*) from department d where d.departmentName = :name",nativeQuery= true)
     int countDepartment(String name);
 }

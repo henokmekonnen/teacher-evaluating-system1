@@ -2,6 +2,7 @@ package com.ddu.tes.controller;
 
 import com.ddu.tes.data.modle.User;
 import com.ddu.tes.security.SecurityInfoMgn;
+import com.ddu.tes.service.department.DepartmentService;
 import com.ddu.tes.service.user.UserService;
 import com.ddu.tes.utils.Constant;
 import org.apache.commons.lang.StringUtils;
@@ -23,6 +24,9 @@ public class HomeController {
 
 @Autowired
     UserService userService;
+
+    @Autowired
+    private DepartmentService departmentService;
 
     @Autowired
     public SecurityInfoMgn securityInfoManager;
@@ -55,7 +59,12 @@ public class HomeController {
             model.addAttribute(Constant.MESSAGE, "Please change your system generated password.");
             return "redirect:/changePassword?fistTime="+Boolean.TRUE ;
         }
+
 */
+        int noOfDepartments = departmentService.countDepartment();
+
+        model.addAttribute("noOfDepartments", noOfDepartments);
+
         if (currentUser != null) {
 
             model.addAttribute("loggedInUserName", currentUser.getFirstName());

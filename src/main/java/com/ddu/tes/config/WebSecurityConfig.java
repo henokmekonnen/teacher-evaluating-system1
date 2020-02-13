@@ -60,8 +60,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/dashboard").authenticated()
                     .antMatchers("/home").access("hasAnyRole('"+ Constant.ADMIN_ROLE+"')")
                     .antMatchers("/user/**").access("hasAnyRole('"+ Constant.ADMIN_ROLE+"')")
-                    .antMatchers("/answerpage/**").access("hasAnyRole('"+Constant.CHAIRED_ROLE+"','"+ Constant.TEACHER_ROLE+"')")
-//                    .antMatchers("/answerpage/**").access("hasAnyRole('"+Constant.STUDENT_ROLE+"')")
+                    .antMatchers("/answerpage/teaherpage").access("hasAnyRole('"+ Constant.TEACHER_ROLE+"')")
+                    .antMatchers("/answerpage/chairedpage").access("hasAnyRole('"+Constant.CHAIRED_ROLE+"')")
+                    .antMatchers("/answerpage/acceptAnswer").permitAll()
                     .antMatchers("/forgetPassword").anonymous();
 
 
