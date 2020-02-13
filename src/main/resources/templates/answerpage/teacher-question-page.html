@@ -70,8 +70,8 @@
 
                             <div class="col-lg-auto">
                                 <div class=" form-group" >
-                                    <label style="font-weight: bold; padding: 10px;">Core Competency</label>
-                                    <div th:each="qst :${questionList}"   th:if="${qst.typeLookLp} == TEACHER and ${qst.questionType} == Core-Competency">
+                                    <label style="font-weight: bold; padding: 10px;">Core-Competency-Subject-matter</label>
+                                    <div th:each="qst :${questionList}"   th:if="${qst.typeLookLp} == TEACHER and ${qst.questionType} == Core-Competency-Subject-matter">
                                         <span class="form-control"  style="margin-bottom: 10px; border: 0px"  name="question" th:text="${qst.question}"  required="required"> </span>
                                         <div class="row">
                                             <div class="col-lg-2">
@@ -90,6 +90,27 @@
                                 </div>
                             </div>
 
+                            <div class="col-lg-auto">
+                                <div class=" form-group" >
+                                    <label style="font-weight: bold; padding: 10px;">Core-Competency-Research-and-Community-Services</label>
+                                    <div th:each="qst :${questionList}"   th:if="${qst.typeLookLp} == TEACHER and ${qst.questionType} == Core-Competency-Research-and-Community-Services">
+                                        <span class="form-control"  style="margin-bottom: 10px; border: 0px"  name="question" th:text="${qst.question}"  required="required"> </span>
+                                        <div class="row">
+                                            <div class="col-lg-2">
+                                                <select select class="form-control" name="" style="margin-top: 10px; " required="required"   th:field="*{coreCompetence}" >
+                                                    <option value=""> please select </option>
+                                                    <option th:value="1">በጣም ዝቅተኛ</option>
+                                                    <option th:value="2">ዝቅተኛ</option>
+                                                    <option th:value="3">መካከለኛ</option>
+                                                    <option th:value="4">ከፍተኛ</option>
+                                                    <option th:value="5">በጣም ከፍተኛ</option>
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
                             <div class="col-lg-auto">
                                 <div class=" form-group" >
@@ -205,7 +226,7 @@
                         $field.append(new Option("please select User", "-1"));
 
                         $.each(data, function (id, value) {
-                            $field.append('<option value=' + id + '>' + value + '</option>');
+                            $field.append('<option value=' + id + '>' + value +'</option>');
 
                         });
                     }

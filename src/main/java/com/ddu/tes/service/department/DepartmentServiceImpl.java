@@ -7,6 +7,7 @@ import com.ddu.tes.controller.model.department.EditDepartmentRequestModel;
 import com.ddu.tes.controller.model.department.EditDepartmentResponseModel;
 import com.ddu.tes.data.modle.Department;
 import com.ddu.tes.data.modle.User;
+import com.ddu.tes.data.repository.DepartmentRepository;
 import com.ddu.tes.data.repository.SqlRepository;
 import com.ddu.tes.utils.Constant;
 import org.apache.commons.lang.StringUtils;
@@ -27,8 +28,13 @@ import java.util.Map;
 public class DepartmentServiceImpl implements  DepartmentService{
 
     private static final Log logger = LogFactory.getLog(DepartmentServiceImpl.class);
+
     @Autowired
      SqlRepository sqlRepository;
+
+
+    @Autowired
+    DepartmentRepository departmentRepository;
 
     @Override
     public GetDepartmentByNameResult getDepartmentByName(String departmentName) {
@@ -226,4 +232,9 @@ public class DepartmentServiceImpl implements  DepartmentService{
 
         return dptUser;
     }
+
+    public  int countDepartment(){
+        return departmentRepository.countDepartment();
+    }
+
 }

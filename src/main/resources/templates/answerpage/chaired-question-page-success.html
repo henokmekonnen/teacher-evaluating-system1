@@ -198,14 +198,14 @@
                     success: function (data) {
                         // the next thing you want to do
 
-                        alert(JSON.stringify(data))
+                        // alert(JSON.stringify(data))
 
                         var $field = $('#userId');
 
                         $field.empty();
                         $field.append(new Option("please select User", "-1"));
 
-                        $.each(data, function (id, value) {
+                        $.each(data, function (id, value,value1) {
                             $field.append('<option value=' + id + '>' + value + '</option>');
 
                         });

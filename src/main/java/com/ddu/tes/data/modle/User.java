@@ -111,7 +111,7 @@ public class User extends BaseModel{
     }
 
     @Basic
-    @Column(name = "UserName", nullable = false, length = 20)
+    @Column(name = "UserName", nullable = false, length = 100)
     public String getUserName() {
         return userName;
     }

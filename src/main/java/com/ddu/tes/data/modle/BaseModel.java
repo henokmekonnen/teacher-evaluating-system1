@@ -50,11 +50,13 @@ public abstract class BaseModel implements Serializable {
     @Transient
     public abstract void setId(final Integer id);
 
-    /*public String getCreatedBy() {
-        return createdBy;
+    /*publicStringgetCreatedBy() {
+        returncreatedBy;
     }
 
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
+    publicvoidsetCreatedBy(String createdBy) {
+        this.createdBy=createdBy;
     }*/
 }
+
+

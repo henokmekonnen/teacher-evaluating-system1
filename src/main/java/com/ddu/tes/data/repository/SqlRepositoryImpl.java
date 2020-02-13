@@ -157,6 +157,7 @@ public class SqlRepositoryImpl implements SqlRepository, InitializingBean {
         return savedObj;
     }
 
+
     @Override
     @Transactional
     public List<Object> bulkInsert(List<Object> object) {
@@ -193,11 +194,11 @@ public class SqlRepositoryImpl implements SqlRepository, InitializingBean {
                 }
 
                 list = new ArrayList<>();
- 
+
                 while (rs.next()) {
 
                     list.add(rs.getObject(1));
-                } 
+                }
             }
 
             return list;
@@ -210,7 +211,7 @@ public class SqlRepositoryImpl implements SqlRepository, InitializingBean {
 
             try{ if (statement != null) statement.close(); }
             catch(SQLException e) {
-                
+
                 logger.error(e.getMessage(), e);
             }
 
@@ -257,7 +258,7 @@ public class SqlRepositoryImpl implements SqlRepository, InitializingBean {
         } finally {
 
             try{ if (statement != null) statement.close(); }
-            catch(SQLException e) { 
+            catch(SQLException e) {
                 logger.error(e.getMessage(),e);
             }
 
@@ -291,7 +292,7 @@ public class SqlRepositoryImpl implements SqlRepository, InitializingBean {
 
             try{ if (statement != null) statement.close(); }
             catch(SQLException e) {
-                
+
                 logger.error(e.getMessage(), e);
             }
 
@@ -398,7 +399,7 @@ public class SqlRepositoryImpl implements SqlRepository, InitializingBean {
         } finally {
 
             try{ if (statement != null) statement.close(); }
-            catch(SQLException e) { 
+            catch(SQLException e) {
                 logger.error(e.getMessage(), e);
             }
 
@@ -464,8 +465,8 @@ public class SqlRepositoryImpl implements SqlRepository, InitializingBean {
         } finally {
 
             try{ if (statement != null) statement.close(); }
-            catch(SQLException e) { 
-                
+            catch(SQLException e) {
+
                 logger.error(e.getMessage(), e);
             }
 
@@ -545,8 +546,8 @@ public class SqlRepositoryImpl implements SqlRepository, InitializingBean {
         } finally {
 
             try{ if (statement != null) statement.close(); }
-            catch(SQLException e) { 
-                
+            catch(SQLException e) {
+
                 logger.error(e.getMessage(), e);
             }
 
@@ -588,7 +589,7 @@ public class SqlRepositoryImpl implements SqlRepository, InitializingBean {
 
             try{ if (statement != null) statement.close(); }
             catch(SQLException e) {
-                
+
                 logger.error(e.getMessage(), e);
             }
 
@@ -628,8 +629,8 @@ public class SqlRepositoryImpl implements SqlRepository, InitializingBean {
         } finally {
 
             try{ if (statement != null) statement.close(); }
-            catch(SQLException e) { 
-                
+            catch(SQLException e) {
+
                 logger.error(e.getMessage(), e);
             }
 
@@ -679,8 +680,8 @@ public class SqlRepositoryImpl implements SqlRepository, InitializingBean {
         } finally {
 
             try{ if (statement != null) statement.close(); }
-            catch(SQLException e) { 
-                
+            catch(SQLException e) {
+
                 logger.error(e.getMessage(), e);
             }
 
@@ -720,8 +721,8 @@ public class SqlRepositoryImpl implements SqlRepository, InitializingBean {
         } finally {
 
             try{ if (statement != null) statement.close(); }
-            catch(SQLException e) { 
-                
+            catch(SQLException e) {
+
                 logger.error(e.getMessage(), e);
             }
 
@@ -764,7 +765,7 @@ public class SqlRepositoryImpl implements SqlRepository, InitializingBean {
 
             try{ if (statement != null) statement.close(); }
             catch(SQLException e) {
-                
+
                 logger.error(e.getMessage(), e);
             }
 
@@ -787,7 +788,7 @@ public class SqlRepositoryImpl implements SqlRepository, InitializingBean {
             }
         }
     }
-  
+
     private RuntimeException handleSQLException(SQLException se, String statement, Object[] parameters) {
 
         DataAccessException dae = sqlErrorTranslator.translate("SQLDAO operation", null, se);

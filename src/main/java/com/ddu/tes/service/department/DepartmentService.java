@@ -18,5 +18,7 @@ public interface DepartmentService {
      public GetAllDepartmentListResult getAllDepartments();
      public boolean departmentExist (String name );
 
+     int countDepartment();
+
     Map<Integer, String> getDepartmentUsersByDepartmentId(Integer departmentId);
 }

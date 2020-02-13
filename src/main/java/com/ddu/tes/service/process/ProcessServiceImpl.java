@@ -1,10 +1,15 @@
 package com.ddu.tes.service.process;
 
-import com.ddu.tes.data.enums.*;
+import com.ddu.tes.data.enums.ChannelEnum;
+import com.ddu.tes.data.enums.ProcessRelationTypeEnum;
+import com.ddu.tes.data.enums.ProcessStatusEnum;
+import com.ddu.tes.data.enums.ProcessTypeEnum;
 import com.ddu.tes.data.modle.Process;
-import com.ddu.tes.data.modle.*;
+import com.ddu.tes.data.modle.ProcessData;
+import com.ddu.tes.data.modle.User;
 import com.ddu.tes.data.repository.SqlRepository;
 import com.ddu.tes.security.SecurityInfoMgnImpl;
+import com.ddu.tes.service.user.UserService;
 import com.ddu.tes.utils.CustomMessageService;
 import com.ddu.tes.utils.RandomNumberGenerator;
 import org.apache.commons.lang3.StringUtils;
@@ -20,6 +25,9 @@ public class ProcessServiceImpl implements ProcessService {
 
     private static final int DEFAULT_PROCESS_CODE_LENGTH = 19;
     private static final org.apache.commons.logging.Log logger = LogFactory.getLog(ProcessServiceImpl.class);
+
+    @Autowired
+    UserService userService;
 
     @Autowired
     private SqlRepository sqlRepository;
@@ -56,22 +64,20 @@ public class ProcessServiceImpl implements ProcessService {
 
             if (processData != null && !processData.isEmpty()) {
 
-                List<Object> processDataList = new ArrayList<>();
+                List<Object> processDataList = new ArrayList<Object>();
 
                 int processId = (Integer) process.getId();
-
                 for (Map.Entry<String, String> entry : processData.entrySet()) {
 
                     ProcessData pData = new ProcessData();
-                    pData.setProcessDataId(processId);
                     pData.setDataName(entry.getKey());
                     pData.setDataValue(entry.getValue());
                     pData.setProcessId(processId);
                     pData.setCreatedByUserId(securityInfoManager.getCurrentUser().getUserId());
                     pData.setCreatedDate(Calendar.getInstance().getTime());
-                    processDataList.add(pData);
-                }
+                      processDataList.add(pData);
 
+                }
                 sqlRepository.bulkInsert(processDataList);
 
             }
@@ -79,7 +85,7 @@ public class ProcessServiceImpl implements ProcessService {
             return process;
 
         } catch (Exception ex) {
-            logger.error("Error registering process, process type" + processTypeId, ex);
+            logger.error("Error registering process, process type " + processTypeId, ex);
 
             throw ex;
         }
@@ -94,14 +100,17 @@ public class ProcessServiceImpl implements ProcessService {
 
             if (processId == null) {
                 
-                throw new RuntimeException(" invalid processe");
+                throw new RuntimeException(" invalid null processeId");
             }
 
-            Process process = getProcessByProcessId(processId);
+//            Process process = getProcessByProcessId(processId);
+            Process process = new Process();
+            process.setProcessId(processId);
 
+            process=(Process)sqlRepository.findOne(process);
             if (process == null) {
 
-                throw new RuntimeException(" invalid processe");            }
+                throw new RuntimeException(" invalid processe Model");            }
 
 
             if (!process.getProcessStatusId().equals(ProcessStatusEnum.PENDING)) {
@@ -181,7 +190,7 @@ public class ProcessServiceImpl implements ProcessService {
         }
 
     }
-
+@Override
     public Process getPendingProcessByProcessCodeAndProcessType(String processCode, ProcessTypeEnum processType) {
 
         try {
@@ -237,10 +246,13 @@ public class ProcessServiceImpl implements ProcessService {
 
             if (processId == null) {
                 throw new RuntimeException(" invalid processe");            }
+            ProcessData filterProcessData = new ProcessData();
+filterProcessData.setProcessId(processId);
 
-            final Object result = sqlRepository.get(Process.class, processId, null);
+            Process result =(Process)sqlRepository.findOne(filterProcessData);
+//            final Object result =(Optional) sqlRepository.get(Process.class, , null);
 
-            return null == result ? null : (Process) result;
+            return null == result ? null :(Process) result;
 
         } catch (Exception ex) {
             logger.error("Error getting process, for process id" + processId, ex);

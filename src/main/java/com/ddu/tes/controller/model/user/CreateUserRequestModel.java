@@ -16,7 +16,7 @@ public class CreateUserRequestModel {
     private Integer departmentId;
     private Integer roleId;
      private String dateOfBirth;
-    private String userName;
+    private  String userName;
     private String password;
     private Boolean isLocked;
     private Boolean isEnable;

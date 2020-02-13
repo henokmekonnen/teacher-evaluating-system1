@@ -171,12 +171,12 @@ public GetUserByPhoneResult getUserByPhone(String phoneNumber) {
 
             User currentUser = securityInfoManager.getCurrentUser();
 
-            HashMap<String, String> processData = new HashMap<>();
-            processData.put("createdByUserId", currentUser.getUserId().toString());
+         /*   HashMap<String, String> processData = new HashMap<>();
+            processData.put(currentUser.getFirstName()+" "+currentUser.getLastName(), currentUser.getUserId().toString());
+*/
 
-
-            createUserProcess = processService.registerPendingProcess(ProcessTypeEnum.REGISTER_User
-                    ,processData , channelEnum,  null, currentUser.getUserId(), null);
+            createUserProcess = processService.registerPendingProcess(ProcessTypeEnum.REGISTER_USER
+                    ,null , channelEnum,  null, currentUser.getUserId(), null);
 
 
             User newUser = new User();
@@ -220,7 +220,7 @@ public GetUserByPhoneResult getUserByPhone(String phoneNumber) {
             responseModel.setDepartmentId(confirmCreateUser.getDepartmentId());
             responseModel.setRoleId(confirmCreateUser.getRoleId());
 
-            createUserProcess.setInitiatingUserId(currentUser.getUserId());
+            createUserProcess.setInitiatingUserId(newUser.getUserId());
             processService.updateProcess(createUserProcess);
 
             processService.completePendingProcess(createUserProcess.getProcessId(), "successfully registerd user");

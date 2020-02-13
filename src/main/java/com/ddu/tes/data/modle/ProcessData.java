@@ -7,6 +7,7 @@ import java.util.Objects;
 @Table(name = "process_data")
 public class ProcessData extends BaseModel {
     private Integer processDataId;
+
     private Integer createdByUserId;
     private Integer processId;
     private String dataName;
@@ -14,6 +15,7 @@ public class ProcessData extends BaseModel {
 
     @Id
     @Column(name = "ProcessDataId", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getProcessDataId() {
         return processDataId;
     }
@@ -65,12 +67,12 @@ public class ProcessData extends BaseModel {
     @Override
     @Transient
    public Integer getId() {
-        return getProcessId();
+        return getProcessDataId();
     }
 
     @Override
     public void setId(Integer id) {
-        setProcessId(id);
+        setProcessDataId(id);
     }
 
 

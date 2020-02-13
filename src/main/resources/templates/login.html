@@ -6,9 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--===============================================================================================-->
     <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}" href="../static/assets/css/bootstrap.min.css" />
-
-
-
     <link rel="stylesheet" th:href="@{/assets/login/css/util.css}" href="../static/assets/login/css/util.css" />
     <link rel="stylesheet" th:href="@{/assets/login/css/main.css}" href="../static/assets/login/css/main.css" />
     <!--===============================================================================================-->
@@ -21,7 +18,7 @@
 
             <form class="login100-form validate-form" th:action="@{/perform_login}" method="post">
                 <span class="login100-form-title p-b-33">
-			    <img class="align-content-center" th:src="@{/assets/images/photo_2020-01-05_23-46-43.jpg}" alt="Logo">DireDawa Universty  Account Login
+			    <img class="align-content-center" th:src="@{/assets/images/photo_2020-02-05_02-58-21.jpg}" alt="Logo">
                  </span>
 
                 <div class="alert alert-dismissable alert-danger" th:if="${param.error}" th:with="errorMsg=${session['SPRING_SECURITY_LAST_EXCEPTION'].message}">
